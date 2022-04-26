@@ -1,0 +1,24 @@
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@400;700&display=swap");
+
+$body-font: "Poppins", sans-serif;
+$first-color: hsl(273, 97%, 66%);
+$first-color-shape: hsl(253, 33%, 32%);
+
+$text-color: hsl(273, 4%, 45%);
+$body-color: hsl(273, 100%, 99%);
+$container-color: #fff;
+$title-color-dark: hsl(273, 83%, 98%);
+$text-color-dark: hsl(273, 21%, 56%);
+$container-color-dark: hsl(273, 80%, 14%);
+
+$background-color: hsl(140, 72%, 54%);
+
+$title-color: hsl(273, 8%, 15%);
+$title-color-unactive: hsl(280deg 8% 15% / 84%);
+$title-color-active: hsl(276, 33%, 94%);
+
+$icon-unactive: invert(5%) sepia(3%) saturate(6737%) hue-rotate(236deg)
+  brightness(88%) contrast(78%);
+
+$icon-active: invert(99%) sepia(2%) saturate(3450%) hue-rotate(192deg)
+  brightness(92%) contrast(111%);

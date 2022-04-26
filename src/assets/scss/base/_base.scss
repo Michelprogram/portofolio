@@ -1,0 +1,56 @@
+/*=============== BASE ===============*/
+@use "../variables/variables" as var;
+
+* {
+  box-sizing: border-box;
+  padding: 0;
+  margin: 0;
+}
+
+html {
+  scroll-behavior: smooth;
+  overflow-x: hidden;
+}
+
+body {
+  font-family: var.$body-font;
+  overflow-x: hidden;
+}
+
+h1,
+h2,
+h3 {
+  color: var.$title-color;
+}
+
+ul {
+  list-style: none;
+}
+
+a,
+a::before,
+a::after,
+*:visited {
+  text-decoration: none;
+}
+
+img {
+  max-width: 100%;
+  height: auto;
+}
+
+.title {
+  margin-top: 2%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  h2 {
+    font-size: 3em;
+    font-weight: 700;
+  }
+  img {
+    width: 50px;
+    margin-right: 2%;
+  }
+}
