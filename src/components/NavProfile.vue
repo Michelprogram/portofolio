@@ -6,7 +6,7 @@
           <img src="../assets/img/icons/close.svg" @click="triggerNav()" />
         </div>
         <div class="profile_picture">
-          <img src="../assets/img/profile.png" alt="" srcset="" />
+          <img src="../assets/img/profile.jpg" alt="" srcset="" />
         </div>
         <div class="description">
           <p>👋 Hi, I'm</p>
