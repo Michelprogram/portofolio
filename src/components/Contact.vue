@@ -5,29 +5,44 @@
       <h2>Contact</h2>
     </div>
 
-    <div class="form-mai">
+    <div class="form-mail">
       <form @submit.prevent="submit" @reset="onReset">
-        <div>
-          <label>name</label>
-          <input v-model="name" />
+        <div class="top-input">
+          <div>
+            <label>Name</label>
+            <input v-model="name" />
+          </div>
+
+          <div>
+            <label>Email</label>
+            <input v-model="email" />
+          </div>
         </div>
 
-        <div>
-          <label>email</label>
-          <input v-model="email" />
+        <div class="bot-input">
+          <div>
+            <textarea
+              v-model="message"
+              placeholder="Your message here !"
+            ></textarea>
+          </div>
         </div>
-
         <div>
-          <label>message</label>
-          <textarea v-model="message"></textarea>
+          <button type="submit">
+            AAAA<a href="../assets/img/icons/send.svg"></a>
+          </button>
+          <button type="reset">
+            BBB<a href="../assets/img/icons/reset.svg"></a>
+          </button>
         </div>
-
-        <button type="submit">submit</button>
-        <button type="reset">reset</button>
       </form>
     </div>
 
-    <div class="other-contact">Twitter Linkedin GitHub</div>
+    <div class="other-contact">
+      <img src="../assets/img/icons/twitter.svg" srcset="" />
+      <img src="../assets/img/icons/github.svg" srcset="" />
+      <img src="../assets/img/icons/linkedin.svg" srcset="" />
+    </div>
   </div>
 </template>
 
@@ -44,4 +59,44 @@ export default class Contact extends Vue {
 
 <style lang="scss">
 @import "../assets/scss/base";
+
+form {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.top-input,
+.bot-input {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  text-align: center;
+  width: 90%;
+  margin-left: 5%;
+}
+
+.top-input {
+  margin-top: 3%;
+  margin-bottom: 3%;
+  label {
+    font-size: 1.5em;
+  }
+  input {
+    font-size: 1em;
+    height: 25px;
+    margin-left: 2%;
+  }
+}
+
+.bot-input {
+  textarea {
+    width: 500px;
+    height: 250px;
+
+    resize: none;
+  }
+}
 </style>

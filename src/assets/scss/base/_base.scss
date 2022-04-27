@@ -54,3 +54,19 @@ img {
     margin-right: 2%;
   }
 }
+
+.building {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin-top: 5%;
+  margin-bottom: 5%;
+  img {
+    width: 65%;
+  }
+  p {
+    margin: 2%;
+    font-size: 2em;
+  }
+}

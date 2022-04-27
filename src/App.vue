@@ -19,8 +19,8 @@ import NavBar from "./components/NavBar.vue";
 export default class App extends Vue {}
 </script>
 
-<style>
+<style lang="scss">
 .container {
-  border: 2px solid black;
+  //border: 2px solid black;
 }
 </style>
