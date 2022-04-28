@@ -45,7 +45,7 @@ jobs:
         run: ls
           
       - name: Push to subtree
-        run: git subtree push --prefix dist origin gh-pages     
+        run: git subtree push --prefix dist origin gh-pages1
 
 
 
