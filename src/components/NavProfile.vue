@@ -92,6 +92,7 @@ export default class Navbar extends Vue {
   position: absolute;
   left: 0;
   top: 0;
+  z-index: 2;
   background-color: var.$background-color;
 
   display: flex;

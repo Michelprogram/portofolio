@@ -58,6 +58,8 @@ export default class Contact extends Vue {
 </script>
 
 <style lang="scss">
+@use "../assets/scss/variables" as var;
+
 @import "../assets/scss/base";
 
 form {
@@ -88,6 +90,10 @@ form {
     font-size: 1em;
     height: 25px;
     margin-left: 2%;
+    border-top: 0px;
+    border-left: 0px;
+    border-right: 0px;
+    border-bottom: 2px solid var.$background-color;
   }
 }
 
@@ -96,6 +102,8 @@ form {
     width: 500px;
     height: 250px;
 
+    letter-spacing: 2px;
+    font-size: 1.25em;
     resize: none;
   }
 }

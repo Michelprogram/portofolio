@@ -37,6 +37,8 @@ export default class Navbar extends Vue {
 </script>
 
 <style lang="scss">
+@use "../assets/scss/variables" as var;
+
 @import "../assets/scss/style";
 
 .default {
@@ -54,11 +56,28 @@ export default class Navbar extends Vue {
 }
 
 .header {
+  position: relative;
   display: flex;
   justify-content: space-around;
   gap: 50px;
   align-items: center;
   height: 12vh;
+
+  &::before {
+    content: "";
+    position: absolute;
+    display: block;
+    background: linear-gradient(
+      to top,
+      hsl(0, 0%, 100%) 0%,
+      var.$background-color 100%
+    );
+    width: 100%;
+    height: 5px;
+    bottom: 0px;
+    left: 0px;
+    z-index: -1;
+  }
 
   p {
     font-size: 1.3em;
