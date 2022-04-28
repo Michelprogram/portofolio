@@ -5,7 +5,7 @@
   </div>
   <div class="building">
     <img src="../assets/img/construction.svg" alt="" srcset="" />
-    <p>⚠️ This part of website is in construction</p>
+    <p>⚠️ This part of website is in construction Home</p>
   </div>
 </template>
 
