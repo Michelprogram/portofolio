@@ -77,6 +77,39 @@ export default class Contact extends Vue {
     this.email = "";
     this.message = "";
   }
+
+  onSubmit():void{
+
+  }
+
+  send(){
+            switch (this.checkField()){
+                case -1:
+                    this.error = "L'un des champs est incomplet."
+                    this.show = true
+                    break;
+                case 0:
+                    this.error = "Email incorrect."
+                    this.show = true
+                    break;
+                case 1:
+                    this.show = false
+                    this.sendApi()
+                    break;
+            }
+        },
+        checkField(){
+            const regexMail = /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/gm
+            if (this.nom.trim() == "" || this.mail.trim() == "" || this.message.trim() == ""){
+                return -1
+            }
+            else if(!this.mail.match(regexMail)){
+                return 0
+            }
+
+            return 1
+        }
+
 }
 </script>
 
