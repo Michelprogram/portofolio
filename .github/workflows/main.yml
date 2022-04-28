@@ -41,11 +41,11 @@ jobs:
           git add dist
           git commit -m "$(git log '--format=format:%H' master -1)"
           
-      - name: Pull subtree
-        run: ls
-          
       - name: Push to subtree
-        run: git subtree push --prefix dist origin gh-pages1
+        run: |
+          git subtree split --prefix dist -b gh-pages
+          git push -f origin gh-pages:gh-pages
+          git branch -D gh-pages
 
 
 
