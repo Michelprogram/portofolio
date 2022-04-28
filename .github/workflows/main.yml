@@ -28,10 +28,8 @@ jobs:
       - name: Setup Node.js environment
         uses: actions/setup-node@v3.1.1
         with:
-          # Version Spec of the version to use.  Examples: 12.x, 10.15.1, >=10.15.0
           node-version: 12.x
-          
-            
+                      
       - name: Install dependecies
         run: npm i
         
@@ -41,10 +39,10 @@ jobs:
       - name: Add to subtree
         run: |
           git add dist
-          git commit -m "adding dist subtree"
+          git commit -m "$(git log '--format=format:%H' master -1)"
           
       - name: Pull subtree
-        run: git pull
+        run: ls
           
       - name: Push to subtree
         run: git subtree push --prefix dist origin gh-pages     
