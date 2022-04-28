@@ -20,7 +20,7 @@
           <li class="nav_item">
             <img src="../assets/img/icons/home.svg" alt="" srcset="" />
             <router-link
-              to="/home"
+              to="/portofolio"
               :class="isActivePath('home') ? 'active-link' : 'link'"
               @click="triggerNav()"
               >Home</router-link
@@ -29,7 +29,7 @@
           <li class="nav_item">
             <img src="../assets/img/icons/profile.svg" alt="" srcset="" />
             <router-link
-              to="/about"
+              to="/portofolio/about"
               :class="isActivePath('about') ? 'active-link' : 'link'"
               @click="triggerNav()"
               >About</router-link
@@ -38,7 +38,7 @@
           <li class="nav_item">
             <img src="../assets/img/icons/portofolio.svg" alt="" srcset="" />
             <router-link
-              to="/portofolio"
+              to="/portofolio/portofolio"
               :class="isActivePath('portofolio') ? 'active-link' : 'link'"
               @click="triggerNav()"
               >Portofolio</router-link
@@ -47,7 +47,7 @@
           <li class="nav_item">
             <img src="../assets/img/icons/skills.svg" alt="" srcset="" />
             <router-link
-              to="/skills"
+              to="/portofolio/skills"
               :class="isActivePath('skills') ? 'active-link' : 'link'"
               @click="triggerNav()"
               >Skills</router-link
@@ -56,7 +56,7 @@
           <li class="nav_item">
             <img src="../assets/img/icons/contact.svg" alt="" srcset="" />
             <router-link
-              to="/contact"
+              to="/portofolio/contact"
               :class="isActivePath('contact') ? 'active-link' : 'link'"
               @click="triggerNav()"
               >Contact</router-link
