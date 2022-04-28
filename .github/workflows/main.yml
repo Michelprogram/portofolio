@@ -19,8 +19,32 @@ jobs:
     steps:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
       - uses: actions/checkout@v3
+      
+      - name: setup git config
+        run: |
+          git config user.name "GitHub Actions Bot"
+          git config user.email "<>"
+        
+      - name: Setup Node.js environment
+        uses: actions/setup-node@v3.1.1
+        with:
+          # Version Spec of the version to use.  Examples: 12.x, 10.15.1, >=10.15.0
+          node-version: 12.x
+          
+            
+      - name: Install dependecies
+        run: npm i
+        
+      - name: Build project
+        run: npm run build
 
-      # Runs a single command using the runners shell
-      - name: Run a script to push to gh-pages
-        run: ./githubPages.sh
+      - name: Add to subtree
+        run: |
+          git add dist
+          git commit -m "adding dist subtree"
+          
+      - name: Push to subtree
+        run: git subtree push --prefix dist origin gh-pages     
+
+
 
