@@ -6,7 +6,7 @@
     </div>
 
     <div class="form-mail">
-      <form @submit.prevent="submit" @reset="onReset">
+      <form ref="form">
         <div class="contain-form">
           <div class="top-input">
             <div>
@@ -30,10 +30,10 @@
           </div>
         </div>
         <div class="buttons">
-          <div type="submit" class="container-submit">
+          <div type="submit" class="container-submit" @click="onSubmit()">
             <img alt="send your message" src="../assets/img/icons/send.svg" />
           </div>
-          <div type="reset" class="container-submit">
+          <div type="reset" class="container-submit" @click="onReset()">
             <img alt="send your message" src="../assets/img/icons/reset.svg" />
           </div>
         </div>
@@ -71,6 +71,12 @@ export default class Contact extends Vue {
   name: string = "";
   email: string = "";
   message: string = "";
+
+  onReset(): void {
+    this.name = "";
+    this.email = "";
+    this.message = "";
+  }
 }
 </script>
 

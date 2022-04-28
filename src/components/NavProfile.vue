@@ -20,7 +20,7 @@
           <li class="nav_item">
             <img src="../assets/img/icons/home.svg" alt="" srcset="" />
             <router-link
-              to="/"
+              to="/home"
               :class="isActivePath('home') ? 'active-link' : 'link'"
               @click="triggerNav()"
               >Home</router-link
