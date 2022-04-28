@@ -7,41 +7,58 @@
 
     <div class="form-mail">
       <form @submit.prevent="submit" @reset="onReset">
-        <div class="top-input">
-          <div>
-            <label>Name</label>
-            <input v-model="name" />
+        <div class="contain-form">
+          <div class="top-input">
+            <div>
+              <label>Name</label>
+              <input v-model="name" />
+            </div>
+
+            <div>
+              <label>Email</label>
+              <input v-model="email" />
+            </div>
           </div>
 
-          <div>
-            <label>Email</label>
-            <input v-model="email" />
+          <div class="bot-input">
+            <div>
+              <textarea
+                v-model="message"
+                placeholder="Your message here !"
+              ></textarea>
+            </div>
           </div>
         </div>
-
-        <div class="bot-input">
-          <div>
-            <textarea
-              v-model="message"
-              placeholder="Your message here !"
-            ></textarea>
+        <div class="buttons">
+          <div type="submit" class="container-submit">
+            <img alt="send your message" src="../assets/img/icons/send.svg" />
           </div>
-        </div>
-        <div>
-          <button type="submit">
-            AAAA<a href="../assets/img/icons/send.svg"></a>
-          </button>
-          <button type="reset">
-            BBB<a href="../assets/img/icons/reset.svg"></a>
-          </button>
+          <div type="reset" class="container-submit">
+            <img alt="send your message" src="../assets/img/icons/reset.svg" />
+          </div>
         </div>
       </form>
     </div>
 
     <div class="other-contact">
-      <img src="../assets/img/icons/twitter.svg" srcset="" />
-      <img src="../assets/img/icons/github.svg" srcset="" />
-      <img src="../assets/img/icons/linkedin.svg" srcset="" />
+      <div class="container-img-link">
+        <img src="../assets/img/icons/twitter.svg" srcset="" />
+        <a href="https://twitter.com/loutre_verte" target="_blank">@bivouac</a>
+      </div>
+      <div class="container-img-link">
+        <img src="../assets/img/icons/github.svg" srcset="" />
+        <a href="https://github.com/Michelprogram" target="_blank"
+          >Michel program</a
+        >
+      </div>
+      <div class="container-img-link">
+        <img src="../assets/img/icons/linkedin.svg" srcset="" />
+        <a
+          href="https://www.linkedin.com/in/dorian-gauron-534716187/"
+          target="_blank"
+          >Gauron Dorian</a
+        >
+      </div>
     </div>
   </div>
 </template>
@@ -62,12 +79,30 @@ export default class Contact extends Vue {
 
 @import "../assets/scss/base";
 
+form,
+.buttons {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+}
+
 form {
   width: 100%;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
+  margin-bottom: 5%;
+}
+
+.buttons {
+  width: 30%;
+  .container-submit {
+    padding: 2%;
+    border-radius: 50px;
+    cursor: pointer;
+    background-color: var.$background-color;
+  }
+  img {
+    display: block;
+    width: 50px;
+  }
 }
 
 .top-input,
@@ -77,12 +112,11 @@ form {
   align-items: center;
   text-align: center;
   width: 90%;
-  margin-left: 5%;
 }
 
 .top-input {
   margin-top: 3%;
-  margin-bottom: 3%;
+  margin-bottom: 5%;
   label {
     font-size: 1.5em;
   }
@@ -102,9 +136,55 @@ form {
     width: 500px;
     height: 250px;
 
-    letter-spacing: 2px;
+    letter-spacing: 3px;
     font-size: 1.25em;
     resize: none;
+    font-family: var.$body-font;
+  }
+}
+
+.other-contact {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  width: 100%;
+
+  .container-img-link {
+    position: relative;
+
+    img {
+      cursor: pointer;
+      width: 60px;
+      z-index: 1;
+
+      transition: all 0.5s ease-in-out;
+    }
+
+    a {
+      position: absolute;
+      white-space: nowrap;
+      top: 50%;
+      left: 50%;
+
+      z-index: -1;
+      opacity: 0;
+      font-size: 1em;
+      transform: translate(-50%, -50%);
+
+      transition: all 0.5s ease-in-out 0.3s;
+    }
+
+    &:hover {
+      img {
+        opacity: 0;
+        z-index: -1;
+      }
+      a {
+        opacity: 1;
+        font-size: 1.3em;
+        z-index: 2;
+      }
+    }
   }
 }
 </style>
