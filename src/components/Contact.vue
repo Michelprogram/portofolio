@@ -30,14 +30,28 @@
           </div>
         </div>
         <div class="buttons">
-          <div type="submit" class="container-submit" @click="onSubmit()">
+          <div
+            type="submit"
+            @click="onSubmit()"
+            :class="getWaiting() ? 'disable-button' : 'container-submit'"
+          >
             <img alt="send your message" src="../assets/img/icons/send.svg" />
           </div>
-          <div type="reset" class="container-submit" @click="onReset()">
+          <div
+            type="reset"
+            @click="onReset()"
+            :class="getWaiting() ? 'disable-button' : 'container-submit'"
+          >
             <img alt="send your message" src="../assets/img/icons/reset.svg" />
           </div>
         </div>
       </form>
+    </div>
+
+    <div class="error">
+      <p>
+        {{ error }}
+      </p>
     </div>
 
     <div class="other-contact">
@@ -65,12 +79,17 @@
 
 <script lang="ts">
 import { Options, Vue } from "vue-class-component";
+import Errors from "../enums/Erros";
+import emailjs from "@emailjs/browser";
 
 @Options({})
 export default class Contact extends Vue {
   name: string = "";
   email: string = "";
   message: string = "";
+  error: string = "";
+
+  waiting: Boolean = false;
 
   onReset(): void {
     this.name = "";
@@ -78,38 +97,69 @@ export default class Contact extends Vue {
     this.message = "";
   }
 
-  onSubmit():void{
-
+  setError(newError: Errors): void {
+    this.error = newError;
   }
 
-  send(){
-            switch (this.checkField()){
-                case -1:
-                    this.error = "L'un des champs est incomplet."
-                    this.show = true
-                    break;
-                case 0:
-                    this.error = "Email incorrect."
-                    this.show = true
-                    break;
-                case 1:
-                    this.show = false
-                    this.sendApi()
-                    break;
-            }
-        },
-        checkField(){
-            const regexMail = /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/gm
-            if (this.nom.trim() == "" || this.mail.trim() == "" || this.message.trim() == ""){
-                return -1
-            }
-            else if(!this.mail.match(regexMail)){
-                return 0
-            }
+  getError(): string {
+    return this.error;
+  }
 
-            return 1
-        }
+  getWaiting(): Boolean {
+    console.log(this.waiting);
+    return this.waiting;
+  }
 
+  setWaiting(newWaiting: Boolean) {
+    this.waiting = newWaiting;
+  }
+
+  onSubmit(): void {
+    let params: Record<string, string> = {
+      name: this.name,
+      email: this.email,
+      message: this.message,
+    };
+
+    this.setError(this.checkField());
+
+    if (this.getError() == Errors.good) {
+      this.setWaiting(true);
+      emailjs
+        .send(
+          "service_7e6viya",
+          "template_aw3gl1n",
+          params,
+          "INgO1urKz_M4VMzri"
+        )
+        .then(() => {
+          this.setError(Errors.sent);
+          this.onReset();
+        })
+        .catch((err) => {
+          console.error(err);
+          this.setError(Errors.errMailJs);
+        })
+        .finally(() => {
+          this.setWaiting(false);
+        });
+    }
+  }
+
+  checkField(): Errors {
+    const regexMail = /^[\w-.]+@([\w-]+\.)+[\w-]{2,4}$/gm;
+    if (
+      this.name.trim() == "" ||
+      this.email.trim() == "" ||
+      this.message.trim() == ""
+    ) {
+      return Errors.fields;
+    } else if (!this.email.match(regexMail)) {
+      return Errors.email;
+    }
+
+    return Errors.good;
+  }
 }
 </script>
 
@@ -127,7 +177,7 @@ form,
 
 form {
   width: 100%;
-  margin-bottom: 5%;
+  margin-bottom: 3%;
 }
 
 .buttons {
@@ -137,7 +187,17 @@ form {
     border-radius: 50px;
     cursor: pointer;
     background-color: var.$background-color;
+
+    transition: all 0.5s ease-in;
   }
+
+  .disable-button {
+    @extend .container-submit;
+    cursor: not-allowed;
+    pointer-events: none;
+    background-color: var.$text-color;
+  }
+
   img {
     display: block;
     width: 50px;
@@ -224,6 +284,21 @@ form {
         z-index: 2;
       }
     }
+  }
+}
+
+.error {
+  position: relative;
+  display: flex;
+  align-content: center;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 2%;
+  p {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
   }
 }
 </style>
