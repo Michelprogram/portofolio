@@ -43,6 +43,9 @@ jobs:
           git add dist
           git commit -m "adding dist subtree"
           
+      - name: Pull subtree
+        run: git pull
+          
       - name: Push to subtree
         run: git subtree push --prefix dist origin gh-pages     
 
