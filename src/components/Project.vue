@@ -22,7 +22,7 @@ import Hexagone from "../components/Hexagone.vue";
 })
 export default class Project extends Vue {
   isHexagone(): boolean {
-    const rd: Number = Math.floor(Math.random() * 3);
+    const rd: Number = Math.floor(Math.random() * 4);
     return rd == 0;
   }
 }
@@ -60,9 +60,38 @@ export default class Project extends Vue {
     transition: all 0.5s ease-in;
   }
 
-  .container-title {
+  .container-obj {
     position: absolute;
     background: var.$container-color;
+
+    .title {
+      color: var.$title-color;
+      position: relative;
+      width: auto;
+
+      &:after {
+        content: "";
+        width: 0%;
+        height: 10px;
+        position: absolute;
+        bottom: 0%;
+        left: 0%;
+        z-index: -1;
+        background: linear-gradient(
+          to top,
+          hsl(0, 0%, 100%) 0%,
+          var.$background-color 100%
+        );
+      }
+    }
+
+    .description {
+      color: var.$title-color-unactive;
+    }
+  }
+
+  .container-title {
+    @extend .container-obj;
 
     border-radius: 50%;
     width: 125px;
@@ -80,65 +109,28 @@ export default class Project extends Vue {
     white-space: nowrap;
 
     .title {
-      color: var.$title-color;
-      position: relative;
-      width: auto;
-
       &:after {
-        content: "";
-        width: 0%;
-        height: 10px;
-        position: absolute;
-        bottom: 0%;
-        left: 0%;
-        z-index: -1;
-        background: linear-gradient(
-          to top,
-          hsl(0, 0%, 100%) 0%,
-          var.$background-color 100%
-        );
         transition: width 0.5s ease-in-out;
       }
-    }
-    .description {
-      color: var.$title-color-unactive;
     }
   }
 
   .container-title-2 {
-    position: absolute;
+    @extend .container-obj;
+
     top: -80px;
     left: 0%;
     width: 100%;
     height: 80px;
-    background: var.$container-color;
     transition: all 0.5s ease-in-out;
     text-align: center;
 
     .title {
-      color: var.$title-color;
-      position: relative;
-      width: auto;
+      z-index: 1;
 
       &:after {
-        content: "";
-        width: 0%;
-        height: 10px;
-        position: absolute;
-        bottom: 0%;
-        left: 0%;
-        z-index: -1;
-        background: linear-gradient(
-          to top,
-          hsl(0, 0%, 100%) 0%,
-          var.$background-color 100%
-        );
-        transition: width 0.5s ease-in-out;
+        transition: width 0.5s ease-in-out 0.5s;
       }
-    }
-
-    .description {
-      color: var.$title-color-unactive;
     }
   }
 }
