@@ -78,89 +78,93 @@
 </template>
 
 <script lang="ts">
-import { Options, Vue } from "vue-class-component";
+import { defineComponent } from "vue";
 import Errors from "../enums/Erros";
 import emailjs from "@emailjs/browser";
 
-@Options({})
-export default class Contact extends Vue {
-  name: string = "";
-  email: string = "";
-  message: string = "";
-  error: string = "";
-
-  waiting: Boolean = false;
-
-  onReset(): void {
-    this.name = "";
-    this.email = "";
-    this.message = "";
-  }
-
-  setError(newError: Errors): void {
-    this.error = newError;
-  }
-
-  getError(): string {
-    return this.error;
-  }
-
-  getWaiting(): Boolean {
-    console.log(this.waiting);
-    return this.waiting;
-  }
-
-  setWaiting(newWaiting: Boolean) {
-    this.waiting = newWaiting;
-  }
-
-  onSubmit(): void {
-    let params: Record<string, string> = {
-      name: this.name,
-      email: this.email,
-      message: this.message,
+export default defineComponent({
+  name: "CContact",
+  data() {
+    return {
+      name: "" as string,
+      email: "" as string,
+      message: "" as string,
+      error: "" as string,
+      waiting: false as Boolean,
     };
+  },
+  methods: {
+    onReset(): void {
+      this.name = "";
+      this.email = "";
+      this.message = "";
+    },
 
-    this.setError(this.checkField());
+    setError(newError: Errors): void {
+      this.error = newError;
+    },
 
-    if (this.getError() == Errors.good) {
-      this.setWaiting(true);
-      emailjs
-        .send(
-          "service_7e6viya",
-          "template_aw3gl1n",
-          params,
-          "INgO1urKz_M4VMzri"
-        )
-        .then(() => {
-          this.setError(Errors.sent);
-          this.onReset();
-        })
-        .catch((err) => {
-          console.error(err);
-          this.setError(Errors.errMailJs);
-        })
-        .finally(() => {
-          this.setWaiting(false);
-        });
-    }
-  }
+    getError(): string {
+      return this.error;
+    },
 
-  checkField(): Errors {
-    const regexMail = /^[\w-.]+@([\w-]+\.)+[\w-]{2,4}$/gm;
-    if (
-      this.name.trim() == "" ||
-      this.email.trim() == "" ||
-      this.message.trim() == ""
-    ) {
-      return Errors.fields;
-    } else if (!this.email.match(regexMail)) {
-      return Errors.email;
-    }
+    getWaiting(): Boolean {
+      console.log(this.waiting);
+      return this.waiting;
+    },
 
-    return Errors.good;
-  }
-}
+    setWaiting(newWaiting: Boolean) {
+      this.waiting = newWaiting;
+    },
+
+    onSubmit(): void {
+      let params: Record<string, string> = {
+        name: this.name,
+        email: this.email,
+        message: this.message,
+      };
+
+      this.setError(this.checkField());
+
+      if (this.getError() == Errors.good) {
+        this.setWaiting(true);
+        emailjs
+          .send(
+            "service_7e6viya",
+            "template_aw3gl1n",
+            params,
+            "INgO1urKz_M4VMzri"
+          )
+          .then(() => {
+            this.setError(Errors.sent);
+            this.onReset();
+          })
+          .catch((err) => {
+            console.error(err);
+            this.setError(Errors.errMailJs);
+          })
+          .finally(() => {
+            this.setWaiting(false);
+          });
+      }
+    },
+
+    checkField(): Errors {
+      const regexMail = /^[\w-.]+@([\w-]+\.)+[\w-]{2,4}$/gm;
+      if (
+        this.name.trim() == "" ||
+        this.email.trim() == "" ||
+        this.message.trim() == ""
+      ) {
+        return Errors.fields;
+      } else if (!this.email.match(regexMail)) {
+        return Errors.email;
+      }
+
+      return Errors.good;
+    },
+  },
+});
 </script>
 
 <style lang="scss">

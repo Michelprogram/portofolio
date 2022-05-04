@@ -10,10 +10,11 @@
 </template>
 
 <script lang="ts">
-import { Options, Vue } from "vue-class-component";
+import { defineComponent } from "vue";
 
-@Options({})
-export default class About extends Vue {}
+export default defineComponent({
+  name: "CAbout",
+});
 </script>
 
 <style lang="scss"></style>

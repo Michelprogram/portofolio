@@ -15,19 +15,22 @@
 </template>
 
 <script lang="ts">
-import { Options, Vue } from "vue-class-component";
+import { defineComponent } from "vue";
+
 import Data from "../data/project";
-import IProject from "../interfaces/IProjects";
 import Project from "../components/Project.vue";
 
-@Options({
+export default defineComponent({
+  name: "CPortofolio",
   components: {
     Project,
   },
-})
-export default class Portofolio extends Vue {
-  projects: Array<IProject> = Data;
-}
+  data() {
+    return {
+      projects: Data,
+    };
+  },
+});
 </script>
 
 <style lang="scss">

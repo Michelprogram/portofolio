@@ -5,9 +5,18 @@ const projects: Array<IProject> = [
     id: 0,
     name: "Golang",
     short_description: "API",
+    long_description:
+      "Lorem ipsum dolor, sit amet consectetur adipisicing elit. Est, consectetur doloribus placeat ipsum nihil reiciendis inventore suscipit praesentium culpa quia consequuntur dicta doloremque sint nostrum ab necessitatibus incidunt veritatis sequi dolore repellat cumque hic minus. Repudiandae doloremque iure tempore repellendus non nobis ipsa, unde dolorem, eveniet mollitia laboriosam ipsum temporibus perspiciatis vitae atque hic, debitis autem. Atque esse quos quidem soluta numquam accusantium vel odio dolor! Minima odio unde architecto eligendi. Quos tenetur, labore vero fugiat, iusto eos rerum ea, ducimus praesentium veniam voluptas debitis? Earum dicta autem corporis, officiis non laboriosam asperiores soluta cum distinctio delectus ratione consequatur molestiae.",
     image:
       "https://cdn.dribbble.com/userupload/2624050/file/original-59266f4dea1c2aa43f2064cc0f3b165a.png",
     github: "https://github.com/Michelprogram/go_api",
+    skills: [
+      {
+        name: "Golang",
+        percentage: 90,
+        color: "blue",
+      },
+    ],
   },
   {
     id: 1,
@@ -75,4 +84,4 @@ const projects: Array<IProject> = [
   },
 ];
 
-export default projects.sort((a, b) => 0.5 - Math.random());
+export default projects;

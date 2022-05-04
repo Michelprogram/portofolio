@@ -14,8 +14,6 @@
     "sass": "^1.49.9",
     "sass-loader": "^12.6.0",
     "vue": "^3.2.13",
-    "vue-class-component": "^8.0.0-0",
-    "vue-property-decorator": "^9.1.2",
     "vue-router": "^4.0.14"
   },
   "devDependencies": {

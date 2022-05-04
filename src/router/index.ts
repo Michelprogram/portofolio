@@ -3,34 +3,43 @@ import About from "../components/About.vue";
 import Portofolio from "../components/Portofolio.vue";
 import Skills from "../components/Skills.vue";
 import Contact from "../components/Contact.vue";
+import ProjectDescription from "../components/ProjectDescription.vue";
 
 import { createRouter, createWebHistory } from "vue-router";
 
+const prefix: string = "/portofolio/";
+
 const routes = [
   {
-    path: "/portofolio/",
+    path: prefix,
     name: "home",
     component: Home,
   },
   {
-    path: "/portofolio/about",
+    path: prefix + "about",
     name: "about",
     component: About,
   },
   {
-    path: "/portofolio/portofolio",
+    path: prefix + "portofolio",
     name: "portofolio",
     component: Portofolio,
   },
   {
-    path: "/portofolio/skills",
+    path: prefix + "skills",
     name: "skills",
     component: Skills,
   },
   {
-    path: "/portofolio/contact",
+    path: prefix + "contact",
     name: "contact",
     component: Contact,
+  },
+  {
+    path: prefix + "project/:id",
+    name: "project",
+    props: true,
+    component: ProjectDescription,
   },
 ];
 

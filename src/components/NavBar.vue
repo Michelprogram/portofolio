@@ -13,27 +13,30 @@
 </template>
 
 <script lang="ts">
-import { Options, Vue } from "vue-class-component";
-import NavProfile from "./NavProfile.vue";
-import Home from "./Home.vue";
+import { defineComponent } from "vue";
 
-@Options({
+import NavProfile from "./NavProfile.vue";
+
+export default defineComponent({
+  name: "CNavbar",
   components: {
     NavProfile,
-    Home,
   },
-})
-export default class Navbar extends Vue {
-  navIsOpen: boolean = false;
+  data() {
+    return {
+      navIsOpen: false as boolean,
+    };
+  },
+  methods: {
+    triggerNav(): void {
+      this.navIsOpen = !this.navIsOpen;
+    },
 
-  triggerNav(): void {
-    this.navIsOpen = !this.navIsOpen;
-  }
-
-  getNavIsOpen(): boolean {
-    return this.navIsOpen;
-  }
-}
+    getNavIsOpen(): boolean {
+      return this.navIsOpen;
+    },
+  },
+});
 </script>
 
 <style lang="scss">

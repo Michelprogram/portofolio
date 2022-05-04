@@ -1,5 +1,5 @@
 <template>
-  <div class="container-project">
+  <div class="container-project" @click="goTo()">
     <img :src="project.image" alt="" />
     <div :class="isHexagone() ? 'container-title' : 'container-title-2'">
       <p class="title">{{ project.name }}</p>
@@ -9,23 +9,30 @@
 </template>
 
 <script lang="ts">
-import { Options, Vue } from "vue-class-component";
-import Hexagone from "../components/Hexagone.vue";
+import { defineComponent, PropType } from "vue";
+import IProject from "../interfaces/IProjects";
 
-@Options({
+export default defineComponent({
+  name: "CProject",
   props: {
-    project: Object,
+    project: {
+      type: Object as PropType<IProject>,
+      required: true,
+    },
   },
-  components: {
-    Hexagone,
+  methods: {
+    isHexagone(): boolean {
+      const rd: Number = Math.floor(Math.random() * 2);
+      return rd == 0;
+    },
+    goTo(): void {
+      this.$router.push({
+        name: "project",
+        params: { id: this.project.id },
+      });
+    },
   },
-})
-export default class Project extends Vue {
-  isHexagone(): boolean {
-    const rd: Number = Math.floor(Math.random() * 4);
-    return rd == 0;
-  }
-}
+});
 </script>
 
 <style lang="scss">

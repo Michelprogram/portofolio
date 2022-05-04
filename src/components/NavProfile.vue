@@ -39,7 +39,9 @@
             <img src="../assets/img/icons/portofolio.svg" alt="" srcset="" />
             <router-link
               to="/portofolio/portofolio"
-              :class="isActivePath('portofolio') ? 'active-link' : 'link'"
+              :class="
+                isActivePath(['portofolio', 'project']) ? 'active-link' : 'link'
+              "
               @click="triggerNav()"
               >Portofolio</router-link
             >
@@ -69,17 +71,24 @@
 </template>
 
 <script lang="ts">
-import { Options, Vue } from "vue-class-component";
+import { defineComponent } from "vue";
 
-@Options({})
-export default class Navbar extends Vue {
-  triggerNav(): void {
-    this.$emit("onTrigger");
-  }
-  isActivePath(expectedLink: string): Boolean {
-    return this.$route.name == expectedLink;
-  }
-}
+export default defineComponent({
+  name: "CNavbar",
+
+  methods: {
+    triggerNav(): void {
+      this.$emit("onTrigger");
+    },
+    isActivePath(expectedLink: string | string[]): Boolean {
+      if (typeof expectedLink == "string") {
+        return this.$route.name == expectedLink;
+      } else {
+        return expectedLink.filter((el) => el == this.$route.name).length > 0;
+      }
+    },
+  },
+});
 </script>
 
 <style lang="scss">
