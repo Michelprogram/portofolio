@@ -1,0 +1,71 @@
+@forward "./sections";
+@use "./utils" as util;
+
+html {
+  box-sizing: border-box;
+  font-size: 100%;
+}
+*,
+*::before,
+*::after {
+  box-sizing: inherit;
+}
+
+h1,
+h2,
+h3,
+p {
+  margin: 0;
+}
+
+p {
+  line-height: 1.3;
+  font-size: 1em;
+  font-size: clamp(1rem, 0.79rem + 0.89vw, 1.125em);
+  color: util.$text-2;
+}
+
+a.underline {
+  font-size: 1rem;
+  line-height: 1.625;
+  letter-spacing: 2.29px;
+  font-weight: 700;
+  text-transform: uppercase;
+  color: util.$text-1;
+  text-decoration: none;
+  background-image: linear-gradient(to right, util.$green 75%, util.$green 75%);
+  background-repeat: repeat-x;
+  background-size: 8px 4px;
+  background-position: 0 1.625em;
+  padding-bottom: 8px;
+
+  transition: color 250ms ease-in-out;
+
+  &:hover {
+    color: util.$green;
+  }
+}
+
+body {
+  margin: 0;
+  font-family: "Space Grotesk", sans-serif;
+  background-color: util.$body-bg;
+  color: util.$text-1;
+  font-size: util.$fs-18;
+  line-height: 1.56;
+  overflow-x: hidden;
+}
+
+.wrapper {
+  width: calc(100% - 2rem);
+  max-width: util.$container-size;
+  margin-inline: auto;
+  position: relative;
+
+  padding-bottom: 60px;
+  border-bottom: 2px solid util.$text-1;
+
+  @media (min-width: px-to-rem(600px)) {
+    width: calc(100% - px-to-rem(60px));
+  }
+}

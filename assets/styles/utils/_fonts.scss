@@ -1,0 +1,18 @@
+@use "functions" as *;
+
+@import url("https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;700&display=swap");
+
+@font-face {
+  font-family: "Kivy Sans";
+  src: url("../fonts/KyivType.woff2") format("woff2-variations");
+  font-weight: 0 1000;
+  font-display: swap;
+}
+
+$fs-18: px-to-rem(18px);
+$fs-24: px-to-rem(24px);
+$fs-32: px-to-rem(32px);
+$fs-40: px-to-rem(40px);
+$fs-48: px-to-rem(48px);
+$fs-72: px-to-rem(72px);
+$fs-88: px-to-rem(88px);

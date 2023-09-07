@@ -1,0 +1,44 @@
+@use "sass:math";
+
+$NUMBER_METEOR: 15;
+
+@for $i from 0 through $NUMBER_METEOR {
+  .meteor-#{$i} {
+    z-index: 1000;
+    position: fixed;
+    width: 300px;
+    height: 1px;
+    transform: rotate(-45deg);
+    background-image: linear-gradient(to right, #fff, rgba(255, 255, 255, 0));
+    &:before {
+      content: "";
+      z-index: 1000;
+      position: fixed;
+      width: 4px;
+      height: 5px;
+      border-radius: 50%;
+      margin-top: -2px;
+      background: rgba(#fff, 0.7);
+      box-shadow: 0 0 15px 3px #fff;
+    }
+  }
+}
+
+@keyframes meteor {
+  0% {
+    opacity: 1;
+    margin-top: -600px;
+    margin-right: -600px;
+  }
+  42% {
+    opacity: 0;
+  }
+  65% {
+    margin-top: 600px;
+    margin-left: -1200px;
+    opacity: 0;
+  }
+  100% {
+    opacity: 0;
+  }
+}

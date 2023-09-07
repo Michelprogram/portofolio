@@ -1,0 +1,12 @@
+$container-size: 69.375rem;
+$transition: 250ms ease-in-out;
+
+.visually-hidden {
+  position: absolute;
+  left: -10000px;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  overflow: hidden;
+  border: 0;
+}
