@@ -38,7 +38,7 @@ jobs:
       - name: Add to subtree
         run: |
           git add dist
-          git commit -m "$(git log '--format=format:%H' master -1)"
+          git commit -m "$(git log '--format=format:%H' main -1)"
 
       - name: Push to subtree
         run: |
