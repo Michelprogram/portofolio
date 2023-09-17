@@ -5,4 +5,6 @@ export default defineConfig({
   image: {
     service: squooshImageService(),
   },
+  site: "https://michelprogram.github.io",
+  base: "/portfolio",
 });
