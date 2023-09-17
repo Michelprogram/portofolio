@@ -24,26 +24,20 @@ jobs:
     steps:
       - uses: actions/checkout@v3
 
-      - uses: pnpm/action-setup@v2
-        with:
-          version: 7.29
-
       - name: setup git config
         run: |
           git config user.name "GitHub Actions Bot"
           git config user.email "<>"
 
-      - name: Use Node.js ${{ matrix.node-version }}
-        uses: actions/setup-node@v3
+      - uses: oven-sh/setup-bun@v1
         with:
-          node-version: ${{ matrix.node-version }}
-          cache: "pnpm"
+          bun-version: latest
 
       - name: Install dependecies
-        run: pnpm install
+        run: bun install
 
       - name: Build project
-        run: pnpm run build
+        run: bun run build
 
       - name: Setup Pages
         uses: actions/configure-pages@v3
