@@ -1,0 +1,161 @@
+---
+const skills = [
+  {
+    title: "HTML",
+    icon: "https://raw.githubusercontent.com/Tarikul-Islam-Anik/Animated-Fluent-Emojis/master/Emojis/Activities/Party%20Popper.png",
+    description: "3 Years Experience",
+  },
+  {
+    title: "SASS",
+    icon: "https://raw.githubusercontent.com/Tarikul-Islam-Anik/Animated-Fluent-Emojis/master/Emojis/Activities/Crystal%20Ball.png",
+    description: "2 Years Experience",
+  },
+  {
+    title: "Typescript",
+    icon: "https://raw.githubusercontent.com/Tarikul-Islam-Anik/Animated-Fluent-Emojis/master/Emojis/Objects/Pouring%20Liquid.png",
+    description: "1 Year Experience",
+  },
+  {
+    title: "Golang",
+    icon: "https://raw.githubusercontent.com/Tarikul-Islam-Anik/Animated-Fluent-Emojis/master/Emojis/Animals/Bear.png",
+    description: "1 Year Experience",
+  },
+  {
+    title: "Vue",
+    icon: "https://raw.githubusercontent.com/Tarikul-Islam-Anik/Animated-Fluent-Emojis/master/Emojis/Smilies/Robot.png",
+    description: "2 Years Experience",
+  },
+  {
+    title: "Docker",
+    icon: "https://raw.githubusercontent.com/Tarikul-Islam-Anik/Animated-Fluent-Emojis/master/Emojis/Animals/Spouting%20Whale.png",
+    description: "1 Year Experience",
+  },
+];
+
+import { Image } from "astro:assets";
+---
+
+<section class="skills">
+  <h2 class="visually-hidden">Skills</h2>
+  <div class="wrapper skills__wrapper">
+    {
+      skills.map((skill) => {
+        return (
+          <div class="skills__item">
+            <div class="skills__title">
+              <h3>{skill.title}</h3>
+              <Image src={skill.icon} width="25" height="25" alt="Icon" />
+            </div>
+            <p class="skills_description">{skill.description}</p>
+          </div>
+        );
+      })
+    }
+  </div>
+</section>
+
+<style lang="scss">
+  @import "../../assets/styles/utils/functions";
+  @import "../../assets/styles/utils/colors";
+
+  .skills {
+    position: relative;
+
+    &__wrapper {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 25px;
+      padding-block: 40px;
+
+      //Tablet 445 x 720
+      @media (min-width: px-to-rem(600px)) {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 52px 24px;
+        padding-block: 52px;
+      }
+
+      //Desktop 348 x 766
+      @media (min-width: px-to-rem(1280px)) {
+        grid-template-columns: repeat(3, 1fr);
+        padding-block-start: 72px;
+      }
+
+      .skills__item {
+        text-align: center;
+
+        //Tablet 445 x 720
+        @media (min-width: px-to-rem(600px)) {
+          text-align: start;
+        }
+
+        .skills__title {
+          font-size: 2rem;
+          font-size: clamp(2rem, 0.33rem + 7.11vw, 3rem);
+          line-height: 1.7;
+          margin-bottom: 2px;
+          transform: translate(-500px);
+          opacity: 0;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          gap: 10px;
+
+          img {
+            width: 25px;
+            height: 25px;
+
+            //Tablet 445 x 720
+            @media (min-width: px-to-rem(600px)) {
+              width: 45px;
+              height: 45px;
+            }
+
+            //Desktop 348 x 766
+            @media (min-width: px-to-rem(1280px)) {
+              width: 55px;
+              height: 55px;
+            }
+          }
+
+          //Tablet 445 x 720
+          @media (min-width: px-to-rem(600px)) {
+            justify-content: flex-start;
+          }
+
+          transition: all 0.8s ease-in-out;
+        }
+
+        .skills__title__appear {
+          opacity: 1;
+          transform: translate(0px);
+        }
+      }
+    }
+  }
+</style>
+
+<script>
+  import { Observer, type ObserverOption, randomNumber } from "../utils/utils";
+
+  const skill = document.querySelector(".skills") as HTMLDivElement;
+
+  const observerSkillOptions: ObserverOption = {
+    actionOnAppear: () => {
+      const skills = document.querySelectorAll(".skills__title");
+      skills.forEach((sk) => {
+        setTimeout(
+          () => {
+            sk.classList.add("skills__title__appear");
+          },
+          randomNumber(0, 800)
+        );
+      });
+    },
+    actionOnLeave: () => {
+      const skills = document.querySelectorAll(".skills__title");
+      skills.forEach((sk) => sk.classList.remove("skills__title__appear"));
+    },
+  };
+
+  new Observer(skill, observerSkillOptions).Run();
+</script>

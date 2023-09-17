@@ -1,0 +1,290 @@
+---
+import { Image } from "astro:assets";
+import FrontPicture from "../images/me.jpg";
+import BackPicture from "../images/me-2.png";
+
+import Circle from "../images/circle.svg";
+
+const hobbies = [
+  {
+    toolTip: "Practice since 11 years.",
+    icon: "https://raw.githubusercontent.com/Tarikul-Islam-Anik/Animated-Fluent-Emojis/master/Emojis/Activities/Badminton.png",
+  },
+  {
+    toolTip: "Play with my boyssss",
+    icon: "https://raw.githubusercontent.com/Tarikul-Islam-Anik/Animated-Fluent-Emojis/master/Emojis/Activities/Video%20Game.png",
+  },
+  {
+    toolTip: "Try to do a kickflip !",
+    icon: "https://raw.githubusercontent.com/Tarikul-Islam-Anik/Animated-Fluent-Emojis/master/Emojis/Travel%20and%20places/Skateboard.png",
+  },
+  {
+    toolTip: "Learning ...",
+    icon: "https://raw.githubusercontent.com/Tarikul-Islam-Anik/Animated-Fluent-Emojis/master/Emojis/Activities/Chess%20Pawn.png",
+  },
+];
+---
+
+<section class="hero">
+  <div class="wrapper hero__wrapper">
+    <Image src={Circle} class="hero__circle hero__decoration" alt="Circle" />
+    <picture class="hero__container">
+      <div class="hero__picture">
+        <div class="hero__picture__front">
+          <Image src={FrontPicture} alt="photo of me" />
+        </div>
+        <div class="hero__picture__back">
+          <div class="hobbies">
+            {
+              hobbies.map((hobby) => (
+                <div class="hobby">
+                  <span data-tooltip={hobby.toolTip}>
+                    <Image src={hobby.icon} alt="icon" width="65" height="65" />
+                  </span>
+                </div>
+              ))
+            }
+          </div>
+          <div>
+            <p id="tool_tip">Practice badminton since 11 years.</p>
+          </div>
+          <div class="description">
+            <p>
+              I am currently studying in software engineering for a master's
+              degree 🎓. I spend most of my free time creating personnal
+              projects and I really enjoy the open source mindset.
+            </p>
+          </div>
+          <div class="music">
+            <iframe
+              style="border-radius: 12px"
+              src="https://open.spotify.com/embed/track/6kh17zXl4MM4AzSeJP02hB?utm_source=generator"
+              width="100%"
+              height="100"
+              frameBorder="0"
+              allowfullscreen=""
+              allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
+              loading="lazy"></iframe>
+          </div>
+        </div>
+      </div>
+    </picture>
+    <div class="hero__text">
+      <h1 class="hero__headline">
+        Nice to<br />
+         meet you ! I'm <span> Gauron Dorian</span>
+      </h1>
+      <p class="hero__description">
+        Based in France, I'm software developer passionate about open source and
+        building application that users love.
+      </p>
+      <a
+        href="mailto:gauron.dorian.pro@gmail.com"
+        class="hero__contact underline">Get in touch !</a
+      >
+    </div>
+  </div>
+</section>
+
+<style lang="scss">
+  @import "../../assets/styles/utils/functions";
+  @import "../../assets/styles/utils/colors";
+  @import "../../assets/styles/utils/fonts";
+  @import "../../assets/styles/utils/animation";
+
+  .hero {
+    &__decoration {
+      position: absolute;
+      z-index: -1;
+    }
+
+    &__circle {
+      right: -30%;
+      top: 250px;
+
+      z-index: 10;
+
+      //Tablet 445 x 720
+      @media (min-width: px-to-rem(600px)) {
+        right: -10%;
+      }
+
+      //Desktop 348 x 766
+      @media (min-width: px-to-rem(1280px)) {
+        right: 25%;
+        top: 65%;
+      }
+    }
+
+    &__container {
+      perspective: 1000px;
+      position: relative;
+
+      &:hover {
+        .hero__picture {
+          transform: rotateY(0deg);
+          //Tablet 445 x 720
+          @media (min-width: px-to-rem(600px)) {
+            transform: rotateY(180deg);
+          }
+        }
+      }
+    }
+
+    &__picture {
+      position: relative;
+      transform-style: preserve-3d;
+      transition: 0.6s 0.1s;
+
+      display: flex;
+
+      &__front,
+      &__back {
+        display: block;
+        margin: 5% auto;
+        padding: px-to-rem(5px);
+        overflow: hidden;
+        border-radius: 5px;
+
+        backface-visibility: hidden;
+      }
+
+      &__front {
+        transform: rotateY(0deg);
+        z-index: 2;
+        align-items: center;
+
+        img {
+          //Mobile 174 x 383
+          width: 174px;
+          height: 383px;
+          object-fit: cover;
+
+          //Tablet 445 x 720
+          @media (min-width: px-to-rem(600px)) {
+            width: 245px;
+            height: 420px;
+          }
+
+          //Desktop 348 x 766
+          @media (min-width: px-to-rem(1280px)) {
+            width: 348px;
+            height: 656px;
+          }
+        }
+      }
+
+      &__back {
+        transform: rotateY(180deg);
+        z-index: 1;
+        position: absolute;
+
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: space-around;
+
+        top: 0;
+        left: 0;
+
+        width: 100%;
+        height: 100%;
+
+        border-radius: 5px;
+
+        background-color: $body-bg;
+
+        .hobbies {
+          display: flex;
+          align-items: center;
+          justify-content: space-around;
+          width: 100%;
+
+          .hobby {
+            position: relative;
+
+            span {
+              img {
+                padding: 15px;
+
+                width: 70px;
+                height: 70px;
+              }
+            }
+          }
+        }
+
+        #tool_tip {
+          opacity: 0;
+          font-size: $fs-24;
+          transition: opacity 225ms cubic-bezier(0.25, 0.46, 0.45, 0.94);
+        }
+
+        .description {
+          padding: px-to-rem(5px);
+          text-align: center;
+
+          font-size: px-to-rem(10px);
+        }
+      }
+    }
+
+    &__wrapper {
+      overflow-x: hidden;
+      //Tablet 445 x 720
+      @media (min-width: px-to-rem(600px)) {
+        display: flex;
+        flex-direction: row-reverse;
+        margin-top: 60px;
+        gap: 5px;
+      }
+    }
+
+    &__text {
+      text-align: center;
+
+      @media (min-width: px-to-rem(600px)) {
+        text-align: left;
+      }
+
+      .hero {
+        &__headline {
+          font-size: 2.5rem;
+          font-size: clamp(2.5rem, 0.7rem + 6.68vw, 5.5rem);
+          margin-bottom: 20px;
+
+          @media (min-width: px-to-rem(600px)) {
+            margin-bottom: 60px;
+          }
+
+          span {
+            background-image: linear-gradient(to right, $green 75%, $green 75%);
+            background-repeat: repeat-x;
+            background-size: 8px 4px;
+            background-position: 0 1.18em;
+          }
+        }
+        &__description {
+          margin-bottom: 40px;
+        }
+      }
+    }
+  }
+</style>
+
+<script>
+  const spans = document.querySelectorAll("span[data-tooltip]");
+  const toolTip = document.querySelector("#tool_tip") as HTMLParagraphElement;
+
+  spans.forEach((span) => {
+    span.addEventListener("mouseover", () => {
+      toolTip.classList.remove("fade");
+      setTimeout(() => {
+        requestAnimationFrame(() => {
+          toolTip.textContent = span.getAttribute("data-tooltip");
+          toolTip.classList.add("fade");
+        });
+      }, 225);
+    });
+  });
+</script>

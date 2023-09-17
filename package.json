@@ -1,18 +1,19 @@
 {
-  "name": "portofolio",
-  "private": true,
-  "version": "0.0.0",
+  "name": "portofoliov2",
   "type": "module",
+  "version": "0.0.1",
   "scripts": {
-    "dev": "vite",
-    "build": "tsc && vite build",
-    "preview": "vite preview"
-  },
-  "devDependencies": {
-    "vite": "^4.2.0",
-    "typescript": "^4.9.3"
+    "dev": "astro dev",
+    "start": "astro dev",
+    "build": "astro build",
+    "preview": "astro preview",
+    "astro": "astro"
   },
   "dependencies": {
-    "sass": "^1.60.0"
+    "astro": "^3.1.0",
+    "sharp": "latest"
+  },
+  "devDependencies": {
+    "sass": "^1.67.0"
   }
 }

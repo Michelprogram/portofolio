@@ -1,0 +1,99 @@
+---
+import Header from "../components/Header.astro";
+import Footer from "../components/Footer.astro";
+import Meteor from "../components/Meteor.astro";
+import Cursor from "../components/Cursor.astro";
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" href="/favicon.ico" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Gauron Dorian</title>
+  </head>
+  <body>
+    <Cursor />
+    <Meteor />
+    <Header />
+    <slot />
+    <Footer />
+  </body>
+</html>
+
+<style is:global lang="scss">
+  @import "../../assets/styles/utils/colors";
+  @import "../../assets/styles/utils/fonts";
+  @import "../../assets/styles/utils/variables";
+
+  html {
+    box-sizing: border-box;
+    font-size: 100%;
+    cursor: none;
+  }
+  *,
+  *::before,
+  *::after {
+    box-sizing: inherit;
+  }
+
+  h1,
+  h2,
+  h3,
+  p {
+    margin: 0;
+  }
+
+  p {
+    line-height: 1.3;
+    font-size: 1em;
+    font-size: clamp(1rem, 0.79rem + 0.89vw, 1.125em);
+    color: $text-2;
+  }
+
+  a.underline {
+    font-size: 1rem;
+    line-height: 1.625;
+    letter-spacing: 2.29px;
+    font-weight: 700;
+    text-transform: uppercase;
+    color: $text-1;
+    text-decoration: none;
+    background-image: linear-gradient(to right, $green 75%, $green 75%);
+    background-repeat: repeat-x;
+    background-size: 8px 4px;
+    background-position: 0 1.625em;
+    padding-bottom: 8px;
+
+    transition: color 250ms ease-in-out;
+
+    &:hover {
+      color: $green;
+    }
+  }
+
+  body {
+    margin: 0;
+    font-family: "Space Grotesk", sans-serif;
+    background-color: $body-bg;
+    color: $text-1;
+    font-size: $fs-18;
+    line-height: 1.56;
+    overflow-x: hidden;
+  }
+
+  .wrapper {
+    width: calc(100% - 2rem);
+    max-width: $container-size;
+    margin-inline: auto;
+    position: relative;
+
+    padding-bottom: 60px;
+    border-bottom: 2px solid $text-1;
+
+    @media (min-width: px-to-rem(600px)) {
+      width: calc(100% - px-to-rem(60px));
+    }
+  }
+</style>

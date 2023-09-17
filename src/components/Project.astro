@@ -1,0 +1,260 @@
+---
+import { Image } from "astro:assets";
+
+import MagicScanner from "../images/previews/magic-scanner.png";
+import Cut from "../images/previews/cut.png";
+import PlanetStore from "../images/previews/planets.png";
+import TwitterBot from "../images/previews/twitter-bot.png";
+import ChessGame from "../images/previews/chess.png";
+import AppleAnimation from "../images/previews/mac.png";
+import DataStructure from "../images/previews/guru.png";
+import RedisGo from "../images/previews/speed.png";
+
+const projects = [
+  {
+    image: MagicScanner,
+    icon: "https://raw.githubusercontent.com/Tarikul-Islam-Anik/Animated-Fluent-Emojis/master/Emojis/People/Mage.png",
+    title: "Magic Scanner",
+    tags: ["React", "Tailwind", "Vercel", "Go", "PWA", "OCR - Google"],
+    preview: "https://magic-scanner.vercel.app/",
+    code: "https://github.com/Michelprogram/magic-scanner",
+  },
+  {
+    image: Cut,
+    icon: "https://raw.githubusercontent.com/Tarikul-Islam-Anik/Animated-Fluent-Emojis/master/Emojis/Animals/Four%20Leaf%20Clover.png",
+    title: "Clean your twitter",
+    tags: ["Nuxt JS", "Go", "Mongo"],
+    preview: "http://clean-your-tw.online/",
+    code: "https://github.com/Michelprogram/clean-your-twitter",
+  },
+  {
+    image: PlanetStore,
+    icon: "https://raw.githubusercontent.com/Tarikul-Islam-Anik/Animated-Fluent-Emojis/master/Emojis/Travel%20and%20places/Comet.png",
+    title: "Planet store",
+    tags: ["React", "SCSS", "Typescript"],
+    preview: "https://21-planets.netlify.app/",
+    code: "https://github.com/Michelprogram/21-planets",
+  },
+  {
+    image: TwitterBot,
+    icon: "https://raw.githubusercontent.com/Tarikul-Islam-Anik/Animated-Fluent-Emojis/master/Emojis/Objects/Spiral%20Calendar.png",
+    title: "Twitter bot username",
+    tags: ["Go", "Twitter API", "Cron"],
+    preview: "https://twitter.com/michel_le_dev",
+    code: "https://github.com/Michelprogram/Twitter-Bot",
+  },
+  {
+    image: ChessGame,
+    icon: "https://raw.githubusercontent.com/Tarikul-Islam-Anik/Animated-Fluent-Emojis/master/Emojis/Activities/Chess%20Pawn.png",
+    title: "Chess game CLI",
+    tags: ["Java", "Design pattern", "Gradle"],
+    preview: "https://github.com/Michelprogram/chess/blob/main/README.pdf",
+    code: "https://github.com/Michelprogram/chess",
+  },
+  {
+    image: AppleAnimation,
+    icon: "https://raw.githubusercontent.com/Tarikul-Islam-Anik/Animated-Fluent-Emojis/master/Emojis/Food/Hot%20Beverage.png",
+    title: "Apple animation",
+    tags: ["Vue", "SCSS", "Go", "Typescript"],
+    preview: "https://michelprogram.github.io/apple-animation/",
+    code: "https://github.com/Michelprogram/apple-animation",
+  },
+  {
+    image: DataStructure,
+    icon: "https://raw.githubusercontent.com/Tarikul-Islam-Anik/Animated-Fluent-Emojis/master/Emojis/Objects/File%20Cabinet.png",
+    title: "Data structures & Pattern",
+    tags: ["Algorithm", "Go"],
+    preview: "https://github.com/Michelprogram/data-structures",
+    code: "https://github.com/Michelprogram/Design-pattern",
+  },
+  {
+    image: RedisGo,
+    icon: "https://raw.githubusercontent.com/Tarikul-Islam-Anik/Animated-Fluent-Emojis/master/Emojis/Travel%20and%20places/Flying%20Saucer.png",
+    title: "Too much speed",
+    tags: ["Docker", "Redis", "Go"],
+    preview:
+      "https://github.com/Michelprogram/redis-golang/blob/master/README.md",
+    code: "https://github.com/Michelprogram/redis-golang",
+  },
+];
+---
+
+<section class="projects">
+  <div class="wrapper projects__wrapper">
+    <h2 class="projects__title">Projects</h2>
+    <div class="projects__grid">
+      {
+        projects.map((project) => {
+          return (
+            <div class="projects__item">
+              <picture>
+                <Image src={project.image} alt="Preview project" />
+              </picture>
+              <div class="projects__title">
+                <Image src={project.icon} alt="icon" width="25" height="25" />
+                <h3>{project.title}</h3>
+              </div>
+              <p class="projects__tags">
+                {project.tags.map((tag) => {
+                  return <span>{tag}</span>;
+                })}
+              </p>
+              <div class="projects__links">
+                <a href={project.preview} target="_blank" class="underline">
+                  View project
+                </a>
+                <a href={project.code} target="_blank" class="underline">
+                  View code
+                </a>
+              </div>
+            </div>
+          );
+        })
+      }
+    </div>
+  </div>
+</section>
+
+<style lang="scss">
+  @import "../../assets/styles/utils/functions";
+
+  .projects {
+    &__wrapper {
+      padding-block: 40px;
+      .projects__title {
+        font-size: 2.5rem;
+        font-size: clamp(2.5rem, 0.7rem + 6.68vw, 5.5rem);
+
+        @media (min-width: px-to-rem(1280px)) {
+          margin-bottom: 20px;
+        }
+      }
+      .projects__grid {
+        display: grid;
+        grid-template-columns: 1fr;
+        gap: 30px 0px;
+
+        //Tablet
+        @media (min-width: px-to-rem(600px)) {
+          grid-template-columns: repeat(2, 1fr);
+          gap: 30px 5px;
+        }
+
+        @media (min-width: px-to-rem(1280px)) {
+          gap: 70px 30px;
+        }
+
+        .projects__item {
+          display: grid;
+          grid-template-columns: 1fr;
+          gap: 10px;
+          position: relative;
+
+          @media (min-width: px-to-rem(1280px)) {
+            grid-template-rows: repeat(4, auto);
+
+            &:hover picture::after {
+              opacity: 0.5;
+            }
+
+            &:hover .projects__links {
+              opacity: 1;
+            }
+          }
+
+          picture {
+            @media (min-width: px-to-rem(1280px)) {
+              grid-row: 1 / 2;
+              grid-column: 1 / 2;
+              position: relative;
+              &:after {
+                content: "";
+                position: absolute;
+                width: 100%;
+                height: 100%;
+                left: 0;
+                top: 0;
+                opacity: 0;
+                background-color: hsl(0, 0%, 0%);
+
+                transition: opacity 250ms ease-in-out;
+              }
+            }
+          }
+
+          img {
+            width: 343px;
+            height: 253px;
+
+            object-fit: contain;
+
+            //Desktop 348 x 766
+            @media (min-width: px-to-rem(1280px)) {
+              width: 100%;
+              height: auto;
+
+              grid-row: 1 / 2;
+              grid-column: 1 / 2;
+            }
+          }
+
+          .projects__title {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 0;
+
+            img {
+              width: 25px;
+              height: 25px;
+
+              //Desktop 348 x 766
+              @media (min-width: px-to-rem(1280px)) {
+                width: 35px;
+                height: 35px;
+              }
+            }
+
+            h3 {
+              margin-top: -20px;
+              font-weight: 700;
+              text-transform: uppercase;
+              font-size: 1.5rem;
+              line-height: 1.3;
+
+              @media (min-width: px-to-rem(1280px)) {
+                margin-top: 0px;
+              }
+            }
+          }
+
+          .projects__tags {
+            span {
+              margin-inline-end: 18px;
+            }
+          }
+
+          .projects__links {
+            @media (min-width: px-to-rem(1280px)) {
+              grid-row: 1 / 2;
+              grid-column: 1 / 2;
+
+              justify-self: center;
+              align-self: center;
+
+              z-index: 1;
+
+              opacity: 0;
+
+              transition: opacity 150ms ease-in-out;
+            }
+
+            a {
+              margin-inline-end: 30px;
+            }
+          }
+        }
+      }
+    }
+  }
+</style>

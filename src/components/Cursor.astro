@@ -1,0 +1,40 @@
+<div class="cursor">
+  <div class="center"></div>
+</div>
+
+<style lang="scss">
+  @import "../../assets/styles/utils/colors";
+
+  .cursor {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    background-color: $text-1;
+    opacity: 0.5;
+    transform: translate(-50%, -50%);
+    pointer-events: none;
+    z-index: 9999;
+
+    .center {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      width: 8px;
+      height: 8px;
+      background-color: $green;
+      border-radius: 50%;
+      transform: translate(-50%, -50%);
+    }
+  }
+</style>
+
+<script>
+  const cursor = document.querySelector(".cursor");
+
+  document.addEventListener("mousemove", (e) => {
+    cursor!.setAttribute("style", `top: ${e.clientY}px; left: ${e.clientX}px;`);
+  });
+</script>
