@@ -3,6 +3,7 @@ import { Image } from "astro:assets";
 import FrontPicture from "../images/me.jpg";
 
 import Circle from "../images/circle.svg";
+import Arrow from "../images/arrow.svg";
 
 const hobbies = [
   {
@@ -27,6 +28,10 @@ const hobbies = [
 <section class="hero">
   <div class="wrapper hero__wrapper">
     <Image src={Circle} class="hero__circle hero__decoration" alt="Circle" />
+    <div class="hero__arrow hero__decoration">
+      <p>Pet mystick</p>
+      <Image src={Arrow} alt="Arrow" />
+    </div>
     <picture class="hero__container">
       <div class="hero__picture">
         <div class="hero__picture__front">
@@ -55,6 +60,7 @@ const hobbies = [
             </p>
           </div>
           <div class="music">
+            <p>Song of the moment</p>
             <iframe
               style="border-radius: 12px"
               src="https://open.spotify.com/embed/track/6kh17zXl4MM4AzSeJP02hB?utm_source=generator"
@@ -95,6 +101,29 @@ const hobbies = [
     &__decoration {
       position: absolute;
       z-index: -1;
+    }
+
+    &__arrow {
+      display: none;
+
+      //Desktop 348 x 766
+      @media (min-width: px-to-rem(1280px)) {
+        display: flex;
+        flex-direction: column;
+        gap: 15px;
+        right: -14%;
+        top: 28%;
+
+        p {
+          color: $text-1;
+          font-size: 1.5rem;
+          rotate: -15deg;
+        }
+
+        img {
+          rotate: 45deg;
+        }
+      }
     }
 
     &__circle {
@@ -236,6 +265,7 @@ const hobbies = [
         flex-direction: row-reverse;
         margin-top: 60px;
         gap: 5px;
+        overflow-x: visible;
       }
     }
 

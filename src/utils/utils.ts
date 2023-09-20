@@ -5,6 +5,7 @@ type Target = HTMLElement | Array<HTMLElement>;
 export type ObserverOption = {
   actionOnAppear: Function;
   actionOnLeave: Function;
+  options?: IntersectionObserverInit;
 };
 
 export class Observer {
@@ -22,7 +23,7 @@ export class Observer {
         if (tr.isIntersecting) this.option.actionOnAppear();
         if (!tr.isIntersecting) this.option.actionOnLeave();
       });
-    });
+    }, this.option.options);
 
     if (this.target instanceof HTMLElement) {
       observer.observe(this.target);
