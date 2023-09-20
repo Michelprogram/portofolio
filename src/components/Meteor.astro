@@ -69,9 +69,15 @@ const createMeteor = () => {
     }
   }
 
+  @for $i from 0 through $NUMBER_METEOR_MOBILE {
+    .meteor__#{$i} {
+      @include meteor();
+    }
+  }
+
   //Tablet 445 x 720
   @media (min-width: px-to-rem(600px)) {
-    @for $i from 0 through $NUMBER_METEOR_TABLET {
+    @for $i from $NUMBER_METEOR_MOBILE through $NUMBER_METEOR_TABLET {
       .meteor__#{$i} {
         @include meteor();
       }
@@ -80,16 +86,10 @@ const createMeteor = () => {
 
   //Desktop 348 x 766
   @media (min-width: px-to-rem(1280px)) {
-    @for $i from 0 through $NUMBER_METEOR_DESKTOP {
+    @for $i from $NUMBER_METEOR_MOBILE through $NUMBER_METEOR_DESKTOP {
       .meteor__#{$i} {
         @include meteor();
       }
-    }
-  }
-
-  @for $i from 0 through $NUMBER_METEOR_MOBILE {
-    .meteor__#{$i} {
-      @include meteor();
     }
   }
 
