@@ -11,7 +11,7 @@ const createMeteor = () => {
 
   for (let i = 0; i < METEOR_NUMBER; i++) {
     const data: MeteorInformation = {
-      className: `meteor-${i}`,
+      className: `meteor__${i} hidden`,
       style: {
         left: `${randomNumber(50, 150)}%`,
         top: `${randomNumber(30, 40)}%`,
@@ -40,27 +40,56 @@ const createMeteor = () => {
 <style lang="scss">
   @use "sass:math";
 
-  $NUMBER_METEOR: 15;
+  $NUMBER_METEOR_DESKTOP: 8;
+  $NUMBER_METEOR_MOBILE: 3;
+  $NUMBER_METEOR_TABLET: 5;
 
-  @for $i from 0 through $NUMBER_METEOR {
-    .meteor-#{$i} {
+  .hidden {
+    display: none;
+  }
+
+  @mixin meteor {
+    display: block;
+    z-index: 1000;
+    position: fixed;
+    width: 300px;
+    height: 1px;
+    transform: rotate(-45deg);
+    background-image: linear-gradient(to right, #fff, rgba(255, 255, 255, 0));
+    &:before {
+      content: "";
       z-index: 1000;
       position: fixed;
-      width: 300px;
-      height: 1px;
-      transform: rotate(-45deg);
-      background-image: linear-gradient(to right, #fff, rgba(255, 255, 255, 0));
-      &:before {
-        content: "";
-        z-index: 1000;
-        position: fixed;
-        width: 4px;
-        height: 5px;
-        border-radius: 50%;
-        margin-top: -2px;
-        background: rgba(#fff, 0.7);
-        box-shadow: 0 0 15px 3px #fff;
+      width: 4px;
+      height: 5px;
+      border-radius: 50%;
+      margin-top: -2px;
+      background: rgba(#fff, 0.7);
+      box-shadow: 0 0 15px 3px #fff;
+    }
+  }
+
+  //Tablet 445 x 720
+  @media (min-width: px-to-rem(600px)) {
+    @for $i from 0 through $NUMBER_METEOR_TABLET {
+      .meteor__#{$i} {
+        @include meteor();
       }
+    }
+  }
+
+  //Desktop 348 x 766
+  @media (min-width: px-to-rem(1280px)) {
+    @for $i from 0 through $NUMBER_METEOR_DESKTOP {
+      .meteor__#{$i} {
+        @include meteor();
+      }
+    }
+  }
+
+  @for $i from 0 through $NUMBER_METEOR_MOBILE {
+    .meteor__#{$i} {
+      @include meteor();
     }
   }
 
