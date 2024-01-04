@@ -5,16 +5,15 @@ on:
     branches: [main]
 
 permissions:
-    contents: write
-    pages: write
-    id-token: write
+  contents: write
+  pages: write
+  id-token: write
 
 jobs:
   build:
-
     environment:
-        name: gh-pages
-        url: ${{ steps.deployment.outputs.page_url }}
+      name: gh-pages
+      url: ${{ steps.deployment.outputs.page_url }}
 
     runs-on: ubuntu-latest
     strategy:
@@ -46,7 +45,7 @@ jobs:
         uses: actions/upload-pages-artifact@v2
         with:
           path: "dist"
-          
+
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v2

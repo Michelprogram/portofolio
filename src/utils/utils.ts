@@ -41,7 +41,15 @@ export const randomNumberNotFloor = (min: number, max: number) => {
   return (Math.random() * (max - min + 1) + min).toFixed(2);
 };
 
+export const randomElement = <T>(array: T[]): T => {
+  return array[Math.floor(Math.random() * array.length)];
+};
+
 export type MeteorInformation = {
   className: string;
   style: Partial<Record<CSSProperty, string>>;
+};
+
+export const computeDateFromBeginning = (date: Date) => {
+  return Math.abs(new Date(Date.now() - date.getTime()).getFullYear() - 1970);
 };

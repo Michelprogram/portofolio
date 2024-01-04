@@ -5,10 +5,13 @@ import BackPicture from "../images/me-2.jpg";
 
 import Circle from "../images/circle.svg";
 import Arrow from "../images/arrow.svg";
+import { computeDateFromBeginning } from "../utils/utils";
 
 const hobbies = [
   {
-    toolTip: "Practice since 11 years.",
+    toolTip: `Practice since ${computeDateFromBeginning(
+      new Date("01/01/2011")
+    )} years.`,
     icon: "https://raw.githubusercontent.com/Tarikul-Islam-Anik/Animated-Fluent-Emojis/master/Emojis/Activities/Badminton.png",
   },
   {
@@ -52,7 +55,7 @@ const hobbies = [
             }
           </div>
           <div>
-            <p id="back__tool__tip">Practice badminton since 11 years.</p>
+            <p id="back__tool__tip">-</p>
           </div>
           <div class="back__description">
             <p>
@@ -64,8 +67,8 @@ const hobbies = [
           <div class="back__music">
             <p>Song of the moment</p>
             <iframe
-              style="border-radius: 12px"
-              src="https://open.spotify.com/embed/track/6kh17zXl4MM4AzSeJP02hB?utm_source=generator"
+              style="border-radius:12px"
+              src="https://open.spotify.com/embed/track/6kh17zXl4MM4AzSeJP02hB?utm_source=generator&theme=0"
               width="100%"
               height="100"
               frameBorder="0"
@@ -254,7 +257,7 @@ const hobbies = [
         }
 
         #back__tool__tip {
-          opacity: 0;
+          opacity: 1;
           font-size: $fs-24;
           transition: opacity 225ms cubic-bezier(0.25, 0.46, 0.45, 0.94);
         }
@@ -269,6 +272,8 @@ const hobbies = [
         .back__music {
           p {
             font-size: 1rem;
+            text-align: center;
+            margin: 3px;
           }
         }
       }
@@ -320,7 +325,9 @@ const hobbies = [
 
 <script>
   const spans = document.querySelectorAll("span[data-tooltip]");
-  const toolTip = document.querySelector("#back__tool__tip") as HTMLParagraphElement;
+  const toolTip = document.querySelector(
+    "#back__tool__tip"
+  ) as HTMLParagraphElement;
 
   spans.forEach((span) => {
     span.addEventListener("mouseover", () => {

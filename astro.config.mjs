@@ -1,10 +1,13 @@
 import { defineConfig, squooshImageService } from "astro/config";
 
+import vue from "@astrojs/vue";
+
 // https://astro.build/config
 export default defineConfig({
   image: {
-    service: squooshImageService(),
+    service: squooshImageService()
   },
   site: "https://dorian-gauron.com",
   base: "/",
+  integrations: [vue()]
 });
