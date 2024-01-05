@@ -92,7 +92,7 @@ const projects = await fetchProjects();
     }
 
     .projects__secondary__title {
-      margin: 10px;
+      margin: 10px 0px;
     }
   }
 }

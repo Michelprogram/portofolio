@@ -75,12 +75,8 @@ const components = ref(randomComponent);
 </script>
 
 <template>
-  <div class="projects__primary scroller">
-    <div
-      v-for="index in 2"
-      :key="index"
-      class="projects__primary__flex scroller__inner"
-    >
+  <div class="scroller">
+    <div v-for="index in 2" :key="index" class="scroller__inner">
       <div>
         <MainComponent :size="main.length" :first="main[0]" :second="main[1]" />
       </div>
@@ -102,30 +98,23 @@ const components = ref(randomComponent);
 
 .scroller {
   display: flex;
+  max-width: 1110px;
 
-  gap: 20px;
+  mask: linear-gradient(90deg, transparent, white 2%, white 98%, transparent);
+
+  gap: 1rem;
 
   &__inner {
-    width: max-content;
-    animation: scroll 50s linear infinite forwards;
-  }
-}
-
-.projects {
-  &__primary {
-    mask: linear-gradient(90deg, transparent, white 2%, white 98%, transparent);
-  }
-
-  &__primary__flex {
     height: 600px;
-    gap: 20px;
     display: flex;
+    gap: 1rem;
+    animation: scroll 40s linear infinite;
   }
 }
 
 @keyframes scroll {
   to {
-    transform: translate(calc(-100% - 20px));
+    transform: translate(calc(-100% - 2rem), 0);
   }
 }
 </style>
