@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { randomIcones } from "../../utils/icones";
+import { icones as randomIcones } from "../../utils/icones";
 import type { Project } from "../../utils/project";
 
 import Main from "./Favorite.vue";
@@ -29,7 +29,7 @@ const fetchProjects = async (): Promise<ProjectContainer> => {
   );
 
   const projects = (await request.json()) as Array<Project>;
-  const icones = await randomIcones(projects.length);
+  const icones = await randomIcones();
 
   projects
     .sort(
