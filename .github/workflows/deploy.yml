@@ -32,11 +32,17 @@ jobs:
         with:
           bun-version: latest
 
+      - name: "Create env file"
+        run: |
+          touch .env
+          echo GIT_HUB_TOKEN=${{ env.GIT_HUB_TOKEN }} >> .env
+          cat .env
+
       - name: Install dependecies
         run: bun install
 
       - name: Build project
-        run: GIT_HUB_TOKEN=${{ env.GIT_HUB_TOKEN }} bun run build
+        run: bun run build
 
       - name: Setup Pages
         uses: actions/configure-pages@v3
