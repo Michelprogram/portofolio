@@ -27,6 +27,8 @@ export const randomIcones= async (loop:number) : Promise<Array<IconeInfo>> => {
 } */
 
 export const icones = async () => {
+  console.log(GIT_HUB_TOKEN);
+
   const url =
     "https://api.github.com/repos/Tarikul-Islam-Anik/Animated-Fluent-Emojis/contents/Emojis/";
 
