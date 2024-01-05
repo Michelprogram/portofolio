@@ -36,7 +36,7 @@ jobs:
         run: bun install
 
       - name: Build project
-        run: bun run build
+        run: GIT_HUB_TOKEN=${{ env.GIT_HUB_TOKEN }} bun run build
 
       - name: Setup Pages
         uses: actions/configure-pages@v3
