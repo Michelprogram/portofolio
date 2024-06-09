@@ -1,30 +1,9 @@
-import { randomNumber } from "./utils.ts";
-import * as fs from "fs/promises";
 const GIT_HUB_TOKEN = import.meta.env.GIT_HUB_TOKEN;
 
 type IconeInfo = {
   path: string;
   name: string;
 };
-/* 
-export const randomIcones= async (loop:number) : Promise<Array<IconeInfo>> => {
-
-    const res:Array<IconeInfo> = []
-
-    const icones = await fs.readFile(".idea/httpRequests/icones.json")
-
-    const data = JSON.parse(icones.toString())
-
-    //const data = await icones()
-
-    //await fs.writeFile(".idea/httpRequests/icones.json",JSON.stringify(data))
-
-    for (let i = 0; i < loop; i++) {
-        res.push(data[randomNumber(0,data.length)])
-    }
-
-    return res
-} */
 
 export const icones = async () => {
   const url =

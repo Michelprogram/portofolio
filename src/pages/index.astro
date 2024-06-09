@@ -3,12 +3,27 @@ import Layout from "../layouts/Layout.astro";
 import Hero from "../components/Hero.astro";
 import Skill from "../components/Skill.astro";
 import Projects from "../components/projects/Projects.vue";
+import Secondary from "../components/projects/Secondary.vue";
+
+import { fetchProjectsFake } from "../utils/fake.ts";
+import Experiences from "../components/Experiences.astro";
+
+////const projects = await fetchProjects();
+
+const projects = await fetchProjectsFake();
 ---
 
 <Layout>
   <main>
     <Hero />
     <Skill />
-    <Projects />
+    <div class="wrapper projects__wrapper">
+      <Projects main={projects.Main} />
+      <Secondary secondary={projects.Secondary} client:load />
+    </div>
+    <Experiences />
+    <section style="height: 300px;">
+      <p>test</p>
+    </section>
   </main>
 </Layout>

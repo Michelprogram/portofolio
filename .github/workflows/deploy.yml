@@ -36,7 +36,6 @@ jobs:
         run: |
           touch .env
           echo GIT_HUB_TOKEN=${{ secrets.GIT_HUB_TOKEN }} >> .env
-          cat .env
 
       - name: Install dependecies
         run: bun install

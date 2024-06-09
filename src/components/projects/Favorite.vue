@@ -108,7 +108,7 @@ const components = ref(randomComponent);
     height: 600px;
     display: flex;
     gap: 1rem;
-    animation: scroll 40s linear infinite;
+    animation: scroll 50s linear infinite;
   }
 }
 

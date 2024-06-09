@@ -1,3 +1,12 @@
+import {icones as randomIcones} from "./icones.ts";
+
+const GIT_HUB_TOKEN = import.meta.env.GIT_HUB_TOKEN;
+
+type ProjectContainer = {
+  Main: Array<Project>;
+  Secondary: Array<Project>;
+};
+
 export const path = (path: string) => {
   const splitted = path.split("/");
   splitted[2] = encodeURIComponent(splitted[2]);
@@ -9,6 +18,7 @@ export const path = (path: string) => {
 export const preview = (name: string, branch: string = "main") => {
   return `https://raw.githubusercontent.com/Michelprogram/${name}/${branch}/preview/preview.png`;
 };
+
 export type Project = {
   name: string;
   html_url: string;
@@ -59,4 +69,41 @@ export const topicFilteredAndMaxSize = (topics: Array<string>, max:number) => {
   topics = topicsWithoutMain(topics);
 
   return topicSize(topics, max);
+};
+
+export const fetchProjects = async (): Promise<ProjectContainer> => {
+  const PROJECT: ProjectContainer = {
+    Main: [],
+    Secondary: [],
+  };
+
+  const request = await fetch(
+      "http://api.github.com/users/Michelprogram/repos?per_page=100",
+      {
+        headers: {
+          "X-GitHub-Api-Version": "2022-11-28",
+          Authorization: "Bearer " + GIT_HUB_TOKEN,
+        },
+      }
+  );
+
+  const projects = (await request.json()) as Array<Project>;
+  const icones = await randomIcones();
+
+  projects
+      .sort(
+          (a, b) =>
+              new Date(b.updated_at).getTime() - new Date(a.updated_at).getTime()
+      )
+      .forEach((project, index) => {
+        project.icon = icones[index].path;
+
+        if (project.topics.includes("main")) {
+          PROJECT.Main.push(project);
+        } else {
+          PROJECT.Secondary.push(project);
+        }
+      });
+
+  return PROJECT;
 };

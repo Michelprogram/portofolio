@@ -20,8 +20,8 @@ export class Observer {
   Run() {
     const observer = new IntersectionObserver((tr) => {
       tr.forEach((tr) => {
-        if (tr.isIntersecting) this.option.actionOnAppear();
-        if (!tr.isIntersecting) this.option.actionOnLeave();
+        if (tr.isIntersecting) this.option.actionOnAppear(tr);
+        if (!tr.isIntersecting) this.option.actionOnLeave(tr);
       });
     }, this.option.options);
 

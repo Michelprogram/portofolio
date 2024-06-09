@@ -1,0 +1,319 @@
+---
+type Experience = {
+  title: string;
+  from: Date;
+  to: Date;
+  place: string;
+  icon: string;
+  description: string;
+};
+
+const experiences: Array<Experience> = [
+  {
+    title: "Learning ...",
+    from: new Date("2016-01-01"),
+    to: new Date("2019-01-01"),
+    place: "Tours, France",
+    icon: "https://raw.githubusercontent.com/Tarikul-Islam-Anik/Animated-Fluent-Emojis/master/Emojis/Smilies/Alien%20Monster.png",
+    description:
+      "At my first year of high school, I started to learn the basics of programmation with Python. I was really interested in this field and I wanted to learn more about it.",
+  },
+  {
+    title: "Way more intensive",
+    from: new Date("2019-01-01"),
+    to: new Date("2021-01-01"),
+    place: "Tours, France",
+    icon: "https://raw.githubusercontent.com/Tarikul-Islam-Anik/Animated-Fluent-Emojis/master/Emojis/Travel%20and%20places/Fire.png",
+    description:
+      "I don't remember why, but i tried to join root-me.org, first was to create a tcp server, so i start working at home. In parallel, I was learning the basics of c/c++ at university.",
+  },
+  {
+    title: "Sandwich course EDF",
+    from: new Date("2021-01-01"),
+    to: new Date("2022-01-01"),
+    place: "Nantes, France",
+    icon: "https://raw.githubusercontent.com/Tarikul-Islam-Anik/Animated-Fluent-Emojis/master/Emojis/Travel%20and%20places/Rocket.png",
+    description:
+      "At this time i was looking for a company to do my sandwich course. I found EDF, a french company, and i started to work with them. I was working on a project to create a web application and worker plugin. At this time, i started to deep dive into development for fun.",
+  },
+  {
+    title: "Final step",
+    from: new Date("2022-01-01"),
+    to: new Date("2024-01-01"),
+    place: "Rennes, France",
+    icon: "https://raw.githubusercontent.com/Tarikul-Islam-Anik/Animated-Fluent-Emojis/master/Emojis/Food/Beer%20Mug.png",
+    description:
+      "I was still working at EDF, and pretty happy about it. I was working on my master degree in parallel. This time i worked on automation using jenkins and ansible to create a whole devops architecture.",
+  },
+];
+
+import { Image } from "astro:assets";
+---
+
+<section class="wrapper career__wrapper">
+  <h2 class="career__title">Experiences</h2>
+  <div class="career__timeline">
+    <div class="career__timeline__line">
+      <svg
+        width="258"
+        height="1817"
+        viewBox="0 0 258 1817"
+        fill="none"
+        xmlns="http://www.w3.org/2000/svg"
+      >
+        <path
+          id="timeline__path"
+          d="M201.999 0C201.999 0 126.932 78.5 108.495 187C90.0569 295.5 162.994 390.5 172.994 456C182.994 521.5 265.969 634.553 254 698.5C242.031 762.447 160.993 767.5 151.994 845.5C142.995 923.5 37.473 933.874 19 990C-4.10776 1060.21 130.614 1105.19 108.994 1156.5C87.3753 1207.81 109.285 1241.79 85 1288C63.1509 1329.57 2.49439 1323 2.49608 1375.5C2.49777 1428 1.71923 1455.78 29.4946 1494.5C57.6803 1533.79 101.257 1524.36 135.5 1558.5C209.111 1631.9 200.999 1816.5 200.999 1816.5"
+          stroke="url(#paint0_linear_92_217)"
+          stroke-width="4"></path>
+        <defs>
+          <linearGradient
+            id="paint0_linear_92_217"
+            x1="121.031"
+            y1="0"
+            x2="121.031"
+            y2="1816.5"
+            gradientUnits="userSpaceOnUse"
+          >
+            <stop stop-color="#4EE1A0"></stop>
+            <stop offset="1" stop-color="#A4EACB"></stop>
+          </linearGradient>
+        </defs>
+      </svg>
+    </div>
+    <div class="career__timeline__experiences">
+      {
+        experiences.map((experience) => {
+          return (
+            <section class="career__timeline__experiences__container">
+              <div class="career__timeline__experiences__container__title">
+                <div>
+                  <Image
+                    src={experience.icon}
+                    alt="icon"
+                    width="50"
+                    height="50"
+                  />
+                  <h1>{experience.title}</h1>
+                </div>
+                <span>
+                  from {experience.from.getFullYear()} to{" "}
+                  {experience.to.getFullYear()} at{" "}
+                  <a
+                    href={`https://www.google.fr/maps/place/${experience.place}`}
+                    target="_blank"
+                  >
+                    {experience.place}
+                  </a>
+                </span>
+              </div>
+              <p class="career__timeline__experiences__container__description">
+                {experience.description}
+              </p>
+            </section>
+          );
+        })
+      }
+    </div>
+  </div>
+</section>
+
+<style lang="scss" scoped>
+  @import "../../assets/styles/utils/functions";
+  @import "../../assets/styles/utils/colors";
+  @import "../../assets/styles/utils/fonts";
+
+  .career {
+    &__wrapper {
+      padding-block: 40px;
+      height: fit-content;
+      position: relative;
+    }
+
+    &__title {
+      font-size: clamp(2.5rem, 0.7rem + 6.68vw, 5.5rem);
+
+      @media (min-width: px-to-rem(1280px)) {
+        margin-bottom: 20px;
+      }
+    }
+
+    &__timeline {
+      &__line {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        text-align: center;
+        overflow: hidden;
+
+        svg {
+          display: inline-block;
+          height: 100%;
+        }
+      }
+
+      &__experiences {
+        position: relative;
+
+        display: flex;
+        flex-direction: column;
+        gap: 1.5em;
+
+        &__container {
+          width: 50%;
+          padding: 5%;
+
+          &__title {
+            display: flex;
+            flex-direction: column;
+            gap: 0.25em;
+            div {
+              display: flex;
+              align-items: center;
+              justify-content: start;
+              gap: 1em;
+            }
+
+            h1 {
+              text-align: center;
+              font-size: clamp(1.5rem, 0.7rem + 1.68vw, 2.5rem);
+            }
+
+            span {
+              font-size: clamp(0.5rem, 0.7rem + 0.68vw, 1rem);
+              color: rgb(255, 255, 255, 0.5);
+
+              a {
+                font-style: italic;
+                text-decoration: underline;
+                cursor: pointer;
+                color: inherit;
+              }
+            }
+          }
+
+          &__title,
+          p {
+            opacity: 0;
+
+            transition: all 0.8s ease-in-out;
+
+            &.appear {
+              opacity: 1;
+            }
+          }
+        }
+
+        &__container:nth-child(odd) {
+          align-self: flex-end;
+
+          div,
+          p {
+            transform: translateX(200px);
+
+            &.appear,
+            div {
+              transform: translateX(0);
+            }
+          }
+        }
+
+        &__container:nth-child(even) {
+          align-self: flex-start;
+
+          div,
+          p {
+            transform: translateX(-200px);
+
+            &.appear,
+            div {
+              transform: translateX(0);
+            }
+          }
+        }
+      }
+    }
+  }
+</style>
+
+<script>
+  import { Observer, type ObserverOption } from "../utils/utils";
+
+  const path = document.querySelector(
+    "#timeline__path"
+  ) as SVGPathElement | null;
+
+  const careerWrapper = document.querySelector(
+    ".career__wrapper"
+  ) as HTMLElement | null;
+
+  let pathLength = 0;
+
+  const setObservers = () => {
+    //For title
+    const experiences = Array.from(
+      document.querySelectorAll(".career__timeline__experiences__container")
+    ) as Array<HTMLElement>;
+
+    const observerTitleOptions: ObserverOption = {
+      actionOnAppear: function (target: IntersectionObserverEntry) {
+        target.target.firstElementChild!.classList.add("appear");
+      },
+      actionOnLeave: (target: IntersectionObserverEntry) => {
+        target.target.firstElementChild!.classList.remove("appear");
+      },
+      options: {
+        threshold: 0.5,
+      },
+    };
+
+    const observerDescriptionOptions: ObserverOption = {
+      actionOnAppear: function (target: IntersectionObserverEntry) {
+        target.target.lastElementChild!.classList.add("appear");
+      },
+      actionOnLeave: (target: IntersectionObserverEntry) => {
+        target.target.lastElementChild!.classList.remove("appear");
+      },
+      options: {
+        threshold: 0.6,
+      },
+    };
+
+    [
+      new Observer(experiences, observerTitleOptions),
+      new Observer(experiences, observerDescriptionOptions),
+    ].forEach((observer) => observer.Run());
+  };
+
+  const initPath = () => {
+    if (path === null) return;
+
+    pathLength = path.getTotalLength();
+
+    path.style.strokeDasharray = `${pathLength} ${pathLength}`;
+
+    path.style.strokeDashoffset = `${pathLength}`;
+  };
+
+  const onScroll = () => {
+    if (careerWrapper === null || path === null) return;
+
+    const careerRect = careerWrapper.getBoundingClientRect();
+    const scrollTop = window.scrollY || document.documentElement.scrollTop;
+    const elementTop = careerRect.top + scrollTop;
+    const max = elementTop + careerWrapper.offsetHeight;
+    const percent = (scrollTop - elementTop) / (max - elementTop) + 0.25;
+
+    if (percent >= 0 && percent <= 1) {
+      path.style.strokeDashoffset = `${pathLength - pathLength * percent}`;
+    } else if (percent < 0) {
+      path.style.strokeDashoffset = `${pathLength}`;
+    }
+  };
+
+  initPath();
+  setObservers();
+  window.addEventListener("scroll", onScroll);
+</script>
