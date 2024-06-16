@@ -1,0 +1,63 @@
+---
+
+---
+
+<section class="wrapper next__wrapper">
+    <h2 class="next__title">What's next</h2>
+    <div class="next__content">
+        <p class="next__content__description">
+            I've always loved the thrill of moving to a new city for school, and
+            now I'm especially excited about the idea of heading to work in
+            Canada. This move won't just be about diving into a new culture and
+            exploring a new country, it's also a fantastic chance to level up my
+            English skills.
+        </p>
+        <div class="next__content__animation">
+            <img
+                src="https://raw.githubusercontent.com/Tarikul-Islam-Anik/Animated-Fluent-Emojis/master/Emojis/Travel%20and%20places/Airplane.png"
+                alt="Airplane"
+            />
+            <span>I'm cooking the futur animation ...</span>
+        </div>
+    </div>
+</section>
+
+<style lang="scss" scoped>
+    .next {
+        &__wrapper {
+            padding-block: 40px;
+        }
+
+        &__title {
+            font-size: clamp(2.5rem, 0.7rem + 6.68vw, 5.5rem);
+        }
+
+        &__content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            grid-template-rows: 1;
+            grid-gap: 5%;
+            align-items: center;
+
+            &__animation {
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                justify-content: center;
+                height: 300px;
+                gap: 10%;
+
+                img {
+                    width: 100px;
+                    height: 100px;
+                }
+
+                span {
+                    font-size: clamp(0.5rem, 0.7rem + 0.68vw, 1rem);
+                    color: rgba(255, 255, 255, 0.5);
+                    font-style: italic;
+                }
+            }
+        }
+    }
+</style>
