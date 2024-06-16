@@ -3,14 +3,6 @@ import type { Project } from "../../utils/project";
 import { path, nameSize, topicSize } from "../../utils/project";
 import { computed, ref } from "vue";
 
-/*
-  import {fetchProjectsFake} from "../../utils/fake.ts";
-  const projects = await fetchProjectsFake();
-*/
-
-import { fetchProjects } from "../../utils/project";
-const projetcs = await fetchProjects();
-
 const props = defineProps({
     secondary: {
         required: true,
