@@ -151,6 +151,7 @@ import { Image } from "astro:assets";
                 svg {
                     display: inline-block;
                     height: 100%;
+                    z-index: 1;
                 }
             }
 
@@ -162,7 +163,11 @@ import { Image } from "astro:assets";
                 gap: 1.5em;
 
                 &__container {
-                    width: 50%;
+                    width: 100%;
+                    z-index: 2;
+                    @media (min-width: px-to-rem(1280px)) {
+                        width: 50%;
+                    }
                     padding: 5%;
 
                     &__title {
@@ -239,7 +244,9 @@ import { Image } from "astro:assets";
 </style>
 
 <script>
-    import { Observer, type ObserverOption } from "../utils/utils";
+    import { Observer, type ObserverOption, isMobile } from "../utils/utils";
+
+    const offset = isMobile() ? 0.55 : 0.25;
 
     const path = document.querySelector(
         "#timeline__path",
@@ -306,7 +313,7 @@ import { Image } from "astro:assets";
         const scrollTop = window.scrollY || document.documentElement.scrollTop;
         const elementTop = careerRect.top + scrollTop;
         const max = elementTop + careerWrapper.offsetHeight;
-        const percent = (scrollTop - elementTop) / (max - elementTop) + 0.25;
+        const percent = (scrollTop - elementTop) / (max - elementTop) + offset;
 
         if (percent >= 0 && percent <= 1) {
             path.style.strokeDashoffset = `${pathLength - pathLength * percent}`;

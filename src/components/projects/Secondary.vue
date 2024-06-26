@@ -170,6 +170,10 @@ const clsButton = computed(() => ({
         p {
             color: $text-1;
         }
+
+        h3 {
+            margin: 5% 0;
+        }
     }
 
     &__container {
@@ -180,8 +184,12 @@ const clsButton = computed(() => ({
 
     &__description {
         display: grid;
-        grid-template-columns: 0.45fr 1fr 0.25fr;
+        grid-template-columns: 1.75fr 1fr;
         grid-template-rows: 1fr;
+
+        @media (min-width: px-to-rem(1280px)) {
+            grid-template-columns: 0.45fr 1fr 0.25fr;
+        }
 
         &__icon {
             display: flex;
@@ -193,8 +201,11 @@ const clsButton = computed(() => ({
         }
 
         &__topics {
-            display: flex;
-            gap: 10px;
+            display: none;
+            @media (min-width: px-to-rem(1280px)) {
+                display: flex;
+                gap: 10px;
+            }
         }
 
         &__link {

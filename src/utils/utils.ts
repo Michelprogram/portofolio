@@ -47,11 +47,11 @@ export class ProjectBehavior {
 
   constructor(projectSelector: string, closerSelector: string) {
     this.projects = Array.from(
-      document.querySelectorAll(projectSelector)
+      document.querySelectorAll(projectSelector),
     ) as Array<HTMLDivElement>;
 
     this.closers = Array.from(
-      document.querySelectorAll(closerSelector)
+      document.querySelectorAll(closerSelector),
     ) as Array<HTMLImageElement>;
 
     this.index = 0;
@@ -84,7 +84,7 @@ export class ProjectBehavior {
 
   private extendSelectProject() {
     this.getOtherProjects().forEach((project) =>
-      project.classList.add(Stage.Close)
+      project.classList.add(Stage.Close),
     );
 
     this.getCurrentProject().classList.add(Stage.Opening);
@@ -92,7 +92,7 @@ export class ProjectBehavior {
 
   private closeProject() {
     this.getOtherProjects().forEach((project) =>
-      project.classList.remove(Stage.Close)
+      project.classList.remove(Stage.Close),
     );
 
     this.getCurrentProject().classList.remove(Stage.Open);
@@ -119,3 +119,6 @@ export type MeteorInformation = {
 export const computeDateFromBeginning = (date: Date) => {
   return Math.abs(new Date(Date.now() - date.getTime()).getFullYear() - 1970);
 };
+
+export const isMobile = () =>
+  window.matchMedia("only screen and (max-width: 760px)").matches;

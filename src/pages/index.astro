@@ -7,13 +7,13 @@ import Next from "../components/Next.astro";
 import Secondary from "../components/projects/Secondary.vue";
 import Experiences from "../components/Experiences.astro";
 
+/*
 import { fetchProjects } from "../utils/project.ts";
 const projects = await fetchProjects();
-
-/*
-  import { fetchProjectsFake } from "../utils/fake.ts";
-  const projects = await fetchProjectsFake();
 */
+
+import { fetchProjectsFake } from "../utils/fake.ts";
+const projects = await fetchProjectsFake();
 ---
 
 <Layout>

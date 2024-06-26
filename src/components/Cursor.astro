@@ -2,17 +2,18 @@
     <div class="center"></div>
 </div>
 
-<style lang="scss">
+<style lang="scss" scoped>
     @import "../../assets/styles/utils/colors";
 
     .cursor {
         position: fixed;
+        background-color: $text-1;
+
         top: 0;
         left: 0;
         width: 30px;
         height: 30px;
         border-radius: 50%;
-        background-color: $text-1;
         opacity: 0.5;
         transform: translate(-50%, -50%);
         pointer-events: none;
@@ -32,12 +33,20 @@
 </style>
 
 <script>
+    import { isMobile } from "../utils/utils";
+
     const cursor = document.querySelector(".cursor");
 
-    document.addEventListener("mousemove", (e) => {
-        cursor!.setAttribute(
-            "style",
-            `top: ${e.clientY}px; left: ${e.clientX}px;`,
-        );
-    });
+    if (isMobile()) {
+        cursor!.remove();
+    } else {
+        const cursor = document.querySelector(".cursor");
+
+        document.addEventListener("mousemove", (e) => {
+            cursor!.setAttribute(
+                "style",
+                `top: ${e.clientY}px; left: ${e.clientX}px;`,
+            );
+        });
+    }
 </script>
