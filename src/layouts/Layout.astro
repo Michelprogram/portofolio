@@ -4,17 +4,29 @@ import Footer from "../components/Footer.astro";
 import Meteor from "../components/Meteor.astro";
 import Cursor from "../components/Cursor.astro";
 import Favicon from "../images/favicon.ico";
+import "../styles/global.css";
 ---
 
 <!doctype html>
 <html lang="en">
   <head>
-    <meta charset="UTF-8" />
-    <link rel="icon" type="image/svg+xml" href={Favicon} />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Gauron Dorian</title>
-    <meta name="google-site-verification" content="fZKxGOLH5_q7eTUTuu898KnkDUCGkLukhSQ1LCDrjW8" />
+      <meta charset="UTF-8" />
+          <link rel="icon" type="image/svg+xml" href={Favicon} />
+          <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+          <title>Gauron Dorian</title>
+          <meta name="google-site-verification" content="fZKxGOLH5_q7eTUTuu898KnkDUCGkLukhSQ1LCDrjW8" />
+          <link rel="preconnect" href="https://fonts.googleapis.com" />
+          <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+          <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;700&display=swap" rel="stylesheet" />
   </head>
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-R71TJGC1W4"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+
+    gtag('config', 'G-R71TJGC1W4');
+  </script>
   <body>
     <Cursor />
     <Meteor />
@@ -25,9 +37,10 @@ import Favicon from "../images/favicon.ico";
 </html>
 
 <style is:global lang="scss">
-  @import "../../assets/styles/utils/colors";
-  @import "../../assets/styles/utils/fonts";
-  @import "../../assets/styles/utils/variables";
+  @use "../../assets/styles/utils/colors" as *;
+  @use "../../assets/styles/utils/fonts" as *;
+  @use "../../assets/styles/utils/variables" as *;
+
 
   html {
     box-sizing: border-box;

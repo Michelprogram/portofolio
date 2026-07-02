@@ -1,0 +1,9 @@
+@import "tailwindcss";
+
+@theme {
+    --breakpoint-tablet: 600px
+
+    --color-primary-green: #4ee1a0;
+    --color-secondary-green: hsla(153, 71%, 59%, 0.727);
+
+}

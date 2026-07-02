@@ -11,7 +11,7 @@ import { fetchProjectsFake } from "../utils/fake.ts";
 
 const isProd = import.meta.env.PROD;
 
-const projects = isProd ? await fetchProjects() : await fetchProjectsFake();
+const projects = {Main:[], Secondary:[]}//isProd ? await fetchProjects() : await fetchProjectsFake();
 ---
 
 <Layout>

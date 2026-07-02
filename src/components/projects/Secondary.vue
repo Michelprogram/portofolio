@@ -134,9 +134,9 @@ const clsButton = computed(() => ({
 </template>
 
 <style lang="scss" scoped>
-@import "../../../assets/styles/utils/functions";
-@import "../../../assets/styles/utils/colors";
-@import "../../../assets/styles/utils/fonts";
+@use "../../../assets/styles/utils/functions" as *;
+@use "../../../assets/styles/utils/colors" as *;
+@use "../../../assets/styles/utils/fonts" as *;
 
 .come-from-right-enter-active,
 .come-from-right-leave-active {

@@ -119,9 +119,9 @@ import { Image } from "astro:assets";
 </section>
 
 <style lang="scss" scoped>
-    @import "../../assets/styles/utils/functions";
-    @import "../../assets/styles/utils/colors";
-    @import "../../assets/styles/utils/fonts";
+    @use "../../assets/styles/utils/functions" as *;
+    @use "../../assets/styles/utils/colors"as *;
+    @use "../../assets/styles/utils/fonts" as *;
 
     .career {
         &__wrapper {
