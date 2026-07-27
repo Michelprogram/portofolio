@@ -1,0 +1,151 @@
+---
+import { type Project } from "@/i18n";
+import { Image } from "astro:assets";
+import type { ImageMetadata } from "astro";
+import { useImage } from "@/composables/images";
+
+interface Props {
+  project: Project;
+  index: number;
+}
+
+const { project, index } = Astro.props;
+
+const { image } = useImage({ path: project.image, folder: "projects" });
+---
+
+<div
+  class="grid grid-cols-5 h-50"
+  data-component="project"
+  id={`project-${index}`}
+>
+  <div class="col-span-2 mt-6 relative">
+    <span class="tracking-widest">{String(index + 1).padStart(3, "0")}</span>
+    {
+      image && (
+        <Image
+          data-gsap-image
+          class="absolute scale-0 opacity-0 top-0 left-0 w-55 h-75 object-fill rounded-lg"
+          src={image}
+          width={220}
+          height={300}
+          alt={project.title}
+        />
+      )
+    }
+  </div>
+  <div class="col-span-3 flex flex-col gap-4 mt-6">
+    <h3 class="text-3xl font-medium">{project.title}</h3>
+    <p class="text-lg text-gray-500">{project.description}</p>
+  </div>
+</div>
+<script>
+  import { isAbsent } from "@/utils";
+  import { useGsap } from "@/composables";
+
+  const { worker } = useGsap();
+
+  document
+    .querySelectorAll<HTMLDivElement>("[data-component='project']")
+    .forEach((root) => {
+      worker(`#${root.id}`, (gsap, root) => {
+        const image = root.querySelector<HTMLImageElement>("[data-gsap-image]");
+        if (isAbsent(image)) return;
+
+        const IMAGE_W = 220;
+        const IMAGE_H = 300;
+        const container = image.parentElement; // le div relative
+        if (!container) return;
+        // Une seule fois au init (centre layout fixe)
+        const getOriginalCenter = () => {
+          const rect = container.getBoundingClientRect();
+          return {
+            x: rect.left + IMAGE_W / 2,
+            y: rect.top + IMAGE_H / 2,
+          };
+        };
+        let originalPosition = getOriginalCenter();
+        const FAR = 400;
+        const MAX = 0.5;
+        const MIN = 0.3;
+        let lastX = 0;
+        let idleTimer: ReturnType<typeof setTimeout>;
+
+        const xTo = gsap.quickTo(image, "x", {
+          duration: 0.25,
+          ease: "power2.out",
+        });
+        const yTo = gsap.quickTo(image, "y", {
+          duration: 0.25,
+          ease: "power2.out",
+        });
+        const rotateTo = gsap.quickTo(image, "rotation", {
+          duration: 0.25,
+          ease: "power2.out",
+        });
+
+        const proxy = { brightness: 1 };
+
+        const brightnessQuick = gsap.quickTo(proxy, "brightness", {
+          duration: 0.5,
+          ease: "power2.out",
+          onUpdate: () => {
+            image.style.filter = `brightness(${proxy.brightness})`;
+          },
+        });
+
+        root.addEventListener("mouseenter", (e: MouseEvent) => {
+          lastX = e.clientX;
+          gsap.set(image, { transformOrigin: "center center" });
+          gsap.to(image, {
+            opacity: 1,
+            scale: 1,
+          });
+        });
+
+        let lastBright = 1;
+
+        root.addEventListener("mousemove", (e: MouseEvent) => {
+          const deltaX = e.clientX - lastX;
+          lastX = e.clientX;
+
+          const dx = e.clientX - originalPosition.x;
+          const dy = e.clientY - originalPosition.y;
+          const dist = Math.hypot(dx, dy);
+
+          const tilt = gsap.utils.clamp(-10, 10, -deltaX * 0.6);
+          rotateTo(tilt);
+          lastBright += 0.003;
+          const bright = gsap.utils.clamp(1, 1.2, lastBright);
+
+          brightnessQuick(bright);
+
+          clearTimeout(idleTimer);
+          idleTimer = setTimeout(() => {
+            rotateTo(0);
+            brightnessQuick(1);
+            lastBright = 1;
+          }, 150);
+
+          const strength = gsap.utils.clamp(
+            MIN,
+            MAX,
+            gsap.utils.mapRange(0, FAR, MAX, MIN, dist),
+          );
+
+          xTo(dx * strength);
+          yTo(dy * strength);
+        });
+
+        root.addEventListener("mouseleave", () => {
+          clearTimeout(idleTimer);
+          const tl = gsap.timeline();
+          tl.to(image, { opacity: 0, scale: 0, duration: 0.4 }).to(image, {
+            rotation: 0,
+            x: 0,
+            y: 0,
+          });
+        });
+      });
+    });
+</script>

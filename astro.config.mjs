@@ -1,16 +1,33 @@
 import { defineConfig } from "astro/config";
 import tailwindcss from "@tailwindcss/vite";
-import vue from "@astrojs/vue";
+import { fileURLToPath } from "node:url";
 
-// https://astro.build/config
+import sitemap from "@astrojs/sitemap";
+
 export default defineConfig({
-  /*image: {
-    service: squooshImageService(),
-  },*/
+  i18n: {
+    locales: ["en", "fr"],
+    defaultLocale: "en",
+  },
   vite: {
     plugins: [tailwindcss()],
+    resolve: {
+      alias: {
+        "@": fileURLToPath(new URL("./src", import.meta.url)),
+      },
+    },
   },
   site: "https://dorian-gauron.com",
   base: "/",
-  integrations: [vue()],
+  integrations: [
+    sitemap({
+      i18n: {
+        defaultLocale: "en",
+        locales: {
+          en: "en-US",
+          fr: "fr-CA",
+        },
+      },
+    }),
+  ],
 });

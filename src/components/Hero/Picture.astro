@@ -1,0 +1,88 @@
+---
+import { Image, getImage } from "astro:assets";
+import FrontPicture from "@/images/front-header.webp";
+
+const placeholder = await getImage({
+  src: FrontPicture,
+  width: 24,
+  format: "webp",
+  quality: 5,
+});
+
+interface Props {
+  class?: string;
+}
+const { class: className } = Astro.props;
+---
+
+<div
+  class:list={[
+    "m-auto relative rounded-md overflow-hidden w-43.75 h-95.75 md:w-111.25 md:h-105 lg:h-150 lg:w-full xl:h-164",
+    className,
+  ]}
+  data-component="picture"
+>
+  <img
+    src={placeholder.src}
+    alt=""
+    aria-hidden="true"
+    data-hero-placeholder
+    width={placeholder.attributes.width}
+    height={placeholder.attributes.height}
+    class="absolute inset-0 size-full object-cover blur-xl scale-110"
+  />
+  <Image
+    src={FrontPicture}
+    alt="me with my cat on my shoulder"
+    loading="eager"
+    fetchpriority="high"
+    decoding="async"
+    data-hero-image
+    class="absolute inset-0 size-full object-cover opacity-0"
+  />
+</div>
+
+<script>
+  import { isAbsent } from "@/utils";
+  import { useGsap } from "@/composables";
+
+  const { worker } = useGsap();
+
+  worker("[data-component='picture']", (gsap, root) => {
+    const img = root.querySelector<HTMLImageElement>("[data-hero-image]");
+    const placeholder = root.querySelector<HTMLImageElement>(
+      "[data-hero-placeholder]",
+    );
+    if (isAbsent(img)) return;
+    const reducedMotion = window.matchMedia(
+      "(prefers-reduced-motion: reduce)",
+    ).matches;
+    const reveal = () => {
+      if (reducedMotion) {
+        gsap.set(img, { autoAlpha: 1, filter: "blur(0px)", scale: 1 });
+        if (placeholder) gsap.set(placeholder, { autoAlpha: 0 });
+        return;
+      }
+      gsap.fromTo(
+        img,
+        { autoAlpha: 0, filter: "blur(20px)", scale: 1.05 },
+        {
+          autoAlpha: 1,
+          filter: "blur(0px)",
+          scale: 1,
+          duration: 2,
+          ease: "power2.out",
+        },
+      );
+      if (placeholder) {
+        gsap.to(placeholder, {
+          autoAlpha: 0,
+          duration: 2,
+          ease: "power2.out",
+        });
+      }
+    };
+    if (img.complete) reveal();
+    else img.addEventListener("load", reveal, { once: true });
+  });
+</script>

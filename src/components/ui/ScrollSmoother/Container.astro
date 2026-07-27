@@ -1,0 +1,11 @@
+<div data-gsap="smooth-wrapper">
+  <div data-gsap="smooth-content">
+    <slot />
+  </div>
+</div>
+<script>
+  import { useForm } from "./useForm";
+
+  const { initScroll } = useForm();
+  initScroll();
+</script>

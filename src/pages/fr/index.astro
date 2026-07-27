@@ -7,27 +7,14 @@ import Experiences from "@/components/Experiences/Container.astro";
 import Next from "@/components/Next/Container.astro";
 import Articles from "@/components/Articles/Container.astro";
 import Hobbies from "@/components/Hobbies/Container.astro";
-import StackTracker from "@/components/ui/StackTracker/Container.astro";
-
-const sections = [
-  { title: "Introduction", selector: "hero" },
-  { title: "Skills", selector: "skills" },
-  { title: "Projects", selector: "projects" },
-  { title: "Experiences", selector: "experiences" },
-  { title: "Hobbies", selector: "hobbies" },
-  { title: "Articles", selector: "articles" },
-  { title: "Next", selector: "next" },
-];
 ---
 
 <Layout>
-  <StackTracker slot="fixed-ui" sections={sections} />
-
   <main>
     <Hero />
     <Skills />
     <Projects />
-    <!--     <Experiences /> -->
+    <Experiences />
     <Hobbies />
     <Articles />
     <Next />

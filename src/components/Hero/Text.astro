@@ -1,0 +1,154 @@
+---
+import { useI18n } from "@/composables";
+
+const { translation } = useI18n(Astro.currentLocale);
+const { hero } = translation;
+
+interface Props {
+  class?: string;
+}
+const { class: className } = Astro.props;
+---
+
+<div
+  class:list={[
+    "m-auto mt-4 flex flex-col gap-6 justify-center text-center w-4/5 md:gap-6 md:mt-0 lg:m-0 lg:w-full lg:text-left ",
+    className,
+  ]}
+  data-component="hero"
+>
+  <h1
+    class="m-auto text-5xl/15 text-center w-fit font-bold lg:text-start lg:text-8xl/25 lg:m-0 lg:mb-4 xl:text-9xl/35"
+    data-gsap-title
+  >
+    <span id="title" class="block"> {hero.titleLine1}</span><br />
+    {hero.titleLine2}
+    <span class="relative inline-block">
+      Dorian
+      <span
+        data-gsap-line
+        class="absolute bottom-0 left-0 h-1 w-0 bg-primary-green"
+        aria-hidden="true"></span>
+    </span>
+  </h1>
+
+  <p
+    class="text-xl lg:text-start lg:text-2xl text-primary-gray font-semibold"
+    data-gsap-subtitle
+  >
+    {hero.subtitle}
+  </p>
+
+  <a
+    href="mailto:gauron.dorian.pro@gmail.com"
+    class="m-auto w-fit lg:m-0"
+    data-gsap-title
+  >
+    <span
+      class="font-bold relative inline-block py-2 text-2xl"
+      data-gsap-jumping
+    >
+      {hero.cta}
+      <span
+        data-gsap-line
+        class="absolute bottom-0 left-0 block h-0.5 w-0 bg-primary-green"
+        aria-hidden="true"></span>
+    </span>
+  </a>
+</div>
+
+<script>
+  import { SplitText } from "gsap/SplitText";
+  import { isAbsent } from "@/utils";
+  import { useGsap } from "@/composables";
+
+  const { worker } = useGsap();
+
+  worker("[data-component='hero']", (gsap, root) => {
+    const title = root.querySelector<HTMLHeadElement>("#title");
+    if (isAbsent(title)) return;
+
+    const titleSplit = SplitText.create("[data-gsap-title]", {
+      type: "lines",
+      mask: "lines",
+    });
+
+    const subTitleSplit = SplitText.create("[data-gsap-subtitle]", {
+      type: "lines",
+      mask: "lines",
+      autoSplit: true,
+      onSplit(self) {
+        return gsap.from(self.lines, {
+          duration: 1,
+          y: 100,
+          autoAlpha: 0,
+          stagger: 0.05,
+          ease: "power3.out",
+        });
+      },
+    });
+
+    const chars = SplitText.create("[data-gsap-jumping]", {
+      type: "chars",
+      autoSplit: true,
+    });
+
+    const parent = title.parentElement;
+    if (isAbsent(parent)) return;
+
+    const centerOffset = (parent.offsetWidth - title.offsetWidth) / 2;
+    gsap.set(title, { x: centerOffset + 100 });
+
+    const tl = gsap.timeline({
+      onComplete: () => playJump(),
+    });
+
+    tl.from(titleSplit.lines, {
+      duration: 1,
+      y: 100,
+      autoAlpha: 0,
+      stagger: 0.05,
+      ease: "power3.out",
+    });
+
+    tl.to(
+      title,
+      {
+        x: 0,
+        duration: 1,
+        ease: "power2.inOut",
+      },
+      "-=0.3",
+    );
+
+    tl.to(
+      "[data-gsap-line]",
+      { width: "100%", duration: 0.6, ease: "power2.out", stagger: 0.3 },
+      "-=0.1",
+    );
+
+    const charDuration = 0.3;
+    const charRepeat = 5;
+    const staggerDelay = 0.05;
+    const pauseDuration = 3;
+
+    const singleCharDuration = (charRepeat + 1) * charDuration;
+    const lastCharDelay = (chars.chars.length - 1) * staggerDelay;
+    const totalCycleDuration = lastCharDelay + singleCharDuration;
+
+    const playJump = () => {
+      chars.chars.forEach((ch, i) => {
+        gsap.to(ch, {
+          y: -15,
+          duration: charDuration,
+          ease: "sine.inOut",
+          yoyo: true,
+          repeat: charRepeat,
+          delay: i * staggerDelay,
+        });
+      });
+
+      gsap.delayedCall(totalCycleDuration + pauseDuration, playJump);
+    };
+  });
+</script>

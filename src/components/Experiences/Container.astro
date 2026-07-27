@@ -1,0 +1,36 @@
+---
+import { useI18n } from "@/composables";
+import Experience from "./Experience.astro";
+import Path from "./Path.astro";
+
+const { translation } = useI18n(Astro.currentLocale);
+const {
+  experience: { title, items },
+} = translation;
+---
+
+<section
+  class="mt-12 m-auto size-full flex gap-8 flex-col items-center justify-center w-6xl pb-12"
+  data-component="experiences"
+>
+  <h2 class="text-7xl w-full tracking-wide">{title}</h2>
+  <div class="relative grid grid-cols-1 gap-y-[100px] grid-rows-[auto_auto]">
+    <div class="mt-10 col-span-full w-full -left-40 relative">
+      <Path />
+    </div>
+    <div
+      class="col-span-full flex w-fit gap-[800px] flex-nowrap"
+      data-scroll-track
+    >
+      {items.map((item, idx) => <Experience experience={item} index={idx} />)}
+    </div>
+  </div>
+</section>
+<script>
+  import { useGsap, useExperiences } from "@/composables";
+
+  const { worker } = useGsap();
+  const { init } = useExperiences();
+
+  worker("[data-component='experiences']", (gsap, root) => init(gsap, root));
+</script>

@@ -1,0 +1,60 @@
+---
+import { type Experience } from "@/i18n";
+import { Image } from "astro:assets";
+
+interface Props {
+  experience: Experience;
+  index: number;
+}
+
+const { experience, index } = Astro.props;
+---
+
+<article
+  class="shrink-0 m-0 flex flex-col gap-5 w-[500px]"
+  data-component="experience"
+  id={`experience-${index}`}
+>
+  <div class="flex flex-col gap-1">
+    <div class="flex items-center justify-start gap-4">
+      <Image src={experience.icon} alt="icon" width="50" height="50" />
+      <h3 class="text-center text-3xl">{experience.title}</h3>
+    </div>
+    <span class="text-lg text-gray-500">
+      from {experience.from.getFullYear()} to{" "}
+      {experience.to.getFullYear()} at{" "}
+      <a
+        class="italic underline cursor-pointer text-inherit"
+        href={`https://www.google.fr/maps/place/${experience.place}`}
+        target="_blank"
+      >
+        {experience.place}
+      </a>
+    </span>
+  </div>
+  <p class="" data-gsap-description>{experience.description}</p>
+</article>
+<script>
+  import { isAbsent } from "@/utils";
+  import { useGsap } from "@/composables";
+
+  const { worker } = useGsap();
+
+/*   document
+    .querySelectorAll<HTMLDivElement>("[data-component='experience']")
+    .forEach((root) => {
+      worker(`#${root.id}`, (gsap, root) => {
+        experiencesStore.subscribe((tween) => {
+          gsap.from("[data-gsap-description]", {
+            scrollTrigger: {
+              trigger: root,
+              start: "left 80%",
+              toggleActions: "play none none reverse",
+              markers: true,
+            },
+            duration: 3,
+          });
+        });
+      });
+    }); */
+</script>

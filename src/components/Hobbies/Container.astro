@@ -1,0 +1,15 @@
+---
+import { useI18n } from "@/composables";
+
+const { translation } = useI18n(Astro.currentLocale);
+const {
+  hobbies: { title },
+} = translation;
+---
+
+<section
+  class="size-full flex gap-8 flex-col items-center justify-center w-6xl m-auto border-t-2 border-solid"
+  data-component="hobbies"
+>
+  <h2 class="text-7xl w-full tracking-wide mt-12">{title}</h2>
+</section>

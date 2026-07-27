@@ -1,0 +1,35 @@
+---
+import { useImage } from "@/composables/images";
+import type { Article } from "@/i18n";
+import { isPresent } from "@/utils";
+import { Image } from "astro:assets";
+
+interface Props {
+  article: Article;
+  index: number;
+}
+
+const { article, index } = Astro.props;
+
+const { image } = useImage({ path: article.image, folder: "articles" });
+---
+
+<a href={article.link} class="flex flex-col gap-3">
+  {
+    isPresent(image) && (
+      <Image
+        class="left-0 object-fill rounded-lg"
+        src={image}
+        width={400}
+        height={200}
+        alt={article.title}
+      />
+    )
+  }
+  <h3
+    class="text-2xl font-medium text-center"
+    transition:name={`article-title-${index}`}
+  >
+    {article.title}
+  </h3>
+</a>

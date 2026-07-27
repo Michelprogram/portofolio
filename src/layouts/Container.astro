@@ -1,0 +1,44 @@
+---
+import Header from "@/components/Header/Container.astro";
+import Footer from "@/components/Footer/Container.astro";
+import Meteor from "@/components/ui/Meteor.astro";
+import "../styles/global.css";
+import { ClientRouter } from "astro:transitions";
+import HeaderTag from "./Header.astro";
+
+interface Props {
+  title?: string;
+  description?: string;
+  image?: string;
+  lang?: string;
+}
+
+const {
+  title = "Dorian Gauron — Software Engineer",
+  description = "Software engineer building web apps, bots, and tools.",
+  image = "/og.png",
+  lang = "en",
+} = Astro.props;
+---
+
+<!doctype html>
+<html lang={lang}>
+  <HeaderTag  title={title} description={description} image={image} />
+  <body>
+    <ClientRouter />
+    <Meteor />
+    <slot name="fixed-ui" />
+    <div data-gsap="smooth-wrapper">
+      <div data-gsap="smooth-content" class="relative">
+        <Header />
+        <slot />
+        <Footer />
+      </div>
+    </div>
+  </body><script>
+    import { useForm } from "./useForm";
+
+    const { initScroll } = useForm();
+    initScroll();
+  </script>
+</html>

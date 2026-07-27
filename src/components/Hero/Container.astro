@@ -1,0 +1,16 @@
+---
+import PictureComponent from "./Picture.astro";
+import TextComponent from "./Text.astro";
+---
+
+<section
+  class="flex items-center justify-center mt-12 relative"
+  data-component="hero"
+>
+  <div
+    class="flex flex-col-reverse w-6xl m-inline-auto pb-12 border-solid md:gap-3 lg:px-12 lg:grid lg:grid-cols-5 lg:gap-5 xl:px-0 xl:border-b-2"
+  >
+    <TextComponent class="col-span-3" />
+    <PictureComponent class="col-span-2" />
+  </div>
+</section>
