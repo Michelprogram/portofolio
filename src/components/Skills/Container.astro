@@ -1,49 +1,33 @@
 ---
 import { computeDateFromBeginning } from "@/utils/utils";
-const skills = [
-  {
-    title: "Typescript",
-    icon: "https://raw.githubusercontent.com/Tarikul-Islam-Anik/Animated-Fluent-Emojis/master/Emojis/Objects/Pouring%20Liquid.png",
-    experiences: computeDateFromBeginning(new Date("01/01/2024")),
-  },
-  {
-    title: "Golang",
-    icon: "https://raw.githubusercontent.com/Tarikul-Islam-Anik/Animated-Fluent-Emojis/master/Emojis/Animals/Bear.png",
-    experiences: computeDateFromBeginning(new Date("01/01/2021")),
-  },
-  {
-    title: "Vue",
-    icon: "https://raw.githubusercontent.com/Tarikul-Islam-Anik/Animated-Fluent-Emojis/master/Emojis/Smilies/Robot.png",
-    experiences: computeDateFromBeginning(new Date("01/01/2022")),
-  },
-  {
-    title: "Docker",
-    icon: "https://raw.githubusercontent.com/Tarikul-Islam-Anik/Animated-Fluent-Emojis/master/Emojis/Animals/Spouting%20Whale.png",
-    experiences: computeDateFromBeginning(new Date("01/01/2022")),
-  },
-  {
-    title: "GraphQL",
-    icon: "https://raw.githubusercontent.com/Tarikul-Islam-Anik/Animated-Fluent-Emojis/master/Emojis/Objects/Ring%20Buoy.png",
-    experiences: computeDateFromBeginning(new Date("01/01/2025")),
-  },
-  {
-    title: "Rust",
-    icon: "https://raw.githubusercontent.com/Tarikul-Islam-Anik/Animated-Fluent-Emojis/master/Emojis/Animals/T-Rex.png",
-    experiences: computeDateFromBeginning(new Date("01/01/2025")),
-  },
-];
 
-import { Image } from "astro:assets";
 import { useI18n } from "@/composables";
+import { getCollection } from "astro:content";
+import Skill from "./Skill.astro";
+
 const { translation } = useI18n(Astro.currentLocale);
 const {
-  skills: { title, description, singular, plural },
+  skills: { title, description },
 } = translation;
+
+const skills = (await getCollection("skills"))
+  .sort(
+    (a, b) =>
+      computeDateFromBeginning(new Date(b.data.experiences)) -
+      computeDateFromBeginning(new Date(a.data.experiences)),
+  )
+  .map((skill) => {
+    return {
+      title: skill.data.title,
+      icon: skill.data.icon,
+      experiences: computeDateFromBeginning(new Date(skill.data.experiences)),
+    };
+  });
 ---
 
 <section
   data-component="skills"
-  class="border-t-2 w-5/6 flex gap-8 flex-col items-center justify-center m-auto border-solid pb-5 xl:pb-12 xl:mt-12 xl:border-t-0 xl:border-b-2 xl:w-6xl xl:size-full"
+  class="border-t-2 w-5/6 flex gap-8 flex-col items-center justify-center m-auto border-solid pb-12 xl:mt-12 xl:border-t-0 xl:border-b-2 xl:w-6xl xl:size-full"
 >
   <h2 class="w-full text-5xl mt-4 tracking-wide xl:mt-0 xl:text-7xl">
     {title}
@@ -53,100 +37,108 @@ const {
     <div
       class="grid grid-cols-1 gap-6 justify-items-center md:grid-cols-2 md:gap-16 lg:grid-cols-3"
     >
-      {
-        skills
-          .sort((a, b) => b.experiences - a.experiences)
-          .map((skill) => {
-            return (
-              <div
-                class="text-center gap-3 flex flex-col items-center"
-                data-gsap-skill
-              >
-                <div class="line flex items-center justify-center gap-2 transition-all duration-700 ease-in-out xl:gap-4">
-                  <h3
-                    class="font-bold text-4xl/tight xl:text-5xl/relaxed"
-                    data-gsap-title
-                  >
-                    {skill.title}
-                  </h3>
-                  <div class="flex items-center justify-center self-stretch">
-                    <Image
-                      class="size-9 translate-y-1 object-contain md:size-11.25 lg:size-12"
-                      src={skill.icon}
-                      width="25"
-                      height="25"
-                      alt="Icon"
-                      data-gsap-icon
-                    />
-                  </div>
-                </div>
-                <p
-                  class="text-normal xl:text-xl/relaxed text-primary-gray"
-                  data-gsap-description
-                >
-                  <span class="counter">{skill.experiences}</span>{" "}
-                  {skill.experiences === 1 ? singular : plural}
-                </p>
-              </div>
-            );
-          })
-      }
+      {skills.map((skill) => <Skill skill={skill} />)}
     </div>
   </div>
 </section>
 <script>
   import { SplitText } from "gsap/SplitText";
-  import { useGsap } from "@/composables";
+  import { MediaQuery, useGsap } from "@/composables";
 
   const { worker } = useGsap();
 
-  worker("[data-component='skills']", (gsap, root) => {
-    const tl = gsap.timeline({
-      scrollTrigger: {
-        trigger: "[data-gsap-container]",
-        start: "top 65%",
-      },
-    });
+  worker(
+    { selector: "[data-component='skills']", mediaQuery: MediaQuery.isDesktop },
+    (gsap, root) => {
+      const tl = gsap.timeline({
+        scrollTrigger: {
+          trigger: "[data-gsap-container]",
+          start: "top 65%",
+        },
+      });
 
-    root.querySelectorAll("[data-gsap-skill]").forEach((skill, i) => {
-      const title = skill.querySelector("[data-gsap-title]");
-      const icon = skill.querySelector("[data-gsap-icon]");
-      const description = skill.querySelector("[data-gsap-description]");
-      const split = SplitText.create(title, { type: "chars" });
+      root.querySelectorAll("[data-gsap-skill]").forEach((skill, i) => {
+        const title = skill.querySelector("[data-gsap-title]");
+        const icon = skill.querySelector("[data-gsap-icon]");
+        const description = skill.querySelector("[data-gsap-description]");
+        const split = SplitText.create(title, { type: "chars" });
 
-      const skillTl = gsap.timeline();
+        const skillTl = gsap.timeline();
 
-      skillTl
-        .from(skill, {
-          x: 100,
-          opacity: 0,
-          duration: 0.8,
-          ease: "power2.out",
-        })
-        .from(
-          split.chars,
-          {
-            scale: 0,
-            y: 30,
-            rotation: () => gsap.utils.random(-20, 20),
-            stagger: { each: 0.04, from: "random" },
+        skillTl
+          .from(skill, {
+            x: 100,
+            opacity: 0,
             duration: 0.8,
-            ease: "back.out(2)",
-          },
-          ">",
-        )
-        .from(description, {
-          opacity: 0,
-          scale: 0,
-          duration: 0.4,
-        })
-        .from(icon, {
-          opacity: 0,
-          scale: 0,
-          duration: 0.7,
-        });
+            ease: "power2.out",
+          })
+          .from(
+            split.chars,
+            {
+              scale: 0,
+              y: 30,
+              rotation: () => gsap.utils.random(-20, 20),
+              stagger: { each: 0.04, from: "random" },
+              duration: 0.8,
+              ease: "back.out(2)",
+            },
+            ">",
+          )
+          .from(description, {
+            opacity: 0,
+            scale: 0,
+            duration: 0.4,
+          })
+          .from(icon, {
+            opacity: 0,
+            scale: 0,
+            duration: 0.7,
+          });
 
-      tl.add(skillTl, i * 0.15);
-    });
-  });
+        tl.add(skillTl, i * 0.15);
+      });
+    },
+  );
+
+  worker(
+    { selector: "[data-component='skills']", mediaQuery: MediaQuery.isMobile },
+    (gsap, root) => {
+      const tl = gsap.timeline({
+        scrollTrigger: {
+          trigger: "[data-gsap-container]",
+          start: "top 65%",
+        },
+      });
+
+      root.querySelectorAll("[data-gsap-skill]").forEach((skill, i) => {
+        const title = skill.querySelector("[data-gsap-title]");
+        const icon = skill.querySelector("[data-gsap-icon]");
+        const description = skill.querySelector("[data-gsap-description]");
+        const split = SplitText.create(title, { type: "lines" });
+
+        const skillTl = gsap.timeline();
+
+        skillTl
+          .from(split.lines, {
+            mask: "lines",
+            y: 80,
+            opacity: 0,
+            duration: 0.8,
+            ease: "power2.out",
+          })
+          .from(description, {
+            opacity: 0,
+            scale: 0,
+            duration: 0.4,
+          })
+          .from(icon, {
+            opacity: 0,
+            scale: 0,
+            duration: 0.7,
+          });
+
+        tl.add(skillTl, i * 0.15);
+      });
+    },
+  );
 </script>

@@ -48,7 +48,7 @@ const { class: className } = Astro.props;
 
   const { worker } = useGsap();
 
-  worker("[data-component='picture']", (gsap, root) => {
+  worker({ selector: "[data-component='picture']" }, (gsap, root) => {
     const img = root.querySelector<HTMLImageElement>("[data-hero-image]");
     const placeholder = root.querySelector<HTMLImageElement>(
       "[data-hero-placeholder]",

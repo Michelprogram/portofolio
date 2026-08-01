@@ -1,11 +1,11 @@
 ---
-import { type Project } from "@/i18n";
 import { Image } from "astro:assets";
-import type { ImageMetadata } from "astro";
 import { useImage } from "@/composables/images";
+import { isPresent } from "@/utils/optional";
+import type { Project } from "@/collections";
 
 interface Props {
-  project: Project;
+  project: Project & { title: string; description: string };
   index: number;
 }
 
@@ -14,31 +14,59 @@ const { project, index } = Astro.props;
 const { image } = useImage({ path: project.image, folder: "projects" });
 ---
 
-<div
-  class="grid grid-cols-5 h-50"
-  data-component="project"
-  id={`project-${index}`}
->
-  <div class="col-span-2 mt-6 relative">
-    <span class="tracking-widest">{String(index + 1).padStart(3, "0")}</span>
-    {
-      image && (
-        <Image
-          data-gsap-image
-          class="absolute scale-0 opacity-0 top-0 left-0 w-55 h-75 object-fill rounded-lg"
-          src={image}
-          width={220}
-          height={300}
-          alt={project.title}
-        />
-      )
-    }
+<div class="flex flex-col last:**:data-divider:hidden">
+  <div
+    class="grid grid-cols-5 content-center h-75"
+    data-component="project"
+    id={`project-${index}`}
+  >
+    <div class="hidden lg:block lg:col-span-2 relative">
+      <span class="tracking-widest hidden md:block"
+        >{String(index + 1).padStart(3, "0")}</span
+      >
+      {
+        isPresent(image) && (
+          <Image
+            data-gsap-image
+            class="absolute scale-0 opacity-0 top-0 left-0 w-55 h-75 object-contain rounded-md z-10"
+            src={image}
+            width={220}
+            height={300}
+            alt={project.title}
+          />
+        )
+      }
+    </div>
+    <div
+      class="col-span-5 flex flex-col gap-4 items-center text-center lg:col-span-3 lg:items-start lg:text-left"
+    >
+      <h3 class="text-3xl font-medium z-0">{project.title}</h3>
+      <p class="text-lg text-gray-400">{project.description}</p>
+      <div class="gap-2 hidden md:flex">
+        {
+          project.technologies.map((technology) => (
+            <span class=" bg-gray-800 rounded-md px-2 py-1 text-sm">
+              {technology}
+            </span>
+          ))
+        }
+      </div>
+      <div class="flex gap-4 items-center">
+        <a href={project.link} class="underline relative" target="_blank">
+          <span class="font-medium relative inline-block py-2">
+            Get more details
+            <span
+              class="absolute bottom-0 left-0 block h-0.5 w-full bg-primary-green"
+              aria-hidden="true"></span>
+          </span></a
+        >
+      </div>
+    </div>
   </div>
-  <div class="col-span-3 flex flex-col gap-4 mt-6">
-    <h3 class="text-3xl font-medium">{project.title}</h3>
-    <p class="text-lg text-gray-500">{project.description}</p>
-  </div>
+
+  <div data-divider class="h-0.5 w-5/6 mx-auto bg-white rounded-2xl"></div>
 </div>
+
 <script>
   import { isAbsent } from "@/utils";
   import { useGsap } from "@/composables";
@@ -48,15 +76,16 @@ const { image } = useImage({ path: project.image, folder: "projects" });
   document
     .querySelectorAll<HTMLDivElement>("[data-component='project']")
     .forEach((root) => {
-      worker(`#${root.id}`, (gsap, root) => {
+      worker({ selector: `#${root.id}` }, (gsap, root) => {
         const image = root.querySelector<HTMLImageElement>("[data-gsap-image]");
         if (isAbsent(image)) return;
 
-        const IMAGE_W = 220;
-        const IMAGE_H = 300;
-        const container = image.parentElement; // le div relative
-        if (!container) return;
-        // Une seule fois au init (centre layout fixe)
+        const container = image.parentElement;
+        if (isAbsent(container)) return;
+
+        const IMAGE_W = Number(container.style.width);
+        const IMAGE_H = Number(container.style.height);
+
         const getOriginalCenter = () => {
           const rect = container.getBoundingClientRect();
           return {
@@ -64,6 +93,7 @@ const { image } = useImage({ path: project.image, folder: "projects" });
             y: rect.top + IMAGE_H / 2,
           };
         };
+
         let originalPosition = getOriginalCenter();
         const FAR = 400;
         const MAX = 0.5;
@@ -95,6 +125,8 @@ const { image } = useImage({ path: project.image, folder: "projects" });
         });
 
         root.addEventListener("mouseenter", (e: MouseEvent) => {
+          originalPosition = getOriginalCenter();
+
           lastX = e.clientX;
           gsap.set(image, { transformOrigin: "center center" });
           gsap.to(image, {
@@ -113,7 +145,7 @@ const { image } = useImage({ path: project.image, folder: "projects" });
           const dy = e.clientY - originalPosition.y;
           const dist = Math.hypot(dx, dy);
 
-          const tilt = gsap.utils.clamp(-10, 10, -deltaX * 0.6);
+          const tilt = gsap.utils.clamp(-10, 10, -deltaX * 0.8);
           rotateTo(tilt);
           lastBright += 0.003;
           const bright = gsap.utils.clamp(1, 1.2, lastBright);
@@ -125,7 +157,7 @@ const { image } = useImage({ path: project.image, folder: "projects" });
             rotateTo(0);
             brightnessQuick(1);
             lastBright = 1;
-          }, 150);
+          }, 200);
 
           const strength = gsap.utils.clamp(
             MIN,
@@ -140,10 +172,10 @@ const { image } = useImage({ path: project.image, folder: "projects" });
         root.addEventListener("mouseleave", () => {
           clearTimeout(idleTimer);
           const tl = gsap.timeline();
-          tl.to(image, { opacity: 0, scale: 0, duration: 0.4 }).to(image, {
+          tl.to(image, {
+            opacity: 0,
+            scale: 0,
             rotation: 0,
-            x: 0,
-            y: 0,
           });
         });
       });

@@ -73,7 +73,7 @@
 
     const { worker } = useGsap();
 
-    worker("[data-component='header']", (gsap) => {
+    worker({ selector: "[data-component='header']" }, (gsap) => {
       const linesSplit = SplitText.create("[data-gsap-name]", {
         type: "lines",
         mask: "lines",

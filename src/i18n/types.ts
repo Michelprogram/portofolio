@@ -1,12 +1,3 @@
-export type Project = {
-  title: string;
-  description: string;
-  technologies: string[];
-  link: string;
-  image: string;
-  date: Date;
-};
-
 export type Experience = {
   title: string;
   from: Date;
@@ -38,7 +29,6 @@ export type Translation = {
   };
   project: {
     title: string;
-    items: Project[];
   };
   experience: {
     title: string;

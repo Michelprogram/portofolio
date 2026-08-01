@@ -1,11 +1,18 @@
 ---
 import ProjectAstroComponent from "./Project.astro";
 import { useI18n } from "@/composables";
+import { getCollection } from "astro:content";
 
-const { translation } = useI18n(Astro.currentLocale);
+const { translation, locale } = useI18n(Astro.currentLocale);
 const {
-  project: { title, items },
+  project: { title },
 } = translation;
+
+const items = (await getCollection("projects")).map((p) => ({
+  ...p.data,
+  title: p.data[locale()].title,
+  description: p.data[locale()].description,
+}));
 ---
 
 <section
@@ -15,7 +22,7 @@ const {
   <h2 class="w-full text-5xl mt-4 tracking-wide xl:mt-0 xl:text-7xl">
     {title}
   </h2>
-  <div class="w-full flex flex-col gap-6">
+  <div class="w-full flex flex-col">
     {
       items.map((project, index) => (
         <ProjectAstroComponent project={project} index={index} />

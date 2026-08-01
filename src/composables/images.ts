@@ -2,7 +2,7 @@ import type { ImageMetadata } from "astro";
 
 export const useImage = (options: { path: string; folder: string }) => {
   const modules = import.meta.glob<{ default: ImageMetadata }>(
-    "/src/images/**/*.{jpg,jpeg,png,webp}",
+    "/src/images/**/*.{jpg,jpeg,png,webp,svg}",
     { eager: true },
   );
 
