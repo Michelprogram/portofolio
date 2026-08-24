@@ -1,183 +1,370 @@
 ---
-import { Image } from "astro:assets";
-import { useImage } from "@/composables/images";
-import { isPresent } from "@/utils/optional";
-import type { Project } from "@/collections";
+import type { Project } from "@/collections/projects";
+import { isAbsent, isPresent } from "@/utils";
+import { MoveUpRight, X } from "@lucide/astro";
 
 interface Props {
-  project: Project & { title: string; description: string };
+  project: Omit<Project, "fr" | "en"> & {
+    title: string;
+    description: string;
+  };
   index: number;
+  maxIndex: number;
+  className?: string;
 }
 
-const { project, index } = Astro.props;
+const { project, index, maxIndex, className } = Astro.props;
 
-const { image } = useImage({ path: project.image, folder: "projects" });
+const textMedia = () => {
+  if (isAbsent(project.media)) return "";
+
+  return project.media.type === "video" ? "Demo" : "Website";
+};
+
+const linkMedia = () => {
+  if (isAbsent(project.media)) return "";
+
+  return project.media.type === "video" ? project.media.src : project.media.url;
+};
 ---
 
-<div class="flex flex-col last:**:data-divider:hidden">
-  <div
-    class="grid grid-cols-5 content-center h-75"
-    data-component="project"
-    id={`project-${index}`}
-  >
-    <div class="hidden lg:block lg:col-span-2 relative">
-      <span class="tracking-widest hidden md:block"
-        >{String(index + 1).padStart(3, "0")}</span
-      >
-      {
-        isPresent(image) && (
-          <Image
-            data-gsap-image
-            class="absolute scale-0 opacity-0 top-0 left-0 w-55 h-75 object-contain rounded-md z-10"
-            src={image}
-            width={220}
-            height={300}
-            alt={project.title}
-          />
-        )
-      }
-    </div>
+<div
+  data-component="projects-card"
+  data-status="idle"
+  class={className +
+    " group size-full border data-[status='minimize']:cursor-pointer data-[status='idle']:cursor-pointer data-[status='open']:border-primary-green data-[status='minimize']:border-white rounded-sm grid grid-cols-[1fr_0px_0fr] data-[status='open']:gap-3.5"}
+>
+  <div data-left class="min-w-0 p-2.5">
     <div
-      class="col-span-5 flex flex-col gap-4 items-center text-center lg:col-span-3 lg:items-start lg:text-left"
+      data-left-content
+      class="h-full flex flex-col justify-between gap-6 px-5 py-4"
     >
-      <h3 class="text-3xl font-medium z-0">{project.title}</h3>
-      <p class="text-lg text-gray-400">{project.description}</p>
-      <div class="gap-2 hidden md:flex">
-        {
-          project.technologies.map((technology) => (
-            <span class=" bg-gray-800 rounded-md px-2 py-1 text-sm">
-              {technology}
-            </span>
-          ))
-        }
+      <div data-minimize class="flex justify-between">
+        <span class="tracking-widest text-xs font-light text-white/90">
+          {String(index + 1).padStart(3, "0")}
+        </span>
+        <p class="tracking-widest text-xs font-light text-white/90">
+          {project.date}
+        </p>
       </div>
-      <div class="flex gap-4 items-center">
-        <a href={project.link} class="underline relative" target="_blank">
-          <span class="font-medium relative inline-block py-2">
-            Get more details
-            <span
-              class="absolute bottom-0 left-0 block h-0.5 w-full bg-primary-green"
-              aria-hidden="true"></span>
-          </span></a
+      <div class="h-full flex items-center justify-center">
+        <h3 data-left-acronym class="text-6xl font-medium z-0">
+          {project.acronym}
+        </h3>
+      </div>
+      <p data-minimize class="font-light text-center">{project.title}</p>
+    </div>
+  </div>
+
+  <div
+    data-divider
+    class="w-px self-stretch bg-white origin-top scale-y-0 opacity-0"
+    aria-hidden="true"
+  >
+  </div>
+
+  <div data-right class="min-w-0 overflow-hidden opacity-0 pointer-events-none">
+    <div
+      data-right-content
+      class="h-full flex flex-col justify-between gap-6 px-5 py-4 opacity-0"
+    >
+      <div data-right-reveal class="flex items-start justify-between gap-4">
+        <span class="tracking-widest text-xs font-light text-white/90">
+          {String(index + 1).padStart(2, "0")} / {
+            String(maxIndex).padStart(2, "0")
+          }
+        </span>
+
+        <div class="flex items-center gap-3">
+          <button
+            type="button"
+            data-close
+            class="flex items-center gap-2 cursor-pointer rounded-full border border-white/80 px-3 py-1 text-[10px] tracking-widest uppercase hover:border-primary-green hover:text-primary-green transition-colors"
+          >
+            Close
+            <X class="size-4" />
+          </button>
+        </div>
+      </div>
+
+      <div class="flex flex-col gap-4 min-h-0">
+        <h3
+          data-right-reveal
+          class="text-4xl md:text-5xl xl:text-6xl font-medium leading-[0.95] tracking-tight"
         >
+          {project.title}
+        </h3>
+
+        <p
+          data-right-reveal
+          class="text-sm md:text-base font-light text-white/55 max-w-prose leading-relaxed"
+        >
+          {project.description}
+        </p>
+      </div>
+
+      <div data-right-reveal class="flex flex-wrap items-center gap-6">
+        <a
+          href={project.link}
+          class="m-auto w-fit relative lg:m-0"
+          target="_blank"
+        >
+          <span class="flex items-center gap-3"
+            >Source code <MoveUpRight class="size-4" /></span
+          >
+
+          <span
+            data-gsap-line
+            class="absolute bottom-0 left-0 block h-0.5 w-0 bg-primary-green"
+            aria-hidden="true"></span>
+        </a>
+
+        <a
+          href={linkMedia()}
+          class="m-auto w-fit relative lg:m-0"
+          target="_blank"
+        >
+          <span class="flex items-center gap-3"
+            >{textMedia()}
+            <MoveUpRight class="size-4" /></span
+          >
+
+          <span
+            data-gsap-line
+            class="absolute bottom-0 left-0 block h-0.5 w-0 bg-primary-green"
+            aria-hidden="true"></span>
+        </a>
+      </div>
+
+      <div data-right-reveal class="flex flex-col gap-3 min-h-0">
+        <div
+          class="border-t border-white/15 pt-4 flex flex-col gap-2 text-xs tracking-widest uppercase"
+        >
+          <div class="grid grid-cols-[7rem_1fr] gap-x-4 items-baseline">
+            <span class="text-white/40">Date</span>
+            <span class="text-white/90">{project.date}</span>
+          </div>
+          <div class="grid grid-cols-[7rem_1fr] gap-x-4 items-baseline">
+            <span class="text-white/40">Technologies</span>
+            <span class="text-white/90">
+              {project.technologies.join(" / ")}
+            </span>
+          </div>
+        </div>
       </div>
     </div>
   </div>
 
-  <div data-divider class="h-0.5 w-5/6 mx-auto bg-white rounded-2xl"></div>
-</div>
+  <script>
+    import { useGsap } from "@/composables";
+    import { Flip } from "gsap/all";
+    import type { CardState } from "./events";
+    import { isAbsent } from "@/utils";
 
-<script>
-  import { isAbsent } from "@/utils";
-  import { useGsap } from "@/composables";
+    const { workers } = useGsap();
 
-  const { worker } = useGsap();
+    const OPEN_GRID = "grid-cols-[0.5fr_1px_1fr]";
+    const CLOSED_GRID = "grid-cols-[1fr_0px_0fr]";
 
-  document
-    .querySelectorAll<HTMLDivElement>("[data-component='project']")
-    .forEach((root) => {
-      worker({ selector: `#${root.id}` }, (gsap, root) => {
-        const image = root.querySelector<HTMLImageElement>("[data-gsap-image]");
-        if (isAbsent(image)) return;
+    const ACRONYM_CLEAR_PROPS = "scale,yPercent,rotation,fontSize";
+    const LEFT_CONTENT_CLEAR_PROPS = "padding,gap";
+    const ACRONYM_MINIMIZED_SIZE = "1.25rem";
 
-        const container = image.parentElement;
-        if (isAbsent(container)) return;
+    let openTl: GSAPTimeline | null = null;
+    let closeTl: GSAPTimeline | null = null;
 
-        const IMAGE_W = Number(container.style.width);
-        const IMAGE_H = Number(container.style.height);
+    workers(
+      { selector: "[data-component='projects-card']" },
+      (gsap, root, q) => {
+        const left = root.querySelector<HTMLDivElement>("[data-left]");
+        const leftContent = root.querySelector<HTMLDivElement>(
+          "[data-left-content]",
+        );
 
-        const getOriginalCenter = () => {
-          const rect = container.getBoundingClientRect();
-          return {
-            x: rect.left + IMAGE_W / 2,
-            y: rect.top + IMAGE_H / 2,
-          };
+        const divider = root.querySelector<HTMLDivElement>("[data-divider]");
+
+        const right = root.querySelector<HTMLDivElement>("[data-right]");
+        const rightContent = root.querySelector<HTMLSpanElement>(
+          "[data-right-content]",
+        );
+        const minimizes = root.querySelectorAll<HTMLElement>("[data-minimize]");
+        const acronym = q("[data-left-acronym]");
+
+        const closeButton =
+          root.querySelector<HTMLButtonElement>("[data-close]");
+
+        // --- helpers de layout ---
+
+        const setOpenLayout = (open: boolean) => {
+          root.classList.toggle(OPEN_GRID, open);
+          root.classList.toggle(CLOSED_GRID, !open);
+
+          right?.classList.toggle("pointer-events-none", !open);
+          right?.classList.toggle("p-0", !open);
+          right?.classList.toggle("p-2.5", open);
         };
 
-        let originalPosition = getOriginalCenter();
-        const FAR = 400;
-        const MAX = 0.5;
-        const MIN = 0.3;
-        let lastX = 0;
-        let idleTimer: ReturnType<typeof setTimeout>;
+        const resetAcronymLayout = () => {
+          gsap.set(acronym, { clearProps: ACRONYM_CLEAR_PROPS });
+          gsap.set(leftContent, { clearProps: LEFT_CONTENT_CLEAR_PROPS });
+        };
 
-        const xTo = gsap.quickTo(image, "x", {
-          duration: 0.25,
-          ease: "power2.out",
-        });
-        const yTo = gsap.quickTo(image, "y", {
-          duration: 0.25,
-          ease: "power2.out",
-        });
-        const rotateTo = gsap.quickTo(image, "rotation", {
-          duration: 0.25,
-          ease: "power2.out",
-        });
+        const collapseAcronymLayout = () => {
+          gsap.set(acronym, { fontSize: ACRONYM_MINIMIZED_SIZE });
+          gsap.set(leftContent, { padding: 0, gap: 0 });
+        };
 
-        const proxy = { brightness: 1 };
-
-        const brightnessQuick = gsap.quickTo(proxy, "brightness", {
-          duration: 0.5,
-          ease: "power2.out",
-          onUpdate: () => {
-            image.style.filter = `brightness(${proxy.brightness})`;
-          },
-        });
-
-        root.addEventListener("mouseenter", (e: MouseEvent) => {
-          originalPosition = getOriginalCenter();
-
-          lastX = e.clientX;
-          gsap.set(image, { transformOrigin: "center center" });
-          gsap.to(image, {
-            opacity: 1,
-            scale: 1,
+        const hoverAcronym = (hovering: boolean) => {
+          gsap.to(acronym, {
+            scale: hovering ? 1.1 : 1,
+            yPercent: hovering ? -10 : 0,
+            rotation: hovering ? 3 : 0,
+            duration: 0.25,
+            ease: "power3.inOut",
           });
+        };
+
+        const showMinimizes = (animated: boolean) => {
+          if (!animated) {
+            gsap.set(minimizes, { autoAlpha: 1, height: "auto" });
+            return;
+          }
+
+          gsap
+            .timeline({ defaults: { ease: "power3.inOut" } })
+            .to(minimizes, { autoAlpha: 1, height: "auto", duration: 0.25 });
+        };
+
+        const hideMinimizes = () => {
+          gsap.set(minimizes, { autoAlpha: 0, height: 0 });
+        };
+
+        closeButton?.addEventListener("click", (e) => {
+          e.stopPropagation();
+
+          closeTl?.kill();
+
+          const state = Flip.getState([left, divider, right]);
+
+          closeTl = gsap
+            .timeline({
+              id: "project-close",
+              onComplete: () => {
+                root.dispatchEvent(
+                  new CustomEvent("project:close", { bubbles: true }),
+                );
+              },
+            })
+            .to(q("[data-gsap-line]"), {
+              width: "0%",
+              duration: 0.6,
+              ease: "power2.out",
+              stagger: { each: 0.15, from: "end" },
+            })
+            .set(q("[data-gsap-line]"), {
+              width: 0,
+            })
+            .to(q("[data-right-reveal]"), {
+              yPercent: 100,
+              autoAlpha: 0,
+              duration: 0.3,
+              stagger: { each: 0.1, from: "end" },
+            })
+            .to(divider, { scaleY: 0, duration: 0.35 }, "-=0.1")
+            .set(divider, { opacity: 0 })
+            .add(() => {
+              setOpenLayout(false);
+              Flip.from(state, { duration: 0.5, nested: true });
+            })
+            .set([right, rightContent], { autoAlpha: 0 });
         });
 
-        let lastBright = 1;
+        const statusHandlers: Record<CardState["status"], () => void> = {
+          idle: () => {
+            resetAcronymLayout();
+            showMinimizes(true);
+          },
 
-        root.addEventListener("mousemove", (e: MouseEvent) => {
-          const deltaX = e.clientX - lastX;
-          lastX = e.clientX;
+          open: () => {
+            openTl?.kill();
+            openTl = gsap.timeline({ defaults: { ease: "power3.inOut" } });
 
-          const dx = e.clientX - originalPosition.x;
-          const dy = e.clientY - originalPosition.y;
-          const dist = Math.hypot(dx, dy);
+            showMinimizes(false);
+            resetAcronymLayout();
 
-          const tilt = gsap.utils.clamp(-10, 10, -deltaX * 0.8);
-          rotateTo(tilt);
-          lastBright += 0.003;
-          const bright = gsap.utils.clamp(1, 1.2, lastBright);
+            const state = Flip.getState([left, divider, right]);
+            setOpenLayout(true);
 
-          brightnessQuick(bright);
+            openTl
+              .add(Flip.from(state, { duration: 0.5, nested: true }))
+              .set([right, rightContent], { autoAlpha: 1 })
+              .set(divider, { autoAlpha: 1 })
+              .fromTo(
+                divider,
+                { scaleY: 0 },
+                { scaleY: 1, duration: 0.35, transformOrigin: "top center" },
+                "-=0.1",
+              )
+              .fromTo(
+                q("[data-right-reveal]"),
+                { yPercent: 100, autoAlpha: 0 },
+                { yPercent: 0, autoAlpha: 1, stagger: 0.12 },
+              )
+              .to(q("[data-gsap-line]"), {
+                width: "100%",
+                duration: 0.6,
+                ease: "power2.out",
+                stagger: 0.4,
+              });
+          },
 
-          clearTimeout(idleTimer);
-          idleTimer = setTimeout(() => {
-            rotateTo(0);
-            brightnessQuick(1);
-            lastBright = 1;
-          }, 200);
+          minimize: () => {
+            setOpenLayout(false);
+            gsap.set(divider, { opacity: 0 });
+            gsap.set([right, rightContent], { autoAlpha: 0 });
+            hideMinimizes();
+            collapseAcronymLayout();
+          },
+        };
 
-          const strength = gsap.utils.clamp(
-            MIN,
-            MAX,
-            gsap.utils.mapRange(0, FAR, MAX, MIN, dist),
-          );
+        root.addEventListener(
+          "project:status",
+          (evt: CustomEvent<CardState>) => {
+            statusHandlers[evt.detail.status]?.();
+          },
+        );
 
-          xTo(dx * strength);
-          yTo(dy * strength);
+        /*         root.addEventListener("mouseenter", () => {
+          if (root.dataset.status !== "open") hoverAcronym(true);
         });
 
         root.addEventListener("mouseleave", () => {
-          clearTimeout(idleTimer);
-          const tl = gsap.timeline();
-          tl.to(image, {
-            opacity: 0,
-            scale: 0,
-            rotation: 0,
-          });
+          if (root.dataset.status !== "open") hoverAcronym(false);
+        }); */
+
+        root.addEventListener("mousemove", (e) => {
+          const leftContentRect = leftContent?.getBoundingClientRect();
+
+          const status = root.dataset.status;
+
+          if (status === "minimize") return;
+
+          if (isAbsent(leftContentRect)) return;
+
+          const btnCenter = {
+            x: leftContentRect.left + leftContentRect.width / 2,
+            y: leftContentRect.top + leftContentRect.height / 2,
+          };
+
+          const dx = e.clientX - btnCenter.x;
+          const dy = e.clientY - btnCenter.y;
+          const dist = Math.sqrt(dx * dx + dy * dy);
+          if (dist < 300) {
+            const pull = (300 - dist) / 300;
+            gsap.to(acronym, { x: dx * pull * 0.4, y: dy * pull * 0.4 });
+          }
         });
-      });
-    });
-</script>
+      },
+    );
+  </script>
+</div>

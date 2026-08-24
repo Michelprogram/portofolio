@@ -1,19 +1,3 @@
-export type Experience = {
-  title: string;
-  from: Date;
-  to: Date;
-  place: string;
-  icon: string;
-  description: string;
-};
-
-export type Article = {
-  title: string;
-  description: string;
-  image: string;
-  link: string;
-};
-
 export type Translation = {
   hero: {
     titleLine1: string;
@@ -32,7 +16,6 @@ export type Translation = {
   };
   experience: {
     title: string;
-    items: Experience[];
   };
   next: {
     title: string;
@@ -45,6 +28,5 @@ export type Translation = {
   articles: {
     title: string;
     description: string;
-    items: Article[];
   };
 };

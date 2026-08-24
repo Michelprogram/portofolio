@@ -1,18 +1,30 @@
 ---
-import ProjectAstroComponent from "./Project.astro";
 import { useI18n } from "@/composables";
 import { getCollection } from "astro:content";
+import Project from "./Project.astro";
+import { formatAcronym, formatDate } from "@/utils";
 
 const { translation, locale } = useI18n(Astro.currentLocale);
 const {
   project: { title },
 } = translation;
 
-const items = (await getCollection("projects")).map((p) => ({
-  ...p.data,
-  title: p.data[locale()].title,
-  description: p.data[locale()].description,
-}));
+const items = (await getCollection("projects")).map((p) => {
+  const { acronym, date, fr, en } = p.data;
+
+  const lang = locale();
+
+  return {
+    ...p.data,
+    acronym: formatAcronym("/", acronym),
+    date: formatDate(date, lang),
+    title: lang === "fr" ? fr.title : en.title,
+    description: lang === "fr" ? fr.description : en.description,
+  };
+});
+
+const isNthChild = (targets: number[], nth: number) =>
+  `${targets.includes(nth) ? "col-span-2" : "col-span-1"} row-span-1`;
 ---
 
 <section
@@ -22,11 +34,112 @@ const items = (await getCollection("projects")).map((p) => ({
   <h2 class="w-full text-5xl mt-4 tracking-wide xl:mt-0 xl:text-7xl">
     {title}
   </h2>
-  <div class="w-full flex flex-col">
+  <div
+    data-projects
+    data-open="false"
+    class="w-full h-150 grid grid-cols-4 grid-rows-2 gap-3
+    data-[open=true]:grid-cols-5
+    data-[open=true]:grid-rows-[minmax(0,1fr)_60px]
+    data-[open=true]:**:data-[component=projects-card]:col-span-1
+    data-[open=true]:**:data-[component=projects-card]:row-start-2
+    data-[open=true]:[&_[data-component=projects-card][data-status=open]]:col-span-full
+    data-[open=true]:[&_[data-component=projects-card][data-status=open]]:row-start-1"
+  >
     {
-      items.map((project, index) => (
-        <ProjectAstroComponent project={project} index={index} />
-      ))
+      items.map((project, index) => {
+        return (
+          <Project
+            project={project}
+            index={index}
+            maxIndex={items.length}
+            className={isNthChild([0, 4], index)}
+          />
+        );
+      })
     }
   </div>
 </section>
+
+<script>
+  import { useGsap } from "@/composables";
+  import { isAbsent, type Maybe } from "@/utils";
+  import { Flip } from "gsap/all";
+  import type { CardState } from "./events";
+
+  const { worker } = useGsap();
+
+  worker({ selector: "[data-component='projects']" }, (gsap, root) => {
+    let openCard: Maybe<HTMLDivElement> = null;
+
+    const projectsContainer =
+      root.querySelector<HTMLDivElement>("[data-projects]");
+
+    const cards = [
+      ...root.querySelectorAll<HTMLDivElement>(
+        "[data-component='projects-card']",
+      ),
+    ];
+
+    if (isAbsent(projectsContainer)) return;
+
+    const open = (next: Maybe<HTMLDivElement>) => {
+      const state = Flip.getState(cards);
+
+      projectsContainer.dataset.open = String(Boolean(next));
+
+      cards.forEach((c) => {
+        c.dataset.status = !next ? "idle" : c === next ? "open" : "minimize";
+      });
+
+      openCard = next;
+
+      const tl = gsap.timeline();
+
+      tl.add(
+        Flip.from(state, {
+          duration: 0.8,
+          ease: "power3.inOut",
+          absolute: true,
+        }),
+      ).call(() => {
+        cards.forEach((c) => {
+          const status = isAbsent(next)
+            ? "idle"
+            : c === next
+              ? "open"
+              : "minimize";
+
+          c.dataset.status = status;
+
+          c.dispatchEvent(
+            new CustomEvent<CardState>("project:status", {
+              detail: { status },
+            }),
+          );
+        });
+      }, []);
+    };
+
+    const tl = gsap.timeline({
+      defaults: { duration: 0.45, ease: "power2.out" },
+      scrollTrigger: {
+        trigger: root,
+        start: "top 20%",
+      },
+    });
+
+    cards.forEach((card, i) => {
+      tl.from(card, { autoAlpha: 0, scale: 0 }, i * 0.12);
+
+      card.addEventListener("click", () => {
+        const status = card.dataset.status;
+
+        if (status !== "open") {
+          open(card === openCard ? null : card);
+        }
+      });
+    });
+
+    root.addEventListener("project:close", () => open(null));
+  });
+</script>

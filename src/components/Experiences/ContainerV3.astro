@@ -1,0 +1,155 @@
+---
+import { useI18n } from "@/composables";
+import { computeDateFromBeginning } from "@/utils/utils";
+
+import Path from "./Path.astro";
+
+import { getCollection } from "astro:content";
+
+const { translation, locale } = useI18n(Astro.currentLocale);
+const {
+  experience: { title },
+} = translation;
+
+const experiences = (await getCollection("experiences"))
+  .sort(
+    (a, b) =>
+      computeDateFromBeginning(new Date(b.data.from)) -
+      computeDateFromBeginning(new Date(a.data.from)),
+  )
+  .map((experience) => {
+    return {
+      ...experience.data,
+      title: experience.data[locale()].title,
+      description: experience.data[locale()].description,
+    };
+  });
+---
+
+<section
+  class="mt-12 m-auto size-full flex gap-8 flex-col w-6xl pb-12"
+  data-component="experiences"
+>
+  <h2 class="text-7xl w-full tracking-wide">{title}</h2>
+  <p data-progress></p>
+  <div
+    class="flex flex-col gap-6 relative w-full min-h-[500px] perspective-distant"
+    data-container
+  >
+    <div class="size-full">
+      <div
+        class="absolute h-[150px] w-[80px] bg-amber-300 opacity-0"
+        data-card="0"
+      >
+      </div>
+      <div class="absolute top-0 left-0 z-10">
+        <svg
+          width="1059"
+          height="334"
+          viewBox="0 0 1059 334"
+          fill="none"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <circle data-dot r="10" fill="red"></circle>
+          <path
+            data-path
+            d="M5.50107 328.001C5.50107 328.001 142.204 73.2927 298.001 50.5007C475.926 24.4715 505.341 307.57 685.001 300.001C869.057 292.246 1053.5 5.50067 1053.5 5.50067"
+            stroke="#4EE1A0"
+            stroke-width="11"
+            stroke-linecap="round"></path>
+        </svg>
+      </div>
+      <div class="absolute top-0 left-0">
+        <svg
+          width="1059"
+          height="334"
+          viewBox="0 0 1059 334"
+          fill="none"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <path
+            d="M5.50107 328.001C5.50107 328.001 142.204 73.2927 298.001 50.5007C475.926 24.4715 505.341 307.57 685.001 300.001C869.057 292.246 1053.5 5.50067 1053.5 5.50067"
+            stroke="gray"
+            stroke-opacity="0.4"
+            stroke-width="11"
+            stroke-dasharray="10 30"
+            stroke-linecap="round"></path>
+        </svg>
+      </div>
+    </div>
+  </div>
+</section>
+<script>
+  import { useGsap } from "@/composables";
+  import { ScrollTrigger } from "gsap/ScrollTrigger";
+  import { ScrollSmoother } from "gsap/ScrollSmoother";
+
+  const { worker } = useGsap();
+
+  worker(
+    {
+      selector: "[data-component='experiences']",
+    },
+    (gsap, root) => {
+      const progress =
+        document.querySelector<HTMLParagraphElement>("[data-progress]");
+
+      const cards = new Map();
+      cards.set(30, document.querySelector("[data-card='0']"));
+
+      if (!progress) return;
+
+      const tl = gsap.timeline();
+
+      const card = cards.get(30);
+      let shown = false;
+
+      tl.from("[data-path]", {
+        drawSVG: 0,
+        ease: "none",
+        duration: 1,
+      });
+
+      tl.to(
+        "[data-dot]",
+        {
+          motionPath: {
+            path: "[data-path]",
+            align: "[data-path]",
+            alignOrigin: [0.5, 0.5],
+          },
+          ease: "none",
+          duration: 1,
+        },
+        0,
+      );
+
+      ScrollTrigger.create({
+        id: "test",
+        trigger: root,
+        markers: true,
+        start: "top top",
+        pin: true,
+        scrub: true,
+        end: "+=2000",
+        animation: tl,
+        onUpdate: (self) => {
+          const res = Number((self.progress * 100).toFixed(0));
+
+          progress.textContent = res.toString();
+
+          const past = self.progress >= 0.3;
+          if (past === shown) return; // rien n’a changé
+
+          shown = past;
+          gsap.to(card, {
+            opacity: shown ? 1 : 0,
+            duration: 0.4,
+            ease: "power1.out",
+            overwrite: true,
+          });
+        },
+      });
+    },
+  );
+</script>

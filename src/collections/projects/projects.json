@@ -1,6 +1,11 @@
 [
     {
         "id": "photon-parser",
+        "acronym": "PP",
+        "media": {
+            "type": "website",
+            "url": "https://autodruid.github.io/documentation/photon-parser/"
+        },
         "technologies": [
             "Go",
             "Photon"
@@ -19,6 +24,11 @@
     },
     {
         "id": "albion-bot",
+        "acronym": "AB",
+        "media": {
+            "type": "video",
+            "src": "https://youtu.be/lefK_vcU3ew"
+        },
         "technologies": [
             "Python",
             "OpenCV",
@@ -38,6 +48,7 @@
     },
     {
         "id": "bittorrent-client",
+        "acronym": "BT",
         "technologies": [
             "Go",
             "Bittorrent",
@@ -57,6 +68,7 @@
     },
     {
         "id": "speedertyper",
+        "acronym": "ST",
         "technologies": [
             "MongoDB",
             "Go",
@@ -77,6 +89,7 @@
     },
     {
         "id": "clean-your-twitter",
+        "acronym": "CT",
         "technologies": [
             "Nuxt",
             "Go",
@@ -97,6 +110,7 @@
     },
     {
         "id": "chat-app-htmx",
+        "acronym": "CA",
         "technologies": [
             "HTMX",
             "Go",
@@ -113,45 +127,6 @@
         "en": {
             "title": "21 chat apps",
             "description": "One of the classics in side project, but this one introduces HTMX in addition to learning the basics of websockets!"
-        }
-    },
-    {
-        "id": "magic-scanner",
-        "technologies": [
-            "OCR",
-            "Heroku",
-            "PWA",
-            "Notion API"
-        ],
-        "link": "https://github.com/Michelprogram/magic-scanner",
-        "image": "placeholder",
-        "date": "2023-10-01",
-        "fr": {
-            "title": "Scanner Magic: The Gathering",
-            "description": "Inventoriser ses cartes, quelle corvée autant le faire avec de l'OCR."
-        },
-        "en": {
-            "title": "Scanner Magic: The Gathering",
-            "description": "What a boring task to inventory your cards, let's do it with OCR."
-        }
-    },
-    {
-        "id": "essence-pas-chere",
-        "technologies": [
-            "Python",
-            "Flask",
-            "Geolocation"
-        ],
-        "link": "https://github.com/Michelprogram/essence",
-        "image": "placeholder",
-        "date": "2022-04-01",
-        "fr": {
-            "title": "Essence pas chère",
-            "description": "Toi aussi tu veux être un vrai rat et trouver la station-service la moins chère près de chez toi."
-        },
-        "en": {
-            "title": "Essence pas chère",
-            "description": "You too want to be a real rat and find the cheapest gas station near you."
         }
     }
 ]

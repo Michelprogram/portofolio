@@ -1,0 +1,77 @@
+[
+    {
+        "id": "experience-1",
+        "from": "2016-01-01",
+        "to": "2019-01-01",
+        "place": "Tours, France",
+        "icon": "https://raw.githubusercontent.com/Tarikul-Islam-Anik/Animated-Fluent-Emojis/master/Emojis/Smilies/Alien%20Monster.png",
+        "fr": {
+            "description": "Durant ma première année de lycée, j'ai commencé à programmer avec Python. C'était un vrai coup de foudre, et je savais que je voulais continuer à apprendre plus sur le sujet.",
+            "title": "Apprendre ..."
+        },
+        "en": {
+            "description": "During my freshman year of high school, I dipped my toes into programming with Python. It instantly clicked, and I just knew I wanted to keep learning more about it.",
+            "title": "Learning ..."
+        }
+    },
+    {
+        "id": "experience-2",
+        "from": "2019-01-01",
+        "to": "2021-01-01",
+        "place": "Tours, France",
+        "icon": "https://raw.githubusercontent.com/Tarikul-Islam-Anik/Animated-Fluent-Emojis/master/Emojis/Travel%20and%20places/Fire.png",
+        "fr": {
+            "description": "Je me souviens plus pourquoi, mais j'ai décidé de me lancer dans root-me.org. L'un des premiers défis était de construire un serveur TCP, alors j'ai commencé à hacker à partir de chez moi tout en apprenant les bases de C/C++ à l'université.",
+            "title": "Plus intense"
+        },
+        "en": {
+            "description": "I honestly can't remember why, but I decided to tackle root-me.org. One of the first challenges was building a TCP server, so I started hacking away at it from home while learning the basics of C/C++ at university.",
+            "title": "Way more intensive"
+        }
+    },
+    {
+        "id": "experience-3",
+        "from": "2021-01-01",
+        "to": "2022-01-01",
+        "place": "Nantes, France",
+        "icon": "https://raw.githubusercontent.com/Tarikul-Islam-Anik/Animated-Fluent-Emojis/master/Emojis/Travel%20and%20places/Rocket.png",
+        "fr": {
+            "description": "J'avais besoin d'une entreprise pour mon stage de fin d'études, et j'ai trouvé un emploi chez EDF, la géante énergétique française. J'ai construit des applications web en utilisant Symfony et codé des plugins C# pour AutoCAD. C'est aussi à cette époque que j'ai vraiment commencé à creuser dans le développement juste pour le plaisir (projets côtés).",
+            "title": "Sandwich course EDF"
+        },
+        "en": {
+            "description": "I needed a company for my work-study program and landed a spot at EDF, the French energy giant. I built web apps using Symfony and coded C# plugins for AutoCAD. This is also when I really started deep-diving into development just for fun (side projects).",
+            "title": "Sandwich course EDF"
+        }
+    },
+    {
+        "id": "experience-4",
+        "from": "2022-01-01",
+        "to": "2024-01-01",
+        "place": "Rennes, France",
+        "icon": "https://raw.githubusercontent.com/Tarikul-Islam-Anik/Animated-Fluent-Emojis/master/Emojis/Food/Beer%20Mug.png",
+        "fr": {
+            "description": "J'ai continué à travailler chez EDF pendant mes études de master, tout en me concentrant sur l'automatisation, en utilisant Jenkins et Ansible pour construire une architecture DevOps complète.",
+            "title": "Dernier pas"
+        },
+        "en": {
+            "description": "Still happily working at EDF while grinding through my Master's degree! During this phase, I shifted gears into automation, using Jenkins and Ansible to build out a complete DevOps architecture.",
+            "title": "Final step"
+        }
+    },
+    {
+        "id": "experience-5",
+        "from": "2024-01-01",
+        "to": "2026-01-01",
+        "place": "Montreal, Canada",
+        "icon": "https://raw.githubusercontent.com/Tarikul-Islam-Anik/Animated-Fluent-Emojis/master/Emojis/Travel%20and%20places/Flag%20Canada.png",
+        "fr": {
+            "description": "J'ai traversé l'océan pour commencer un nouveau diplôme en informatique à ETS. Pendant mes études, j'ai découvert une opportunité incroyable chez une nouvelle startup appelée Caido. Ça m'a plongé dans un domaine que je ne connaissais pas bien, mais j'ai fini par me spécialiser comme développeur frontend travaillant avec de superbes technologies.",
+            "title": "Au Canada"
+        },
+        "en": {
+            "description": "I crossed the ocean to start a new CS degree at ETS. While studying, I stumbled into an amazing opportunity at a brand new startup called Caido. It threw me into a field I wasn't super familiar with networking but I ended up specializing as a frontend engineer working with some awesome tech.",
+            "title": "Time to move to Canada"
+        }
+    }
+]

@@ -1,0 +1,32 @@
+[
+    {
+        "id": "article-1",
+        "title": "Badminton",
+        "description": "I've been playing badminton for a few years now. I've played in a few tournaments and won a few medals.",
+        "link": "/hobbies/badminton"
+    },
+    {
+        "id": "article-2",
+        "title": "Video games",
+        "description": "I've been playing video games for a few years now. I've played a lot of games and I've won a few awards.",
+        "link": "/hobbies/video-games"
+    },
+    {
+        "id": "article-3",
+        "title": "Skateboarding",
+        "description": "I've been skateboarding for a few years now. I've skated a lot of parks and I've won a few awards.",
+        "link": "/hobbies/skateboarding"
+    },
+    {
+        "id": "article-4",
+        "title": "Chess",
+        "description": "I've been playing chess for a few years now. I've played a lot of games and I've won a few awards.",
+        "link": "/hobbies/chess"
+    },
+    {
+        "id": "article-5",
+        "title": "Movies/Books",
+        "description": "I've been watching movies and reading books for a few years now. I've watched a lot of movies and I've read a lot of books.",
+        "link": "sens critiques links todo"
+    }
+]
