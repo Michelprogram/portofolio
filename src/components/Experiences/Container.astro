@@ -2,7 +2,6 @@
 import { useI18n } from "@/composables";
 import { computeDateFromBeginning } from "@/utils/utils";
 import Experience from "./Experience.astro";
-import Path from "./Path.astro";
 
 import { getCollection } from "astro:content";
 
@@ -27,7 +26,7 @@ const experiences = (await getCollection("experiences"))
 ---
 
 <section
-  class="mt-12 m-auto size-full flex gap-8 flex-col w-6xl pb-12"
+  class="m-auto mt-12 flex size-full w-6xl flex-col gap-8 pb-12"
   data-component="experiences"
 >
   {
@@ -40,11 +39,11 @@ const experiences = (await getCollection("experiences"))
       />
     ))
   }
-  <h2 class="text-7xl w-full tracking-wide">{title}</h2>
-  <div class="my-18 flex flex-col gap-6 relative w-full h-175" data-container>
+  <h2 class="w-full text-7xl tracking-wide">{title}</h2>
+  <div class="relative my-18 flex h-175 w-full flex-col gap-6" data-container>
     <div class="relative size-full">
       <svg
-        class="absolute left-[50%] top-[50%] translate-x-[-50%] translate-y-[-50%] size-full z-10"
+        class="absolute top-[50%] left-[50%] z-10 size-full translate-x-[-50%] translate-y-[-50%]"
         width="1059"
         height="334"
         viewBox="0 0 1059 334"
@@ -64,21 +63,21 @@ const experiences = (await getCollection("experiences"))
               <g
                 data-checkpoint={index}
                 data-threshold={exp.threshold}
-                class="cursor-pointer group"
+                class="group cursor-pointer"
                 role="button"
                 tabindex="0"
               >
                 <circle
                   r="16"
-                  class="fill-primary-green/10 opacity-0 group-hover:opacity-100 transition-all duration-300 scale-75 group-hover:scale-100"
+                  class="fill-primary-green/10 scale-75 opacity-0 transition-all duration-300 group-hover:scale-100 group-hover:opacity-100"
                 />
                 <circle
                   r="7"
-                  class="fill-neutral-900 stroke-white/40 group-hover:stroke-primary-green transition-colors stroke-2"
+                  class="group-hover:stroke-primary-green fill-neutral-900 stroke-white/40 stroke-2 transition-colors"
                 />
                 <circle
                   r="3.5"
-                  class="fill-white group-hover:fill-primary-green transition-colors"
+                  class="group-hover:fill-primary-green fill-white transition-colors"
                 />
               </g>
             ))
@@ -87,7 +86,7 @@ const experiences = (await getCollection("experiences"))
       </svg>
 
       <svg
-        class="absolute left-[50%] top-[50%] translate-x-[-50%] translate-y-[-50%] size-full"
+        class="absolute top-[50%] left-[50%] size-full translate-x-[-50%] translate-y-[-50%]"
         width="1059"
         height="334"
         viewBox="0 0 1059 334"
@@ -126,7 +125,7 @@ const experiences = (await getCollection("experiences"))
       const checkpoints =
         root.querySelectorAll<SVGGElement>("[data-checkpoint]");
 
-      checkpoints.forEach((cp, i) => {
+      checkpoints.forEach((cp) => {
         const threshold = Number(cp.dataset.threshold);
         const point = path.getPointAtLength((threshold / 100) * totalLength);
 

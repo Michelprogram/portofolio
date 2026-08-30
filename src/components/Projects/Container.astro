@@ -28,22 +28,16 @@ const isNthChild = (targets: number[], nth: number) =>
 ---
 
 <section
-  class="border-t-2 w-5/6 flex gap-8 flex-col items-center justify-center m-auto border-solid pb-5 xl:pb-12 xl:mt-12 xl:border-t-0 xl:border-b-2 xl:w-6xl xl:size-full"
+  class="m-auto flex w-5/6 flex-col items-center justify-center gap-8 border-t-2 border-solid pb-5 xl:mt-12 xl:size-full xl:w-6xl xl:border-t-0 xl:border-b-2 xl:pb-12"
   data-component="projects"
 >
-  <h2 class="w-full text-5xl mt-4 tracking-wide xl:mt-0 xl:text-7xl">
+  <h2 class="mt-4 w-full text-5xl tracking-wide xl:mt-0 xl:text-7xl">
     {title}
   </h2>
   <div
     data-projects
     data-open="false"
-    class="w-full h-150 grid grid-cols-4 grid-rows-2 gap-3
-    data-[open=true]:grid-cols-5
-    data-[open=true]:grid-rows-[minmax(0,1fr)_60px]
-    data-[open=true]:**:data-[component=projects-card]:col-span-1
-    data-[open=true]:**:data-[component=projects-card]:row-start-2
-    data-[open=true]:[&_[data-component=projects-card][data-status=open]]:col-span-full
-    data-[open=true]:[&_[data-component=projects-card][data-status=open]]:row-start-1"
+    class="grid h-150 w-full grid-cols-4 grid-rows-2 gap-3 data-[open=true]:grid-cols-5 data-[open=true]:grid-rows-[minmax(0,1fr)_60px] data-[open=true]:**:data-[component=projects-card]:col-span-1 data-[open=true]:**:data-[component=projects-card]:row-start-2 data-[open=true]:[&_[data-component=projects-card][data-status=open]]:col-span-full data-[open=true]:[&_[data-component=projects-card][data-status=open]]:row-start-1"
   >
     {
       items.map((project, index) => {

@@ -29,20 +29,20 @@ const getLinkDomain = (url: string) => {
     width: `${width}px`,
     height: `${height}px`,
   }}
-  class="bg-neutral-900/90 text-white border border-white/15 rounded-2xl p-6 absolute left-0 flex flex-col justify-between shadow-xl select-none"
+  class="absolute left-0 flex flex-col justify-between rounded-2xl border border-white/15 bg-neutral-900/90 p-6 text-white shadow-xl select-none"
 >
   <div data-title>
-    <h3 class="text-xl font-bold text-center">{hobby.title}</h3>
+    <h3 class="text-center text-xl font-bold">{hobby.title}</h3>
   </div>
 
-  <div data-details class="opacity-0 flex flex-col gap-4 my-auto">
-    <p class="text-sm text-center text-white/80 leading-relaxed">
+  <div data-details class="my-auto flex flex-col gap-4 opacity-0">
+    <p class="text-center text-sm leading-relaxed text-white/80">
       {hobby.description}
     </p>
 
     {
       hobby.links && hobby.links.length > 0 && (
-        <div class="flex flex-wrap items-center justify-center gap-2 text-xs text-primary-green">
+        <div class="text-primary-green flex flex-wrap items-center justify-center gap-2 text-xs">
           {hobby.links.map((link, i) => (
             <>
               {i > 0 && <span class="text-white/40 select-none">•</span>}
@@ -50,7 +50,7 @@ const getLinkDomain = (url: string) => {
                 href={link}
                 target="_blank"
                 rel="noopener noreferrer"
-                class="hover:underline hover:text-white transition-colors"
+                class="transition-colors hover:text-white hover:underline"
               >
                 {getLinkDomain(link)}
               </a>

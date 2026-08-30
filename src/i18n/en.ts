@@ -29,8 +29,4 @@ export const en: Translation = {
   hobbies: {
     title: "Hobbies",
   },
-  articles: {
-    title: "Articles",
-    description: "by me",
-  },
 };

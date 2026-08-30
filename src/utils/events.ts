@@ -1,31 +1,30 @@
-import { isAbsent, isPresent } from "./optional";
+import { isAbsent } from "./optional";
 
 type Events = {
   "experience:update": { progress: number };
   "project:status": { status: "idle" | "open" | "minimize" };
 };
 
-type Bus<K extends keyof Events> = {
+type EventCallback = (payload: never) => void;
+
+type Bus = {
   id: string;
-  cb: (payload: Events[K]) => void;
+  cb: EventCallback;
 };
 
-const store = new Map<
-  keyof Events,
-  Array<{ id: string; cb: (payload: any) => void }>
->();
+const store = new Map<keyof Events, Bus[]>();
 
 export const useEventBus = () => {
   const subscribe = <K extends keyof Events>(
     event: K,
     cb: (payload: Events[K]) => void,
   ) => {
-    const item: Bus<K> = {
+    const item: Bus = {
       id: crypto.randomUUID(),
       cb,
     };
 
-    const callbacks = store.getOrInsert(event, new Array());
+    const callbacks = store.getOrInsert(event, []);
 
     callbacks.push(item);
 
@@ -41,7 +40,9 @@ export const useEventBus = () => {
   const publish = <K extends keyof Events>(event: K, payload: Events[K]) => {
     const callbacks = store.get(event);
     if (isAbsent(callbacks)) return;
-    callbacks.forEach(({ cb }) => cb(payload));
+    callbacks.forEach(({ cb }) =>
+      (cb as (payload: Events[K]) => void)(payload),
+    );
   };
 
   return {

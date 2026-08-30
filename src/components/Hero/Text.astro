@@ -12,13 +12,13 @@ const { class: className } = Astro.props;
 
 <div
   class:list={[
-    "m-auto mt-4 flex flex-col gap-6 justify-center text-center w-4/5 md:gap-6 md:mt-0 lg:m-0 lg:w-full lg:text-left ",
+    "m-auto mt-4 flex w-4/5 flex-col justify-center gap-6 text-center md:mt-0 md:gap-6 lg:m-0 lg:w-full lg:text-left",
     className,
   ]}
   data-component="hero"
 >
   <h1
-    class="m-auto text-5xl/15 text-center w-fit font-bold lg:text-start lg:text-8xl/25 lg:m-0 lg:mb-4 xl:text-9xl/35"
+    class="m-auto w-fit text-center text-5xl/15 font-bold lg:m-0 lg:mb-4 lg:text-start lg:text-8xl/25 xl:text-9xl/35"
     data-gsap-title
   >
     <span id="title" class="block"> {hero.titleLine1}</span><br />
@@ -27,13 +27,13 @@ const { class: className } = Astro.props;
       Dorian
       <span
         data-gsap-line
-        class="absolute bottom-0 left-0 h-1 w-0 bg-primary-green"
+        class="bg-primary-green absolute bottom-0 left-0 h-1 w-0"
         aria-hidden="true"></span>
     </span>
   </h1>
 
   <p
-    class="text-xl lg:text-start lg:text-2xl text-primary-gray font-semibold"
+    class="text-primary-gray text-xl font-semibold lg:text-start lg:text-2xl"
     data-gsap-subtitle
   >
     {hero.subtitle}
@@ -45,13 +45,13 @@ const { class: className } = Astro.props;
     data-gsap-title
   >
     <span
-      class="font-bold relative inline-block py-2 text-2xl"
+      class="relative inline-block py-2 text-2xl font-bold"
       data-gsap-jumping
     >
       {hero.cta}
       <span
         data-gsap-line
-        class="absolute bottom-0 left-0 block h-0.5 w-0 bg-primary-green"
+        class="bg-primary-green absolute bottom-0 left-0 block h-0.5 w-0"
         aria-hidden="true"></span>
     </span>
   </a>
@@ -71,21 +71,6 @@ const { class: className } = Astro.props;
     const titleSplit = SplitText.create("[data-gsap-title]", {
       type: "lines",
       mask: "lines",
-    });
-
-    const subTitleSplit = SplitText.create("[data-gsap-subtitle]", {
-      type: "lines",
-      mask: "lines",
-      autoSplit: true,
-      onSplit(self) {
-        return gsap.from(self.lines, {
-          duration: 1,
-          y: 100,
-          autoAlpha: 0,
-          stagger: 0.05,
-          ease: "power3.out",
-        });
-      },
     });
 
     const chars = SplitText.create("[data-gsap-jumping]", {

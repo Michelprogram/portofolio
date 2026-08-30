@@ -1,6 +1,6 @@
 ---
 import type { Project } from "@/collections/projects";
-import { isAbsent, isPresent } from "@/utils";
+import { isAbsent } from "@/utils";
 import { MoveUpRight, X } from "@lucide/astro";
 
 interface Props {
@@ -37,39 +37,39 @@ const linkMedia = () => {
   <div data-left class="min-w-0 p-2.5">
     <div
       data-left-content
-      class="h-full flex flex-col justify-between gap-6 px-5 py-4"
+      class="flex h-full flex-col justify-between gap-6 px-5 py-4"
     >
       <div data-minimize class="flex justify-between">
-        <span class="tracking-widest text-xs font-light text-white/90">
+        <span class="text-xs font-light tracking-widest text-white/90">
           {String(index + 1).padStart(3, "0")}
         </span>
-        <p class="tracking-widest text-xs font-light text-white/90">
+        <p class="text-xs font-light tracking-widest text-white/90">
           {project.date}
         </p>
       </div>
-      <div class="h-full flex items-center justify-center">
-        <h3 data-left-acronym class="text-6xl font-medium z-0">
+      <div class="flex h-full items-center justify-center">
+        <h3 data-left-acronym class="z-0 text-6xl font-medium">
           {project.acronym}
         </h3>
       </div>
-      <p data-minimize class="font-light text-center">{project.title}</p>
+      <p data-minimize class="text-center font-light">{project.title}</p>
     </div>
   </div>
 
   <div
     data-divider
-    class="w-px self-stretch bg-white origin-top scale-y-0 opacity-0"
+    class="w-px origin-top scale-y-0 self-stretch bg-white opacity-0"
     aria-hidden="true"
   >
   </div>
 
-  <div data-right class="min-w-0 overflow-hidden opacity-0 pointer-events-none">
+  <div data-right class="pointer-events-none min-w-0 overflow-hidden opacity-0">
     <div
       data-right-content
-      class="h-full flex flex-col justify-between gap-6 px-5 py-4 opacity-0"
+      class="flex h-full flex-col justify-between gap-6 px-5 py-4 opacity-0"
     >
       <div data-right-reveal class="flex items-start justify-between gap-4">
-        <span class="tracking-widest text-xs font-light text-white/90">
+        <span class="text-xs font-light tracking-widest text-white/90">
           {String(index + 1).padStart(2, "0")} / {
             String(maxIndex).padStart(2, "0")
           }
@@ -79,7 +79,7 @@ const linkMedia = () => {
           <button
             type="button"
             data-close
-            class="flex items-center gap-2 cursor-pointer rounded-full border border-white/80 px-3 py-1 text-[10px] tracking-widest uppercase hover:border-primary-green hover:text-primary-green transition-colors"
+            class="hover:border-primary-green hover:text-primary-green flex cursor-pointer items-center gap-2 rounded-full border border-white/80 px-3 py-1 text-[10px] tracking-widest uppercase transition-colors"
           >
             Close
             <X class="size-4" />
@@ -87,17 +87,17 @@ const linkMedia = () => {
         </div>
       </div>
 
-      <div class="flex flex-col gap-4 min-h-0">
+      <div class="flex min-h-0 flex-col gap-4">
         <h3
           data-right-reveal
-          class="text-4xl md:text-5xl xl:text-6xl font-medium leading-[0.95] tracking-tight"
+          class="text-4xl leading-[0.95] font-medium tracking-tight md:text-5xl xl:text-6xl"
         >
           {project.title}
         </h3>
 
         <p
           data-right-reveal
-          class="text-sm md:text-base font-light text-white/55 max-w-prose leading-relaxed"
+          class="max-w-prose text-sm leading-relaxed font-light text-white/55 md:text-base"
         >
           {project.description}
         </p>
@@ -106,7 +106,7 @@ const linkMedia = () => {
       <div data-right-reveal class="flex flex-wrap items-center gap-6">
         <a
           href={project.link}
-          class="m-auto w-fit relative lg:m-0"
+          class="relative m-auto w-fit lg:m-0"
           target="_blank"
         >
           <span class="flex items-center gap-3"
@@ -115,13 +115,13 @@ const linkMedia = () => {
 
           <span
             data-gsap-line
-            class="absolute bottom-0 left-0 block h-0.5 w-0 bg-primary-green"
+            class="bg-primary-green absolute bottom-0 left-0 block h-0.5 w-0"
             aria-hidden="true"></span>
         </a>
 
         <a
           href={linkMedia()}
-          class="m-auto w-fit relative lg:m-0"
+          class="relative m-auto w-fit lg:m-0"
           target="_blank"
         >
           <span class="flex items-center gap-3"
@@ -131,20 +131,20 @@ const linkMedia = () => {
 
           <span
             data-gsap-line
-            class="absolute bottom-0 left-0 block h-0.5 w-0 bg-primary-green"
+            class="bg-primary-green absolute bottom-0 left-0 block h-0.5 w-0"
             aria-hidden="true"></span>
         </a>
       </div>
 
-      <div data-right-reveal class="flex flex-col gap-3 min-h-0">
+      <div data-right-reveal class="flex min-h-0 flex-col gap-3">
         <div
-          class="border-t border-white/15 pt-4 flex flex-col gap-2 text-xs tracking-widest uppercase"
+          class="flex flex-col gap-2 border-t border-white/15 pt-4 text-xs tracking-widest uppercase"
         >
-          <div class="grid grid-cols-[7rem_1fr] gap-x-4 items-baseline">
+          <div class="grid grid-cols-[7rem_1fr] items-baseline gap-x-4">
             <span class="text-white/40">Date</span>
             <span class="text-white/90">{project.date}</span>
           </div>
-          <div class="grid grid-cols-[7rem_1fr] gap-x-4 items-baseline">
+          <div class="grid grid-cols-[7rem_1fr] items-baseline gap-x-4">
             <span class="text-white/40">Technologies</span>
             <span class="text-white/90">
               {project.technologies.join(" / ")}

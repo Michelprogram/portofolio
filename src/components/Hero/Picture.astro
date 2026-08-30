@@ -17,7 +17,7 @@ const { class: className } = Astro.props;
 
 <div
   class:list={[
-    "m-auto relative rounded-md overflow-hidden w-43.75 h-95.75 md:w-111.25 md:h-105 lg:h-150 lg:w-full xl:h-164",
+    "relative m-auto h-95.75 w-43.75 overflow-hidden rounded-md md:h-105 md:w-111.25 lg:h-150 lg:w-full xl:h-164",
     className,
   ]}
   data-component="picture"
@@ -29,7 +29,7 @@ const { class: className } = Astro.props;
     data-hero-placeholder
     width={placeholder.attributes.width}
     height={placeholder.attributes.height}
-    class="absolute inset-0 size-full object-cover blur-xl scale-110"
+    class="absolute inset-0 size-full scale-110 object-cover blur-xl"
   />
   <Image
     src={FrontPicture}

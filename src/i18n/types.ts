@@ -25,8 +25,4 @@ export type Translation = {
   hobbies: {
     title: string;
   };
-  articles: {
-    title: string;
-    description: string;
-  };
 };

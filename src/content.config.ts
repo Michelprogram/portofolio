@@ -1,9 +1,3 @@
-import {
-  skills,
-  projects,
-  experiences,
-  articles,
-  hobbies,
-} from "@/collections";
+import { skills, projects, experiences, hobbies } from "@/collections";
 
-export const collections = { skills, projects, experiences, articles, hobbies };
+export const collections = { skills, projects, experiences, hobbies };

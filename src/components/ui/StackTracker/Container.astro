@@ -10,7 +10,7 @@ const { sections } = Astro.props;
 ---
 
 <div
-  class="hidden xl:visible xl:fixed xl:top-1/2 xl:right-7 xl:-translate-y-1/2 xl:z-10"
+  class="hidden xl:visible xl:fixed xl:top-1/2 xl:right-7 xl:z-10 xl:-translate-y-1/2"
   data-component="stack"
 >
   <ul class="flex flex-col">
@@ -22,7 +22,7 @@ const { sections } = Astro.props;
         >
           <span
             data-stack-label
-            class="pointer-events-none absolute right-full mr-2 whitespace-nowrap text-sm text-white"
+            class="pointer-events-none absolute right-full mr-2 text-sm whitespace-nowrap text-white"
           >
             {section.title}
           </span>
@@ -47,12 +47,11 @@ const { sections } = Astro.props;
 </div>
 <script>
   import { useGsap } from "@/composables";
-  import { ScrollTrigger } from "gsap/ScrollTrigger";
   import { ScrollSmoother } from "gsap/ScrollSmoother";
 
   const { worker } = useGsap();
 
-  worker("[data-component='stack']", (gsap, root) => {
+  worker({ selector: "[data-component='stack']" }, (gsap, root) => {
     const items = root.querySelectorAll<SVGElement>("[data-stack-item]");
 
     const entries = [...items].flatMap((item) => {

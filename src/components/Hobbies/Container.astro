@@ -18,13 +18,13 @@ const hobbies = (await getCollection("hobbies")).map((hobby) => {
 ---
 
 <section
-  class="size-full flex gap-8 flex-col items-center justify-center w-6xl m-auto border-t-2 border-solid"
+  class="m-auto flex size-full w-6xl flex-col items-center justify-center gap-8 border-t-2 border-solid"
   data-component="hobbies"
 >
-  <h2 class="text-7xl w-full tracking-wide mt-12">{title}</h2>
+  <h2 class="mt-12 w-full text-7xl tracking-wide">{title}</h2>
   <div
     data-container
-    class="relative w-full flex items-center justify-center cursor-pointer h-125"
+    class="relative flex h-125 w-full cursor-pointer items-center justify-center"
   >
     {
       hobbies.map((hobby, index) => (
@@ -81,7 +81,6 @@ const hobbies = (await getCollection("hobbies")).map((hobby) => {
 
       const titleEl = card.querySelector<HTMLDivElement>("[data-title]");
       const details = card.querySelector<HTMLDivElement>("[data-details]");
-      let status: "open" | "closed" = "closed";
 
       if (isAbsent(titleEl) || isAbsent(details)) return;
 

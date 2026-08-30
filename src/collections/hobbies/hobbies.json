@@ -1,83 +1,77 @@
 [
-    {
-        "id": "article-1",
-        "en": {
-            "title": "Badminton",
-            "description": "I've been playing badminton for a few years now. I've played in a few tournaments and won a few medals."
-        },
-        "fr": {
-            "title": "Badminton",
-            "description": "I've been playing badminton for a few years now. I've played in a few tournaments and won a few medals."
-        },
-        "links": []
+  {
+    "id": "article-1",
+    "en": {
+      "title": "Badminton",
+      "description": "I've been playing badminton for a few years now. I've played in a few tournaments and won a few medals."
     },
-    {
-        "id": "article-2",
-        "en": {
-            "title": "Video games",
-            "description": "I've been playing video games for a few years now. I've played a lot of games and I've won a few awards."
-        },
-        "fr": {
-            "title": "Video games",
-            "description": "I've been playing video games for a few years now. I've played a lot of games and I've won a few awards."
-        },
-        "links": [
-            "https://steamcommunity.com/profiles/76561198222503896/"
-        ]
+    "fr": {
+      "title": "Badminton",
+      "description": "I've been playing badminton for a few years now. I've played in a few tournaments and won a few medals."
     },
-    {
-        "id": "article-3",
-        "en": {
-            "title": "Skateboarding",
-            "description": "I've been skateboarding for a few years now. I've skated a lot of parks and I've won a few awards."
-        },
-        "fr": {
-            "title": "Skateboarding",
-            "description": "I've been skateboarding for a few years now. I've skated a lot of parks and I've won a few awards."
-        },
-        "links": []
+    "links": []
+  },
+  {
+    "id": "article-2",
+    "en": {
+      "title": "Video games",
+      "description": "I've been playing video games for a few years now. I've played a lot of games and I've won a few awards."
     },
-    {
-        "id": "article-4",
-        "en": {
-            "title": "Chess",
-            "description": "I've been playing chess for a few years now. I've played a lot of games and I've won a few awards."
-        },
-        "fr": {
-            "title": "Chess",
-            "description": "I've been playing chess for a few years now. I've played a lot of games and I've won a few awards."
-        },
-        "links": [
-            "https://www.chess.com/member/michelbioshop"
-        ]
+    "fr": {
+      "title": "Video games",
+      "description": "I've been playing video games for a few years now. I've played a lot of games and I've won a few awards."
     },
-    {
-        "id": "article-5",
-        "en": {
-            "title": "Movies/Books",
-            "description": "I've been watching movies and reading books for a few years now. I've watched a lot of movies and I've read a lot of books."
-        },
-        "fr": {
-            "title": "Movies/Books",
-            "description": "I've been watching movies and reading books for a few years now. I've watched a lot of movies and I've read a lot of books."
-        },
-        "links": [
-            "https://senscritique.com/MichelDev",
-            "https://www.goodreads.com/user/show/203859481"
-        ]
+    "links": ["https://steamcommunity.com/profiles/76561198222503896/"]
+  },
+  {
+    "id": "article-3",
+    "en": {
+      "title": "Skateboarding",
+      "description": "I've been skateboarding for a few years now. I've skated a lot of parks and I've won a few awards."
     },
-    {
-        "id": "article-6",
-        "en": {
-            "title": "Magic the Gathering",
-            "description": "I've been playing Magic the Gathering for a few years now. I've played a lot of games and I've won a few awards."
-        },
-        "fr": {
-            "title": "Magic the Gathering",
-            "description": "I've been playing Magic the Gathering for a few years now. I've played a lot of games and I've won a few awards."
-        },
-        "links": [
-            "https://moxfield.com/users/21Michel"
-        ]
-    }
+    "fr": {
+      "title": "Skateboarding",
+      "description": "I've been skateboarding for a few years now. I've skated a lot of parks and I've won a few awards."
+    },
+    "links": []
+  },
+  {
+    "id": "article-4",
+    "en": {
+      "title": "Chess",
+      "description": "I've been playing chess for a few years now. I've played a lot of games and I've won a few awards."
+    },
+    "fr": {
+      "title": "Chess",
+      "description": "I've been playing chess for a few years now. I've played a lot of games and I've won a few awards."
+    },
+    "links": ["https://www.chess.com/member/michelbioshop"]
+  },
+  {
+    "id": "article-5",
+    "en": {
+      "title": "Movies/Books",
+      "description": "I've been watching movies and reading books for a few years now. I've watched a lot of movies and I've read a lot of books."
+    },
+    "fr": {
+      "title": "Movies/Books",
+      "description": "I've been watching movies and reading books for a few years now. I've watched a lot of movies and I've read a lot of books."
+    },
+    "links": [
+      "https://senscritique.com/MichelDev",
+      "https://www.goodreads.com/user/show/203859481"
+    ]
+  },
+  {
+    "id": "article-6",
+    "en": {
+      "title": "Magic the Gathering",
+      "description": "I've been playing Magic the Gathering for a few years now. I've played a lot of games and I've won a few awards."
+    },
+    "fr": {
+      "title": "Magic the Gathering",
+      "description": "I've been playing Magic the Gathering for a few years now. I've played a lot of games and I've won a few awards."
+    },
+    "links": ["https://moxfield.com/users/21Michel"]
+  }
 ]
