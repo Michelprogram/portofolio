@@ -1,36 +1,173 @@
 ---
 import { useI18n } from "@/composables";
+import { computeDateFromBeginning } from "@/utils/utils";
 import Experience from "./Experience.astro";
 import Path from "./Path.astro";
 
-const { translation } = useI18n(Astro.currentLocale);
+import { getCollection } from "astro:content";
+
+const { translation, locale } = useI18n(Astro.currentLocale);
 const {
-  experience: { title, items },
+  experience: { title },
 } = translation;
+
+const experiences = (await getCollection("experiences"))
+  .sort(
+    (a, b) =>
+      computeDateFromBeginning(new Date(b.data.from)) -
+      computeDateFromBeginning(new Date(a.data.from)),
+  )
+  .map((experience) => {
+    return {
+      ...experience.data,
+      title: experience.data[locale()].title,
+      description: experience.data[locale()].description,
+    };
+  });
 ---
 
 <section
-  class="mt-12 m-auto size-full flex gap-8 flex-col items-center justify-center w-6xl pb-12"
+  class="mt-12 m-auto size-full flex gap-8 flex-col w-6xl pb-12"
   data-component="experiences"
 >
+  {
+    experiences.map((experience, index) => (
+      <Experience
+        experience={experience}
+        index={index}
+        width={400}
+        height={150}
+      />
+    ))
+  }
   <h2 class="text-7xl w-full tracking-wide">{title}</h2>
-  <div class="relative grid grid-cols-1 gap-y-[100px] grid-rows-[auto_auto]">
-    <div class="mt-10 col-span-full w-full -left-40 relative">
-      <Path />
-    </div>
-    <div
-      class="col-span-full flex w-fit gap-[800px] flex-nowrap"
-      data-scroll-track
-    >
-      {items.map((item, idx) => <Experience experience={item} index={idx} />)}
+  <div class="my-18 flex flex-col gap-6 relative w-full h-175" data-container>
+    <div class="relative size-full">
+      <svg
+        class="absolute left-[50%] top-[50%] translate-x-[-50%] translate-y-[-50%] size-full z-10"
+        width="1059"
+        height="334"
+        viewBox="0 0 1059 334"
+        fill="none"
+        xmlns="http://www.w3.org/2000/svg"
+      >
+        <path
+          data-path
+          d="M5.50107 328.001C5.50107 328.001 142.204 73.2927 298.001 50.5007C475.926 24.4715 505.341 307.57 685.001 300.001C869.057 292.246 1053.5 5.50067 1053.5 5.50067"
+          stroke="#4EE1A0"
+          stroke-width="11"
+          stroke-linecap="round"></path>
+
+        <g data-checkpoints>
+          {
+            experiences.map((exp, index) => (
+              <g
+                data-checkpoint={index}
+                data-threshold={exp.threshold}
+                class="cursor-pointer group"
+                role="button"
+                tabindex="0"
+              >
+                <circle
+                  r="16"
+                  class="fill-primary-green/10 opacity-0 group-hover:opacity-100 transition-all duration-300 scale-75 group-hover:scale-100"
+                />
+                <circle
+                  r="7"
+                  class="fill-neutral-900 stroke-white/40 group-hover:stroke-primary-green transition-colors stroke-2"
+                />
+                <circle
+                  r="3.5"
+                  class="fill-white group-hover:fill-primary-green transition-colors"
+                />
+              </g>
+            ))
+          }
+        </g>
+      </svg>
+
+      <svg
+        class="absolute left-[50%] top-[50%] translate-x-[-50%] translate-y-[-50%] size-full"
+        width="1059"
+        height="334"
+        viewBox="0 0 1059 334"
+        fill="none"
+        xmlns="http://www.w3.org/2000/svg"
+      >
+        <path
+          d="M5.50107 328.001C5.50107 328.001 142.204 73.2927 298.001 50.5007C475.926 24.4715 505.341 307.57 685.001 300.001C869.057 292.246 1053.5 5.50067 1053.5 5.50067"
+          stroke="gray"
+          stroke-opacity="0.4"
+          stroke-width="11"
+          stroke-dasharray="10 30"
+          stroke-linecap="round"></path>
+      </svg>
     </div>
   </div>
 </section>
 <script>
-  import { useGsap, useExperiences } from "@/composables";
+  import { useGsap } from "@/composables";
+  import { ScrollTrigger } from "gsap/ScrollTrigger";
+  import { useEventBus } from "@/utils";
 
   const { worker } = useGsap();
-  const { init } = useExperiences();
 
-  worker("[data-component='experiences']", (gsap, root) => init(gsap, root));
+  worker(
+    {
+      selector: "[data-component='experiences']",
+    },
+    (gsap, root) => {
+      const eventBus = useEventBus();
+
+      const path = root.querySelector<SVGPathElement>("[data-path]");
+      if (!path) return;
+      const totalLength = path.getTotalLength();
+
+      const checkpoints =
+        root.querySelectorAll<SVGGElement>("[data-checkpoint]");
+
+      checkpoints.forEach((cp, i) => {
+        const threshold = Number(cp.dataset.threshold);
+        const point = path.getPointAtLength((threshold / 100) * totalLength);
+
+        gsap.set(cp, { x: point.x, y: point.y });
+
+        cp.addEventListener("click", () => {
+          const st = ScrollTrigger.getById("experiences-trigger");
+          if (!st) return;
+
+          const targetScroll =
+            st.start + (threshold / 100) * (st.end - st.start);
+
+          window.scrollTo({
+            top: targetScroll,
+            behavior: "smooth",
+          });
+        });
+      });
+
+      const tl = gsap.timeline();
+
+      tl.from(path, {
+        drawSVG: 0,
+        ease: "none",
+        duration: 1,
+      });
+
+      ScrollTrigger.create({
+        id: "experiences-trigger",
+        trigger: root,
+        start: "top 5%",
+        pin: true,
+        scrub: true,
+        end: "+=2000",
+        animation: tl,
+        onUpdate: (self) => {
+          const res = Number((self.progress * 100).toFixed(0));
+
+          eventBus.publish("experience:update", { progress: res });
+        },
+      });
+    },
+  );
 </script>

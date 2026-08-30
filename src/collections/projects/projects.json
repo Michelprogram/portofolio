@@ -75,6 +75,10 @@
             "Websocket",
             "Vue"
         ],
+        "media": {
+            "type": "website",
+            "url": "https://speeder-typer.vercel.app/"
+        },
         "link": "https://github.com/Michelprogram/SpeederTyper",
         "image": "placeholder",
         "date": "2024-07-15",
@@ -96,6 +100,10 @@
             "Nuxt",
             "Typescript"
         ],
+        "media": {
+            "type": "website",
+            "url": "https://clean-your-twitter.vercel.app/"
+        },
         "link": "https://github.com/Michelprogram/clean-your-twitter",
         "image": "twitter",
         "date": "2024-05-15",
@@ -117,6 +125,10 @@
             "Fiber",
             "Websocket"
         ],
+        "media": {
+            "type": "website",
+            "url": "https://chat-app-21-2c453b9f548a.herokuapp.com/"
+        },
         "link": "https://github.com/Michelprogram/chat-app-htmx",
         "image": "htmx",
         "date": "2024-04-01",

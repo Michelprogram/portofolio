@@ -1,60 +1,120 @@
 ---
-import { type Experience } from "@/i18n";
-import { Image } from "astro:assets";
+import type { Experience } from "@/collections/experiences";
+import { useI18n } from "@/composables";
+import { formatMonthYear, isPresent } from "@/utils";
+import { MapPin, Calendar } from "@lucide/astro";
+import { undefined } from "astro:schema";
 
 interface Props {
-  experience: Experience;
+  experience: Omit<Experience, "fr" | "en"> & {
+    title: string;
+    description: string;
+  };
   index: number;
+  width: number;
+  height: number;
 }
 
-const { experience, index } = Astro.props;
+const { experience, index, width, height } = Astro.props;
+
+const { locale } = useI18n(Astro.currentLocale);
+const currentLang = locale();
+
+const formattedFrom = formatMonthYear(experience.from, currentLang);
+const formattedTo = isPresent(experience.to)
+  ? formatMonthYear(experience.to, currentLang)
+  : null;
 ---
 
 <article
-  class="shrink-0 m-0 flex flex-col gap-5 w-[500px]"
-  data-component="experience"
+  class="opacity-0 absolute flex flex-col justify-between p-4 rounded-xl border border-white/15 bg-neutral-900/90 backdrop-blur-md shadow-xl"
+  style={{
+    top: `${experience.position.y}px`,
+    left: `${experience.position.x}px`,
+    width: `${width}px`,
+    minHeight: `${height}px`,
+  }}
+  data-threshold={experience.threshold}
+  data-component="experience-card"
   id={`experience-${index}`}
 >
-  <div class="flex flex-col gap-1">
-    <div class="flex items-center justify-start gap-4">
-      <Image src={experience.icon} alt="icon" width="50" height="50" />
-      <h3 class="text-center text-3xl">{experience.title}</h3>
-    </div>
-    <span class="text-lg text-gray-500">
-      from {experience.from.getFullYear()} to{" "}
-      {experience.to.getFullYear()} at{" "}
-      <a
-        class="italic underline cursor-pointer text-inherit"
-        href={`https://www.google.fr/maps/place/${experience.place}`}
-        target="_blank"
-      >
-        {experience.place}
-      </a>
-    </span>
+  <div class="flex items-center gap-3">
+    <img
+      src={experience.icon}
+      alt={experience.title}
+      class="size-8 object-contain shrink-0"
+      loading="lazy"
+    />
+    <h3 class="text-lg font-semibold text-white leading-tight">
+      {experience.title}
+    </h3>
   </div>
-  <p class="" data-gsap-description>{experience.description}</p>
+
+  <div
+    class="flex flex-wrap items-center gap-x-4 gap-y-1 text-xs text-white/60 tracking-wide mt-2"
+  >
+    <div class="flex items-center gap-1.5">
+      <Calendar class="size-3.5 text-primary-green" />
+      <span
+        >{formattedFrom}
+        {isPresent(formattedTo) ? `— ${formattedTo}` : ""}</span
+      >
+    </div>
+
+    <div class="flex items-center gap-1.5">
+      <MapPin class="size-3.5 text-primary-green" />
+      <a
+        href={experience.link}
+        target="_blank"
+        rel="noopener noreferrer"
+        class="cursor-pointer"
+      >
+        <span class="underline">{experience.place}</span>
+      </a>
+    </div>
+  </div>
+
+  <!-- Description -->
+  <p class="text-sm font-light text-white/70 leading-relaxed mt-3">
+    {experience.description}
+  </p>
 </article>
+
 <script>
-  import { isAbsent } from "@/utils";
   import { useGsap } from "@/composables";
+  import { useEventBus } from "@/utils";
 
-  const { worker } = useGsap();
+  const { workers } = useGsap();
 
-/*   document
-    .querySelectorAll<HTMLDivElement>("[data-component='experience']")
-    .forEach((root) => {
-      worker(`#${root.id}`, (gsap, root) => {
-        experiencesStore.subscribe((tween) => {
-          gsap.from("[data-gsap-description]", {
-            scrollTrigger: {
-              trigger: root,
-              start: "left 80%",
-              toggleActions: "play none none reverse",
-              markers: true,
-            },
-            duration: 3,
+  workers({ selector: "[data-component='experience-card']" }, (gsap, root) => {
+    const threshold = Number(root.dataset.threshold);
+
+    const eventBus = useEventBus();
+
+    let status: "open" | "closed" = "closed";
+
+    eventBus.subscribe("experience:update", (event) => {
+      const { progress } = event;
+
+      if (progress >= threshold) {
+        if (status === "closed") {
+          status = "open";
+          gsap.to(root, {
+            opacity: 1,
+            duration: 0.4,
+            ease: "power1.out",
           });
-        });
-      });
-    }); */
+        }
+      } else {
+        if (status === "open") {
+          status = "closed";
+          gsap.to(root, {
+            opacity: 0,
+            duration: 0.4,
+            ease: "power1.out",
+          });
+        }
+      }
+    });
+  });
 </script>
