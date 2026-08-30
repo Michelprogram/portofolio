@@ -3,6 +3,7 @@ import type { Experience } from "@/collections/experiences";
 import { useI18n } from "@/composables";
 import { formatMonthYear, isPresent } from "@/utils";
 import { MapPin, Calendar } from "@lucide/astro";
+import { Image } from "astro:assets";
 
 interface Props {
   experience: Omit<Experience, "fr" | "en"> & {
@@ -38,11 +39,15 @@ const formattedTo = isPresent(experience.to)
   id={`experience-${index}`}
 >
   <div class="flex items-center gap-3">
-    <img
+    <Image
+      format="webp"
       src={experience.icon}
       alt={experience.title}
       class="size-8 shrink-0 object-contain"
       loading="lazy"
+      decoding="async"
+      width="32"
+      height="32"
     />
     <h3 class="text-lg leading-tight font-semibold text-white">
       {experience.title}

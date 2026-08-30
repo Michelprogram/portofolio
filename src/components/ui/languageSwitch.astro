@@ -1,0 +1,50 @@
+---
+const currentLocale = Astro.currentLocale ?? "en";
+const pathname = Astro.url.pathname;
+
+const getTargetUrl = (targetLocale: "en" | "fr") => {
+  if (targetLocale === "en") {
+    const cleaned = pathname.replace(/^\/fr(\/|$)/, "/");
+    return cleaned === "" ? "/" : cleaned;
+  } else {
+    if (pathname.startsWith("/fr")) return pathname;
+    return `/fr${pathname === "/" ? "" : pathname}`;
+  }
+};
+
+const enUrl = getTargetUrl("en");
+const frUrl = getTargetUrl("fr");
+---
+
+<div
+  class="inline-flex items-center rounded-full border border-white/10 bg-white/5 p-1 text-xs font-medium tracking-wider backdrop-blur-sm"
+  data-component="language-switch"
+  data-gsap-social
+>
+  <a
+    href={enUrl}
+    class:list={[
+      "rounded-full px-2.5 py-1 uppercase transition-all duration-300",
+      currentLocale === "en"
+        ? "bg-primary-green font-bold text-black shadow-sm"
+        : "text-text-1 hover:text-white",
+    ]}
+    aria-label="Switch to English"
+    aria-current={currentLocale === "en" ? "page" : undefined}
+  >
+    EN
+  </a>
+  <a
+    href={frUrl}
+    class:list={[
+      "rounded-full px-2.5 py-1 uppercase transition-all duration-300",
+      currentLocale === "fr"
+        ? "bg-primary-green font-bold text-black shadow-sm"
+        : "text-text-1 hover:text-white",
+    ]}
+    aria-label="Passer en Français"
+    aria-current={currentLocale === "fr" ? "page" : undefined}
+  >
+    FR
+  </a>
+</div>

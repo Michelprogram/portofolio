@@ -16,7 +16,6 @@ const projectSchema = z.object({
     ])
     .optional(),
   link: z.string(),
-  image: z.string(),
   date: z.string(),
   fr: z.object({
     title: z.string(),
@@ -34,43 +33,3 @@ export const projects = defineCollection({
 });
 
 export type Project = z.infer<typeof projectSchema>;
-
-/*     {
-        "id": "magic-scanner",
-        "technologies": [
-            "OCR",
-            "Heroku",
-            "PWA",
-            "Notion API"
-        ],
-        "link": "https://github.com/Michelprogram/magic-scanner",
-        "image": "placeholder",
-        "date": "2023-10-01",
-        "fr": {
-            "title": "Scanner Magic: The Gathering",
-            "description": "Inventoriser ses cartes, quelle corvée autant le faire avec de l'OCR."
-        },
-        "en": {
-            "title": "Scanner Magic: The Gathering",
-            "description": "What a boring task to inventory your cards, let's do it with OCR."
-        }
-    },
-    {
-        "id": "essence-pas-chere",
-        "technologies": [
-            "Python",
-            "Flask",
-            "Geolocation"
-        ],
-        "link": "https://github.com/Michelprogram/essence",
-        "image": "placeholder",
-        "date": "2022-04-01",
-        "fr": {
-            "title": "Essence pas chère",
-            "description": "Toi aussi tu veux être un vrai rat et trouver la station-service la moins chère près de chez toi."
-        },
-        "en": {
-            "title": "Essence pas chère",
-            "description": "You too want to be a real rat and find the cheapest gas station near you."
-        }
-    } */

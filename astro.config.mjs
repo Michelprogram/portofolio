@@ -5,6 +5,9 @@ import { fileURLToPath } from "node:url";
 import sitemap from "@astrojs/sitemap";
 
 export default defineConfig({
+  image: {
+    domains: ["raw.githubusercontent.com"],
+  },
   i18n: {
     locales: ["en", "fr"],
     defaultLocale: "en",

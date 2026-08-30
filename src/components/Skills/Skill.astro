@@ -29,9 +29,12 @@ const { skill } = Astro.props;
       <Image
         class="size-9 translate-y-1 object-contain md:size-11.25 lg:size-12"
         src={skill.icon}
+        format="webp"
         width="25"
         height="25"
         alt="Icon"
+        loading="lazy"
+        decoding="async"
         data-gsap-icon
       />
     </div>

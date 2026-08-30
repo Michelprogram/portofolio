@@ -13,6 +13,10 @@ export type Translation = {
   };
   project: {
     title: string;
+    close: string;
+    sourceCode: string;
+    date: string;
+    technologies: string;
   };
   experience: {
     title: string;

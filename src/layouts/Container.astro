@@ -3,7 +3,6 @@ import Header from "@/components/Header/Container.astro";
 import Footer from "@/components/Footer/Container.astro";
 import Meteor from "@/components/ui/Meteor.astro";
 import "../styles/global.css";
-import { ClientRouter } from "astro:transitions";
 import HeaderTag from "./Header.astro";
 
 interface Props {
@@ -16,7 +15,7 @@ interface Props {
 const {
   title = "Dorian Gauron — Software Engineer",
   description = "Software engineer building web apps, bots, and tools.",
-  image = "/og.png",
+  image = "/og.jpg",
   lang = "en",
 } = Astro.props;
 ---
@@ -25,7 +24,6 @@ const {
 <html lang={lang}>
   <HeaderTag title={title} description={description} image={image} />
   <body>
-    <ClientRouter />
     <Meteor />
     <slot name="fixed-ui" />
     <div data-gsap="smooth-wrapper">
@@ -36,9 +34,20 @@ const {
       </div>
     </div>
   </body><script>
-    import { useForm } from "./useForm";
+    import { ScrollSmoother } from "gsap/ScrollSmoother";
 
-    const { initScroll } = useForm();
+    const initScroll = () => {
+      if (ScrollSmoother.get()) return ScrollSmoother.get();
+      return ScrollSmoother.create({
+        wrapper: "[data-gsap='smooth-wrapper']",
+        content: "[data-gsap='smooth-content']",
+        smooth: 1.2,
+        effects: true,
+        normalizeScroll: true,
+        smoothTouch: 0.1,
+      });
+    };
+
     initScroll();
   </script>
 </html>

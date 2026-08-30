@@ -63,9 +63,10 @@ const experiences = (await getCollection("experiences"))
               <g
                 data-checkpoint={index}
                 data-threshold={exp.threshold}
-                class="group cursor-pointer"
+                class="group cursor-pointer focus:outline-none"
                 role="button"
                 tabindex="0"
+                aria-label={exp.title}
               >
                 <circle
                   r="16"
@@ -161,6 +162,7 @@ const experiences = (await getCollection("experiences"))
         scrub: true,
         end: "+=2000",
         animation: tl,
+        refreshPriority: 10,
         onUpdate: (self) => {
           const res = Number((self.progress * 100).toFixed(0));
 

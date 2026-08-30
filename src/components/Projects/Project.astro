@@ -1,6 +1,7 @@
 ---
 import type { Project } from "@/collections/projects";
-import { isAbsent } from "@/utils";
+import { useI18n } from "@/composables";
+import { isAbsent, isPresent } from "@/utils";
 import { MoveUpRight, X } from "@lucide/astro";
 
 interface Props {
@@ -12,6 +13,11 @@ interface Props {
   maxIndex: number;
   className?: string;
 }
+
+const { translation } = useI18n(Astro.currentLocale);
+const {
+  project: { close, sourceCode, date, technologies },
+} = translation;
 
 const { project, index, maxIndex, className } = Astro.props;
 
@@ -48,7 +54,11 @@ const linkMedia = () => {
         </p>
       </div>
       <div class="flex h-full items-center justify-center">
-        <h3 data-left-acronym class="z-0 text-6xl font-medium">
+        <h3
+          data-left-acronym
+          class="z-0 text-6xl font-medium"
+          aria-label={project.acronym}
+        >
           {project.acronym}
         </h3>
       </div>
@@ -81,7 +91,7 @@ const linkMedia = () => {
             data-close
             class="hover:border-primary-green hover:text-primary-green flex cursor-pointer items-center gap-2 rounded-full border border-white/80 px-3 py-1 text-[10px] tracking-widest uppercase transition-colors"
           >
-            Close
+            {close}
             <X class="size-4" />
           </button>
         </div>
@@ -91,6 +101,7 @@ const linkMedia = () => {
         <h3
           data-right-reveal
           class="text-4xl leading-[0.95] font-medium tracking-tight md:text-5xl xl:text-6xl"
+          aria-label={project.title}
         >
           {project.title}
         </h3>
@@ -108,9 +119,11 @@ const linkMedia = () => {
           href={project.link}
           class="relative m-auto w-fit lg:m-0"
           target="_blank"
+          rel="noopener noreferrer"
+          aria-label={sourceCode}
         >
           <span class="flex items-center gap-3"
-            >Source code <MoveUpRight class="size-4" /></span
+            >{sourceCode} <MoveUpRight class="size-4" /></span
           >
 
           <span
@@ -119,21 +132,27 @@ const linkMedia = () => {
             aria-hidden="true"></span>
         </a>
 
-        <a
-          href={linkMedia()}
-          class="relative m-auto w-fit lg:m-0"
-          target="_blank"
-        >
-          <span class="flex items-center gap-3"
-            >{textMedia()}
-            <MoveUpRight class="size-4" /></span
-          >
-
-          <span
-            data-gsap-line
-            class="bg-primary-green absolute bottom-0 left-0 block h-0.5 w-0"
-            aria-hidden="true"></span>
-        </a>
+        {
+          isPresent(project.media) && (
+            <a
+              href={linkMedia()}
+              class="relative m-auto w-fit lg:m-0"
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label={textMedia()}
+            >
+              <span class="flex items-center gap-3">
+                {textMedia()}
+                <MoveUpRight class="size-4" />
+              </span>
+              <span
+                data-gsap-line
+                class="bg-primary-green absolute bottom-0 left-0 block h-0.5 w-0"
+                aria-hidden="true"
+              />
+            </a>
+          )
+        }
       </div>
 
       <div data-right-reveal class="flex min-h-0 flex-col gap-3">
@@ -141,11 +160,11 @@ const linkMedia = () => {
           class="flex flex-col gap-2 border-t border-white/15 pt-4 text-xs tracking-widest uppercase"
         >
           <div class="grid grid-cols-[7rem_1fr] items-baseline gap-x-4">
-            <span class="text-white/40">Date</span>
+            <span class="text-white/40">{date}</span>
             <span class="text-white/90">{project.date}</span>
           </div>
           <div class="grid grid-cols-[7rem_1fr] items-baseline gap-x-4">
-            <span class="text-white/40">Technologies</span>
+            <span class="text-white/40">{technologies}</span>
             <span class="text-white/90">
               {project.technologies.join(" / ")}
             </span>
@@ -192,8 +211,6 @@ const linkMedia = () => {
 
         const closeButton =
           root.querySelector<HTMLButtonElement>("[data-close]");
-
-        // --- helpers de layout ---
 
         const setOpenLayout = (open: boolean) => {
           root.classList.toggle(OPEN_GRID, open);

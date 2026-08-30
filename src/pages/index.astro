@@ -6,15 +6,14 @@ import Projects from "@/components/Projects/Container.astro";
 import Experiences from "@/components/Experiences/Container.astro";
 import Next from "@/components/Next/Container.astro";
 import Hobbies from "@/components/Hobbies/Container.astro";
-import StackTracker from "@/components/ui/StackTracker/Container.astro";
+import StackTracker from "@/components/ui/StackTracker.astro";
 
 const sections = [
   { title: "Introduction", selector: "hero" },
   { title: "Skills", selector: "skills" },
   { title: "Projects", selector: "projects" },
-  { title: "Experiences", selector: "experiences" },
+  { title: "Experiences", selector: "experiences-wrapper" },
   { title: "Hobbies", selector: "hobbies" },
-  { title: "Articles", selector: "articles" },
   { title: "Next", selector: "next" },
 ];
 ---
@@ -26,7 +25,9 @@ const sections = [
     <Hero />
     <Skills />
     <Projects />
-    <Experiences />
+    <div data-component="experiences-wrapper">
+      <Experiences />
+    </div>
     <Hobbies />
     <Next />
   </main>

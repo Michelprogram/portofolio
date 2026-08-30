@@ -1,113 +1,98 @@
 ---
-import {
-  randomNumber,
-  randomNumberNotFloor,
-  type MeteorInformation,
-} from "@/utils/utils";
-const METEOR_NUMBER = 16;
+interface Props {
+  count?: number;
+}
 
-const createMeteor = () => {
-  const meteors = [];
-
-  for (let i = 0; i < METEOR_NUMBER; i++) {
-    const data: MeteorInformation = {
-      className: `meteor__${i} hidden`,
-      style: {
-        left: `${randomNumber(50, 150)}%`,
-        top: `${randomNumber(30, 40)}%`,
-        "animation-name": "meteor",
-        "animation-duration": `${randomNumberNotFloor(3, 6)}s`,
-        "animation-iteration-count": "infinite",
-        "animation-timing-function": "linear",
-      },
-    };
-
-    meteors.push(data);
-  }
-
-  return meteors;
-};
+const { count = 8 } = Astro.props;
+const meteors = Array.from({ length: count });
 ---
 
-<div aria-hidden="true" class="meteor-container">
+<div
+  aria-hidden="true"
+  class="meteor-container pointer-events-none fixed inset-0 z-50 overflow-hidden"
+  data-component="meteor"
+>
   {
-    createMeteor().map((meteor) => {
-      return <div class={meteor.className} style={{ ...meteor.style }} />;
-    })
+    meteors.map((_, i) => (
+      <div
+        class="meteor absolute top-0 left-0 h-[1.5px] w-65 -rotate-45 bg-linear-to-r from-white via-white/80 to-transparent opacity-0 will-change-transform before:absolute before:top-1/2 before:-left-1 before:h-1 before:w-1.5 before:-translate-y-1/2 before:rounded-full before:bg-white before:shadow-[0_0_12px_3px_#fff]"
+        data-meteor
+        data-index={i}
+      />
+    ))
   }
 </div>
-<style lang="scss">
-  @use "sass:math";
 
-  $NUMBER_METEOR_DESKTOP: 8;
-  $NUMBER_METEOR_MOBILE: 3;
-  $NUMBER_METEOR_TABLET: 5;
+<script>
+  import { MediaQuery, useGsap } from "@/composables";
 
-  .hidden {
-    display: none;
-  }
+  const { worker } = useGsap();
 
-  @mixin meteor {
-    display: block;
-    z-index: 1000;
-    position: fixed;
-    width: 300px;
-    height: 1px;
-    transform: rotate(-45deg);
-    background-image: linear-gradient(to right, #fff, rgba(255, 255, 255, 0));
-    &:before {
-      content: "";
-      z-index: 1000;
-      position: fixed;
-      width: 4px;
-      height: 5px;
-      border-radius: 50%;
-      margin-top: -2px;
-      background: rgba(#fff, 0.7);
-      box-shadow: 0 0 15px 3px #fff;
-    }
-  }
+  worker({ selector: "[data-component='meteor']" }, (gsap, root) => {
+    const meteorElements =
+      root.querySelectorAll<HTMLDivElement>("[data-meteor]");
+    if (meteorElements.length === 0) return;
 
-  @for $i from 0 through $NUMBER_METEOR_MOBILE {
-    .meteor__#{$i} {
-      @include meteor();
-    }
-  }
+    const mm = gsap.matchMedia();
 
-  //Tablet 445 x 720
-  @media (min-width: px-to-rem(600px)) {
-    @for $i from $NUMBER_METEOR_MOBILE through $NUMBER_METEOR_TABLET {
-      .meteor__#{$i} {
-        @include meteor();
-      }
-    }
-  }
+    mm.add(MediaQuery.reduceMotion, () => {
+      gsap.set(meteorElements, { opacity: 0 });
+    });
 
-  //Desktop 348 x 766
-  @media (min-width: px-to-rem(1280px)) {
-    @for $i from $NUMBER_METEOR_MOBILE through $NUMBER_METEOR_DESKTOP {
-      .meteor__#{$i} {
-        @include meteor();
-      }
-    }
-  }
+    const launchMeteor = (el: HTMLDivElement, speedFactor = 1) => {
+      const screenWidth = window.innerWidth;
+      const screenHeight = window.innerHeight;
 
-  @keyframes meteor {
-    0% {
-      opacity: 1;
-      margin-top: -600px;
-      margin-right: -600px;
-    }
-    42% {
-      opacity: 0;
-    }
-    65% {
-      margin-top: 600px;
-      margin-left: -1200px;
-      opacity: 0;
-    }
-    100% {
-      opacity: 0;
-    }
-  }
-</style>
+      const startX = gsap.utils.random(screenWidth * 0.2, screenWidth * 1.4);
+      const startY = gsap.utils.random(-150, screenHeight * 0.4);
+
+      const travelDistance = gsap.utils.random(800, 1400);
+      const duration = gsap.utils.random(3, 6) * speedFactor;
+      const delay = gsap.utils.random(2, 8);
+      const scale = gsap.utils.random(0.6, 1.2);
+
+      const rad = (45 * Math.PI) / 180;
+      const targetX = startX - Math.cos(rad) * travelDistance;
+      const targetY = startY + Math.sin(rad) * travelDistance;
+
+      gsap.fromTo(
+        el,
+        {
+          x: startX,
+          y: startY,
+          scale,
+          opacity: 0,
+        },
+        {
+          x: targetX,
+          y: targetY,
+          duration,
+          delay,
+          ease: "power1.in",
+          keyframes: [
+            { opacity: 0, offset: 0 },
+            { opacity: 1, offset: 0.15 },
+            { opacity: 0.8, offset: 0.7 },
+            { opacity: 0, offset: 1 },
+          ],
+          onComplete: () => {
+            launchMeteor(el, speedFactor);
+          },
+        },
+      );
+    };
+
+    mm.add(MediaQuery.isDesktop, () => {
+      meteorElements.forEach((el, index) => {
+        gsap.delayedCall(index * 0.6, () => launchMeteor(el, 1));
+      });
+    });
+
+    mm.add(MediaQuery.isMobile, () => {
+      const activeMobileMeteors = Array.from(meteorElements).slice(0, 4);
+      activeMobileMeteors.forEach((el, index) => {
+        gsap.delayedCall(index * 0.8, () => launchMeteor(el, 1.2));
+      });
+    });
+  });
+</script>

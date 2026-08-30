@@ -16,17 +16,21 @@ export const en: Translation = {
   },
   project: {
     title: "Projects",
+    close: "Close",
+    sourceCode: "Source code",
+    date: "Date",
+    technologies: "Technologies",
   },
   experience: {
     title: "Experiences",
   },
+  hobbies: {
+    title: "Hobbies",
+  },
   next: {
     title: "What's next",
     description:
-      "I've always loved the thrill of moving to a new city for school, and now I'm super excited about heading to work in Canada. It's not just about diving into a new culture and exploring the country—it's also a fantastic chance to level up my English skills.",
-    animationDescription: "I'm cooking up the future animation...",
-  },
-  hobbies: {
-    title: "Hobbies",
+      "I have a thousand ideas in my head, and with the rise of the AI era, I feel like I can achieve anything I want. I want to get more involved in Rust and lower-level programming with projects like building my own RC boats, creating a radar tracker for my cat when he's outside exploring, and diving into deep reinforcement learning to build smarter robots. I'd also love to write articles about programming and how to build a house (trust me, that one will be awesome). For now, the goal is to head back home, take a deep breath, and start a new chapter in my life.",
+    animationDescription: "Learning Three.js as well...",
   },
 };

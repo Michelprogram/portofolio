@@ -4,6 +4,9 @@ on:
   push:
     tags:
       - "v*"
+  schedule:
+    - cron: "0 2 1 * *"
+  workflow_dispatch:
 
 permissions:
   contents: read
@@ -31,7 +34,7 @@ jobs:
       - name: Build project
         env:
           GIT_HUB_TOKEN: ${{ secrets.GIT_HUB_TOKEN }}
-        run: bun run build
+        run: mise run build
 
       - name: Setup Pages
         uses: actions/configure-pages@v5
