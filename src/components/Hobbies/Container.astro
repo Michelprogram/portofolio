@@ -1,13 +1,20 @@
 ---
 import { useI18n } from "@/composables";
 import { getCollection } from "astro:content";
+import Hobby from "./Hobby.astro";
 
-const { translation } = useI18n(Astro.currentLocale);
+const { translation, locale } = useI18n(Astro.currentLocale);
 const {
   hobbies: { title },
 } = translation;
 
-const hobbies = await getCollection("hobbies");
+const hobbies = (await getCollection("hobbies")).map((hobby) => {
+  return {
+    ...hobby.data,
+    title: hobby.data[locale()].title,
+    description: hobby.data[locale()].description,
+  };
+});
 ---
 
 <section
@@ -17,23 +24,19 @@ const hobbies = await getCollection("hobbies");
   <h2 class="text-7xl w-full tracking-wide mt-12">{title}</h2>
   <div
     data-container
-    class="relative w-full flex items-center justify-center cursor-pointer h-[500px]"
+    class="relative w-full flex items-center justify-center cursor-pointer h-125"
   >
     {
-      hobbies.map((article, index) => (
-        <div
-          data-cards
-          class="bg-red-600 absolute left-0 w-[250px] h-[400px] flex items-center justify-center border-2 rounded-2xl"
-        >
-          <p class="text-center">Content</p>
-        </div>
+      hobbies.map((hobby, index) => (
+        <Hobby hobby={hobby} index={index} width={240} height={400} />
       ))
     }
   </div>
 </section>
+
 <script>
   import { useGsap } from "@/composables";
-  import { Draggable } from "gsap/Draggable";
+  import { isAbsent } from "@/utils";
 
   const { worker } = useGsap();
 
@@ -41,91 +44,122 @@ const hobbies = await getCollection("hobbies");
     const cards = root.querySelectorAll<HTMLDivElement>("[data-cards]");
     const container = root.querySelector<HTMLDivElement>("[data-container]");
 
+    if (isAbsent(container) || cards.length === 0) return;
+
     const W = container.offsetWidth;
     const C = cards[0].offsetWidth;
-    const restBase = (W - C) / 2;
+    const travel = W - C;
+    const restBase = travel / 2;
     const size = cards.length;
-
-    let coords = [];
+    const step = travel / (size - 1);
+    const mid = (size - 1) / 2;
 
     let isOpen = false;
+    const openCoords: { x: number; y: number; rotation: number }[] = [];
 
-    const defaultWaitingCardSettings = (i: number): gsap.TweenVars => {
-      return {
-        transformOrigin: "left bottom",
-        x: restBase + i * 8,
-        y: i * -8,
-        rotation: i * 2,
-        zIndex: i,
-        opacity: 1 - (size - 1 - i) * 0.175,
+    cards.forEach((_, idx) => {
+      const dist = Math.abs(idx - mid);
+      openCoords[idx] = {
+        x: idx * step,
+        y: -dist * 12,
+        rotation: (idx - mid) * 4,
       };
-    };
+    });
+
+    const init = (i: number): gsap.TweenVars => ({
+      transformOrigin: "left bottom",
+      x: restBase + i * 8,
+      y: i * -8,
+      rotation: i * 2,
+      scale: 1,
+      zIndex: i,
+      opacity: 1 - (size - 1 - i) * 0.175,
+    });
 
     cards.forEach((card, i) => {
-      gsap.set(card, defaultWaitingCardSettings(i));
-    });
+      gsap.set(card, init(i));
 
-    container?.addEventListener("mouseenter", () => {
-      const travel = W - C;
-      const step = travel / (size - 1);
-      const mid = (size - 1) / 2;
+      const titleEl = card.querySelector<HTMLDivElement>("[data-title]");
+      const details = card.querySelector<HTMLDivElement>("[data-details]");
+      let status: "open" | "closed" = "closed";
 
-      isOpen = true;
+      if (isAbsent(titleEl) || isAbsent(details)) return;
 
-      cards.forEach((card, idx) => {
-        const dist = Math.abs(idx - mid);
-        gsap.to(card, {
-          x: idx * step,
-          y: -dist * 12,
-          rotation: (idx - mid) * 4,
-          delay: dist * 0.05,
-          duration: 1,
-          ease: "elastic.out(1, 0.6)",
-          overwrite: "auto",
+      gsap.set(titleEl, { y: 140 });
+
+      const tl = gsap.timeline({ paused: true });
+      tl.to(titleEl, {
+        y: 0,
+        duration: 0.25,
+        ease: "power2.out",
+      }).to(
+        details,
+        {
           opacity: 1,
-        });
-        coords[idx] = { x: idx * step, y: -dist * 12 };
-      });
-    });
+          duration: 0.2,
+          ease: "power1.out",
+        },
+        "-=0.1",
+      );
 
-    container?.addEventListener("mouseleave", () => {
-      isOpen = false;
-      cards.forEach((card, i) => {
-        gsap.to(card, {
-          ...defaultWaitingCardSettings(i),
-          duration: 0.9,
-          ease: "elastic.out(1, 0.6)",
-        });
-      });
-      coords = [];
-    });
-
-    cards.forEach((card, idx) => {
-      card.addEventListener("pointerenter", () => {
+      card.addEventListener("mouseenter", () => {
         if (!isOpen) return;
 
         gsap.to(card, {
           zIndex: 999,
-          scale: 1.04,
+          rotation: 0,
+          scale: 1.08,
+          y: openCoords[i].y - 15,
           duration: 0.25,
           ease: "power2.out",
         });
+
+        tl.play();
       });
 
-      card.addEventListener("pointerleave", () => {
+      card.addEventListener("mouseleave", () => {
         if (!isOpen) return;
+        const target = openCoords[i];
+        gsap.to(card, {
+          zIndex: i,
+          scale: 1,
+          x: target.x,
+          y: target.y,
+          rotation: target.rotation,
+          duration: 0.4,
+          ease: "power2.out",
+        });
 
-        const travel = W - C;
-        const step = travel / (size - 1);
-        const mid = (size - 1) / 2;
-        const dist = Math.abs(idx - mid);
+        tl.reverse();
+      });
+
+      card.addEventListener("mousemove", (evt) => {
+        if (!isOpen) return;
+        const rect = card.getBoundingClientRect();
+        const dx = evt.clientX - (rect.left + rect.width / 2);
+        const dy = evt.clientY - (rect.top + rect.height / 2);
 
         gsap.to(card, {
-          zIndex: idx,
+          x: openCoords[i].x + dx * 0.15,
+          y: openCoords[i].y + dy * 0.15,
+          duration: 0.2,
+          ease: "power1.out",
+        });
+      });
+    });
+
+    container.addEventListener("mouseenter", () => {
+      isOpen = true;
+      cards.forEach((card, idx) => {
+        const dist = Math.abs(idx - mid);
+        const target = openCoords[idx];
+
+        gsap.to(card, {
+          x: target.x,
+          y: target.y,
+          rotation: target.rotation,
           scale: 1,
-          x: idx * step,
-          y: -dist * 12,
-          rotation: (idx - mid) * 4,
+          zIndex: idx,
           delay: dist * 0.05,
           duration: 1,
           ease: "elastic.out(1, 0.6)",
@@ -133,18 +167,24 @@ const hobbies = await getCollection("hobbies");
           opacity: 1,
         });
       });
+    });
 
-      card.addEventListener("pointermove", (evt) => {
-        const rect = card.getBoundingClientRect();
-        const dx = evt.clientX - (rect.left + rect.width / 2);
-        const dy = evt.clientY - (rect.top + rect.height / 2);
+    container.addEventListener("mouseleave", () => {
+      isOpen = false;
+      cards.forEach((card, i) => {
+        const titleEl = card.querySelector<HTMLDivElement>("[data-title]");
+        const details = card.querySelector<HTMLDivElement>("[data-details]");
 
-        const offsetX = dx * 0.15;
-        const offsetY = dy * 0.15;
+        if (isAbsent(titleEl) || isAbsent(details)) return;
+
+        gsap.to(titleEl, { y: 140, duration: 0.3, overwrite: "auto" });
+        gsap.to(details, { opacity: 0, duration: 0.2, overwrite: "auto" });
 
         gsap.to(card, {
-          x: coords[idx].x + offsetX,
-          y: coords[idx].y + offsetY,
+          ...init(i),
+          duration: 0.9,
+          ease: "elastic.out(1, 0.6)",
+          overwrite: "auto",
         });
       });
     });

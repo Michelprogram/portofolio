@@ -6,9 +6,15 @@ import { z } from "astro/zod";
 
 const hobbiesSchema = z.object({
   id: z.string(),
-  title: z.string(),
-  description: z.string(),
-  link: z.string(),
+  en: z.object({
+    title: z.string(),
+    description: z.string(),
+  }),
+  fr: z.object({
+    title: z.string(),
+    description: z.string(),
+  }),
+  links: z.array(z.string()),
 });
 
 export const hobbies = defineCollection({
