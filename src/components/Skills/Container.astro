@@ -1,0 +1,144 @@
+---
+import { computeDateFromBeginning } from "@/utils/utils";
+
+import { useI18n } from "@/composables";
+import { getCollection } from "astro:content";
+import Skill from "./Skill.astro";
+
+const { translation } = useI18n(Astro.currentLocale);
+const {
+  skills: { title, description },
+} = translation;
+
+const skills = (await getCollection("skills"))
+  .sort(
+    (a, b) =>
+      computeDateFromBeginning(new Date(b.data.experiences)) -
+      computeDateFromBeginning(new Date(a.data.experiences)),
+  )
+  .map((skill) => {
+    return {
+      title: skill.data.title,
+      icon: skill.data.icon,
+      experiences: computeDateFromBeginning(new Date(skill.data.experiences)),
+    };
+  });
+---
+
+<section
+  data-component="skills"
+  class="m-auto flex w-5/6 flex-col items-center justify-center gap-8 border-t-2 border-solid pb-12 xl:mt-12 xl:size-full xl:w-6xl xl:border-t-0 xl:border-b-2"
+>
+  <h2 class="mt-4 w-full text-5xl tracking-wide xl:mt-0 xl:text-7xl">
+    {title}
+    <span class="text-xs font-normal italic">({description})</span>
+  </h2>
+  <div class="flex w-full items-center justify-center" data-gsap-container>
+    <div
+      class="grid grid-cols-1 justify-items-center gap-6 md:grid-cols-2 md:gap-16 lg:grid-cols-3"
+    >
+      {skills.map((skill) => <Skill skill={skill} />)}
+    </div>
+  </div>
+</section>
+<script>
+  import { SplitText } from "gsap/SplitText";
+  import { MediaQuery, useGsap } from "@/composables";
+
+  const { worker } = useGsap();
+
+  worker(
+    { selector: "[data-component='skills']", mediaQuery: MediaQuery.isDesktop },
+    (gsap, root) => {
+      const tl = gsap.timeline({
+        scrollTrigger: {
+          trigger: "[data-gsap-container]",
+          start: "top 70%",
+        },
+      });
+
+      root.querySelectorAll("[data-gsap-skill]").forEach((skill, i) => {
+        const title = skill.querySelector("[data-gsap-title]");
+        const icon = skill.querySelector("[data-gsap-icon]");
+        const description = skill.querySelector("[data-gsap-description]");
+        const split = SplitText.create(title, { type: "chars" });
+
+        const skillTl = gsap.timeline();
+
+        skillTl
+          .from(skill, {
+            x: 100,
+            opacity: 0,
+            duration: 0.8,
+            ease: "power2.out",
+          })
+          .from(
+            split.chars,
+            {
+              scale: 0,
+              y: 30,
+              rotation: () => gsap.utils.random(-20, 20),
+              stagger: { each: 0.04, from: "random" },
+              duration: 0.8,
+              ease: "back.out(2)",
+            },
+            ">",
+          )
+          .from(description, {
+            opacity: 0,
+            scale: 0,
+            duration: 0.4,
+          })
+          .from(icon, {
+            opacity: 0,
+            scale: 0,
+            duration: 0.7,
+          });
+
+        tl.add(skillTl, i * 0.15);
+      });
+    },
+  );
+
+  worker(
+    { selector: "[data-component='skills']", mediaQuery: MediaQuery.isMobile },
+    (gsap, root) => {
+      const tl = gsap.timeline({
+        scrollTrigger: {
+          trigger: "[data-gsap-container]",
+          start: "top 65%",
+        },
+      });
+
+      root.querySelectorAll("[data-gsap-skill]").forEach((skill, i) => {
+        const title = skill.querySelector("[data-gsap-title]");
+        const icon = skill.querySelector("[data-gsap-icon]");
+        const description = skill.querySelector("[data-gsap-description]");
+        const split = SplitText.create(title, { type: "lines" });
+
+        const skillTl = gsap.timeline();
+
+        skillTl
+          .from(split.lines, {
+            mask: "lines",
+            y: 80,
+            opacity: 0,
+            duration: 0.8,
+            ease: "power2.out",
+          })
+          .from(description, {
+            opacity: 0,
+            scale: 0,
+            duration: 0.4,
+          })
+          .from(icon, {
+            opacity: 0,
+            scale: 0,
+            duration: 0.7,
+          });
+
+        tl.add(skillTl, i * 0.15);
+      });
+    },
+  );
+</script>

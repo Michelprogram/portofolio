@@ -1,0 +1,123 @@
+---
+import type { Experience } from "@/collections/experiences";
+import { useI18n } from "@/composables";
+import { formatMonthYear, isPresent } from "@/utils";
+import { MapPin, Calendar } from "@lucide/astro";
+import { Image } from "astro:assets";
+
+interface Props {
+  experience: Omit<Experience, "fr" | "en"> & {
+    title: string;
+    description: string;
+  };
+  index: number;
+  width: number;
+  height: number;
+}
+
+const { experience, index, width, height } = Astro.props;
+
+const { locale } = useI18n(Astro.currentLocale);
+const currentLang = locale();
+
+const formattedFrom = formatMonthYear(experience.from, currentLang);
+const formattedTo = isPresent(experience.to)
+  ? formatMonthYear(experience.to, currentLang)
+  : null;
+---
+
+<article
+  class="absolute flex flex-col justify-between rounded-xl border border-white/15 bg-neutral-900/90 p-4 opacity-0 shadow-xl backdrop-blur-md"
+  style={{
+    top: `${experience.position.y}px`,
+    left: `${experience.position.x}px`,
+    width: `${width}px`,
+    minHeight: `${height}px`,
+  }}
+  data-threshold={experience.threshold}
+  data-component="experience-card"
+  id={`experience-${index}`}
+>
+  <div class="flex items-center gap-3">
+    <Image
+      format="webp"
+      src={experience.icon}
+      alt={experience.title}
+      class="size-8 shrink-0 object-contain"
+      loading="lazy"
+      decoding="async"
+      width="32"
+      height="32"
+    />
+    <h3 class="text-lg leading-tight font-semibold text-white">
+      {experience.title}
+    </h3>
+  </div>
+
+  <div
+    class="mt-2 flex flex-wrap items-center gap-x-4 gap-y-1 text-xs tracking-wide text-white/60"
+  >
+    <div class="flex items-center gap-1.5">
+      <Calendar class="text-primary-green size-3.5" />
+      <span
+        >{formattedFrom}
+        {isPresent(formattedTo) ? `— ${formattedTo}` : ""}</span
+      >
+    </div>
+
+    <div class="flex items-center gap-1.5">
+      <MapPin class="text-primary-green size-3.5" />
+      <a
+        href={experience.link}
+        target="_blank"
+        rel="noopener noreferrer"
+        class="cursor-pointer"
+      >
+        <span class="underline">{experience.place}</span>
+      </a>
+    </div>
+  </div>
+
+  <p class="mt-3 text-sm leading-relaxed font-light text-white/70">
+    {experience.description}
+  </p>
+</article>
+
+<script>
+  import { useGsap } from "@/composables";
+  import { useEventBus } from "@/utils";
+
+  const { workers } = useGsap();
+
+  workers({ selector: "[data-component='experience-card']" }, (gsap, root) => {
+    const threshold = Number(root.dataset.threshold);
+
+    const eventBus = useEventBus();
+
+    let status: "open" | "closed" = "closed";
+
+    eventBus.subscribe("experience:update", (event) => {
+      const { progress } = event;
+
+      if (progress >= threshold) {
+        if (status === "closed") {
+          status = "open";
+          gsap.to(root, {
+            opacity: 1,
+            duration: 0.4,
+            ease: "power1.out",
+          });
+        }
+      } else {
+        if (status === "open") {
+          status = "closed";
+          gsap.to(root, {
+            opacity: 0,
+            duration: 0.4,
+            ease: "power1.out",
+          });
+        }
+      }
+    });
+  });
+</script>

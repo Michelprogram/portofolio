@@ -1,0 +1,112 @@
+[
+  {
+    "id": "photon-parser",
+    "acronym": "PP",
+    "media": {
+      "type": "website",
+      "url": "https://autodruid.github.io/documentation/photon-parser/"
+    },
+    "technologies": ["Go", "Photon", "Binary parsing", "Blazingly fast"],
+    "link": "https://github.com/AutoDruid/photon-parser",
+    "date": "2026-05-15",
+    "fr": {
+      "title": "Photon parser",
+      "description": "Rétro-ingénierie du protocol Photon pour créer un parseur réseaux ultra-rapide."
+    },
+    "en": {
+      "title": "Breaking the photon protocol",
+      "description": "Reverse engineering the photon protocol to create blazing fast packets parser."
+    }
+  },
+  {
+    "id": "albion-bot",
+    "acronym": "AB",
+    "media": {
+      "type": "video",
+      "src": "https://youtu.be/lefK_vcU3ew"
+    },
+    "technologies": ["Python", "OpenCV", "PyAutoGUI", "Yolo"],
+    "link": "https://github.com/Michelprogram/albion-gathering-bot",
+    "date": "2024-03-15",
+    "fr": {
+      "title": "Bot Albion par reconnaissance IA",
+      "description": "Entrainement d'un model de detection d'objets pour automatiser le farming dans le jeu !"
+    },
+    "en": {
+      "title": "Albion bot by AI recognition",
+      "description": "Training an object detection model to automate farming in the game!"
+    }
+  },
+  {
+    "id": "bittorrent-client",
+    "acronym": "BT",
+    "technologies": ["Go", "Bittorrent", "Network"],
+    "link": "https://github.com/Michelprogram/bittorrent-client",
+    "date": "2024-08-15",
+    "fr": {
+      "title": "Bittorrent en Go",
+      "description": "Implémentation d'un client bittorrent en Go."
+    },
+    "en": {
+      "title": "Bittorrent in Go",
+      "description": "Had fun to re-create a clone of the bittorrent in Go."
+    }
+  },
+  {
+    "id": "speedertyper",
+    "acronym": "ST",
+    "technologies": ["MongoDB", "Go", "Websocket", "Vue"],
+    "media": {
+      "type": "website",
+      "url": "https://speeder-typer.vercel.app/"
+    },
+    "link": "https://github.com/Michelprogram/SpeederTyper",
+    "date": "2024-07-15",
+    "fr": {
+      "title": "Speeder typer",
+      "description": "Un jeu de dactylo en ligne pour faire des courses avec des amis !"
+    },
+    "en": {
+      "title": "Speeder typer",
+      "description": "A typing game to be faster than the Primeagen."
+    }
+  },
+  {
+    "id": "clean-your-twitter",
+    "acronym": "CT",
+    "technologies": ["Nuxt", "Go", "Nuxt", "Typescript"],
+    "media": {
+      "type": "website",
+      "url": "https://clean-your-twitter.vercel.app/"
+    },
+    "link": "https://github.com/Michelprogram/clean-your-twitter",
+    "date": "2024-05-15",
+    "fr": {
+      "title": "Clean your twitter",
+      "description": "On créer des millier de tweets par jour mais est-ce qu'on a deja pense à les supprimer ?"
+    },
+    "en": {
+      "title": "Clean your twitter",
+      "description": "Yes every day thousand of tweets are created, have you wonder how to clean your twitter?"
+    }
+  },
+  {
+    "id": "chat-app-htmx",
+    "acronym": "CA",
+    "technologies": ["HTMX", "Go", "Fiber", "Websocket"],
+    "media": {
+      "type": "website",
+      "url": "https://chat-app-21-2c453b9f548a.herokuapp.com/"
+    },
+    "link": "https://github.com/Michelprogram/chat-app-htmx",
+    "date": "2024-04-01",
+    "fr": {
+      "title": "21 apps de chat",
+      "description": "Un classique dans l'univers des sides projects, mais celui-ci est fait en HTMX!"
+    },
+    "en": {
+      "title": "21 chat apps",
+      "description": "One of the classics in side project, but this one introduces HTMX in addition to learning the basics of websockets!"
+    }
+  }
+]

@@ -1,0 +1,77 @@
+[
+  {
+    "id": "article-1",
+    "en": {
+      "title": "Badminton",
+      "description": "Active player since I was 13, always ready for a game!"
+    },
+    "fr": {
+      "title": "Badminton",
+      "description": "Joueur actif depuis mes 13 ans, toujours prêt pour faire une game !"
+    },
+    "links": []
+  },
+  {
+    "id": "article-2",
+    "en": {
+      "title": "Video games",
+      "description": "Tonight we play what ? Cities Skylines II, Slay the Spire 2, League of Legends, etc..."
+    },
+    "fr": {
+      "title": "Jeux vidéo",
+      "description": "Ce soir on joue à quoi ? Cities Skylines II, Slay the Spire 2, League of Legends, etc..."
+    },
+    "links": ["https://steamcommunity.com/profiles/76561198222503896/"]
+  },
+  {
+    "id": "article-3",
+    "en": {
+      "title": "Skateboarding",
+      "description": "Always looking for new spots to skate!"
+    },
+    "fr": {
+      "title": "Skateboard",
+      "description": "Toujours a la recherche de nouveaux spots pour skater !"
+    },
+    "links": []
+  },
+  {
+    "id": "article-4",
+    "en": {
+      "title": "Chess",
+      "description": "Starting to play chess a few years ago, it's a lot of fun to solve problems!"
+    },
+    "fr": {
+      "title": "Échecs",
+      "description": "J'ai commence à jouer au échecs il y'a peu de temps, pas mal pour faire de la résolution de problèmes !"
+    },
+    "links": ["https://www.chess.com/member/michelbioshop"]
+  },
+  {
+    "id": "article-5",
+    "en": {
+      "title": "Movies/Books",
+      "description": "Like everyone else, I'm a big fan of movies and books, comics included!"
+    },
+    "fr": {
+      "title": "Films/Livres",
+      "description": "Comme tout le monde je suis un grand fan de films et de livres, comics inclus !"
+    },
+    "links": [
+      "https://senscritique.com/MichelDev",
+      "https://www.goodreads.com/user/show/203859481"
+    ]
+  },
+  {
+    "id": "article-6",
+    "en": {
+      "title": "Magic the Gathering",
+      "description": "Became a big fan since the Lord of the Rings extension was released!"
+    },
+    "fr": {
+      "title": "Magic the Gathering",
+      "description": "Je suis devenu un grand fan depuis la sortie de l'extension Seigneur des anneaux !"
+    },
+    "links": ["https://moxfield.com/users/21Michel"]
+  }
+]

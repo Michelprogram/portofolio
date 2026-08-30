@@ -1,0 +1,63 @@
+---
+import type { Hobby } from "@/collections";
+
+interface Props {
+  hobby: Omit<Hobby, "fr" | "en"> & {
+    title: string;
+    description: string;
+  };
+  index: number;
+  width: number;
+  height: number;
+}
+
+const { hobby, index, width, height } = Astro.props;
+
+const getLinkDomain = (url: string) => {
+  try {
+    return new URL(url).hostname.replace(/^www\./, "");
+  } catch {
+    return url;
+  }
+};
+---
+
+<div
+  data-cards
+  data-index={index}
+  style={{
+    width: `${width}px`,
+    height: `${height}px`,
+  }}
+  class="absolute left-0 flex flex-col justify-between rounded-2xl border border-white/15 bg-neutral-900/90 p-6 text-white shadow-xl select-none"
+>
+  <div data-title>
+    <h3 class="text-center text-xl font-bold">{hobby.title}</h3>
+  </div>
+
+  <div data-details class="my-auto flex flex-col gap-4 opacity-0">
+    <p class="text-center text-sm leading-relaxed text-white/80">
+      {hobby.description}
+    </p>
+
+    {
+      hobby.links && hobby.links.length > 0 && (
+        <div class="text-primary-green flex flex-wrap items-center justify-center gap-2 text-xs">
+          {hobby.links.map((link, i) => (
+            <>
+              {i > 0 && <span class="text-white/40 select-none">•</span>}
+              <a
+                href={link}
+                target="_blank"
+                rel="noopener noreferrer"
+                class="transition-colors hover:text-white hover:underline"
+              >
+                {getLinkDomain(link)}
+              </a>
+            </>
+          ))}
+        </div>
+      )
+    }
+  </div>
+</div>

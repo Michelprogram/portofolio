@@ -1,0 +1,30 @@
+---
+import { useI18n } from "@/composables";
+import { Image } from "astro:assets";
+
+const { translation } = useI18n(Astro.currentLocale);
+const {
+  next: { title, description, animationDescription },
+} = translation;
+---
+
+<section
+  class="m-auto flex size-full h-[700px] w-6xl flex-col items-center justify-center gap-8 border-t-2 border-solid"
+  data-component="next"
+>
+  <h2 class="mt-12 w-full text-7xl tracking-wide">{title}</h2>
+  <div class="grid grid-cols-[1fr_0.5fr] grid-rows-1 items-center gap-5">
+    <p>{description}</p>
+    <div class="flex h-[100px] flex-col items-center justify-center gap-5">
+      <Image
+        class="size-[50px]"
+        alt="flying animation"
+        loading="lazy"
+        width="50"
+        height="50"
+        src="https://raw.githubusercontent.com/Tarikul-Islam-Anik/Animated-Fluent-Emojis/master/Emojis/Travel%20and%20places/Airplane.png"
+      />
+      <span class="text-lg text-gray-500 italic">{animationDescription}</span>
+    </div>
+  </div>
+</section>

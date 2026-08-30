@@ -1,0 +1,49 @@
+---
+import { Image } from "astro:assets";
+import { useI18n } from "@/composables";
+
+interface Props {
+  skill: {
+    title: string;
+    icon: string;
+    experiences: number;
+  };
+}
+
+const { translation } = useI18n(Astro.currentLocale);
+const {
+  skills: { singular, plural },
+} = translation;
+
+const { skill } = Astro.props;
+---
+
+<div class="flex flex-col items-center gap-3 text-center" data-gsap-skill>
+  <div
+    class="line flex items-center justify-center gap-2 transition-all duration-700 ease-in-out xl:gap-4"
+  >
+    <h3 class="text-4xl/tight font-bold xl:text-5xl/relaxed" data-gsap-title>
+      {skill.title}
+    </h3>
+    <div class="flex items-center justify-center self-stretch">
+      <Image
+        class="size-9 translate-y-1 object-contain md:size-11.25 lg:size-12"
+        src={skill.icon}
+        format="webp"
+        width="25"
+        height="25"
+        alt="Icon"
+        loading="lazy"
+        decoding="async"
+        data-gsap-icon
+      />
+    </div>
+  </div>
+  <p
+    class="text-normal text-primary-gray hidden md:block xl:text-xl/relaxed"
+    data-gsap-description
+  >
+    <span class="counter">{skill.experiences}</span>{" "}
+    {skill.experiences === 1 ? singular : plural}
+  </p>
+</div>

@@ -1,0 +1,22 @@
+[tools]
+bun = "1.3.10"
+
+[tasks.validate]
+description = "Validate the project"
+run = "bun --bun run lint && bun --bun run format:check && bun --bun run knip && bun --bun run check"
+
+[tasks.fix]
+description = "Fix the project"
+run = "bun --bun run lint:fix && bun --bun run format"
+
+[tasks.dev]
+description = "Run the development server"
+run = "bun --bun run dev"
+
+[tasks.build]
+description = "Build the project"
+run = "bun --bun run build"
+
+[tasks.preview]
+description = "Preview the project"
+run = "bun --bun run preview"

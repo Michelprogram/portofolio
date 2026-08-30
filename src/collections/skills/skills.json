@@ -1,0 +1,38 @@
+[
+  {
+    "id": "typescript",
+    "title": "Typescript",
+    "icon": "https://raw.githubusercontent.com/Tarikul-Islam-Anik/Animated-Fluent-Emojis/master/Emojis/Objects/Pouring%20Liquid.png",
+    "experiences": "2024-01-01"
+  },
+  {
+    "id": "golang",
+    "title": "Golang",
+    "icon": "https://raw.githubusercontent.com/Tarikul-Islam-Anik/Animated-Fluent-Emojis/master/Emojis/Animals/Bear.png",
+    "experiences": "2021-01-01"
+  },
+  {
+    "id": "vue",
+    "title": "Vue",
+    "icon": "https://raw.githubusercontent.com/Tarikul-Islam-Anik/Animated-Fluent-Emojis/master/Emojis/Smilies/Robot.png",
+    "experiences": "2022-01-01"
+  },
+  {
+    "id": "tailwind",
+    "title": "Tailwind",
+    "icon": "https://raw.githubusercontent.com/Tarikul-Islam-Anik/Animated-Fluent-Emojis/master/Emojis/Animals/Jellyfish.png",
+    "experiences": "2022-01-01"
+  },
+  {
+    "id": "graphql",
+    "title": "GraphQL",
+    "icon": "https://raw.githubusercontent.com/Tarikul-Islam-Anik/Animated-Fluent-Emojis/master/Emojis/Objects/Ring%20Buoy.png",
+    "experiences": "2025-01-01"
+  },
+  {
+    "id": "rust",
+    "title": "Rust",
+    "icon": "https://raw.githubusercontent.com/Tarikul-Islam-Anik/Animated-Fluent-Emojis/master/Emojis/Animals/T-Rex.png",
+    "experiences": "2025-01-01"
+  }
+]

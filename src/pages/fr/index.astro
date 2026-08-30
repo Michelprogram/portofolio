@@ -10,15 +10,19 @@ import StackTracker from "@/components/ui/StackTracker.astro";
 
 const sections = [
   { title: "Introduction", selector: "hero" },
-  { title: "Skills", selector: "skills" },
-  { title: "Projects", selector: "projects" },
-  { title: "Experiences", selector: "experiences-wrapper" },
-  { title: "Hobbies", selector: "hobbies" },
-  { title: "Next", selector: "next" },
+  { title: "Compétences", selector: "skills" },
+  { title: "Projets", selector: "projects" },
+  { title: "Expériences", selector: "experiences-wrapper" },
+  { title: "Loisirs", selector: "hobbies" },
+  { title: "Et ensuite", selector: "next" },
 ];
 ---
 
-<Layout>
+<Layout
+  lang="fr"
+  title="Dorian Gauron — Développeur Web"
+  description="Développeur web passionné par la création d'applications web, bots, et outils."
+>
   <StackTracker slot="fixed-ui" sections={sections} />
 
   <main>

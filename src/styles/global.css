@@ -1,0 +1,32 @@
+@import "tailwindcss";
+
+@theme {
+  --color-primary-green: #4ee1a0;
+  --color-primary-gray: rgb(217, 217, 217);
+
+  --font-sans: "Space Grotesk", sans-serif;
+}
+
+body {
+  margin: 0;
+  @apply font-sans;
+  background-color: #151515;
+  color: #ffffff;
+  line-height: 1.56;
+}
+
+html {
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+
+html::-webkit-scrollbar,
+body::-webkit-scrollbar,
+#smooth-wrapper::-webkit-scrollbar {
+  display: none;
+}
+
+#smooth-wrapper {
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}

@@ -1,0 +1,106 @@
+[
+  {
+    "id": "experience-1",
+    "from": "2016-01-01",
+    "to": "2019-01-01",
+    "place": "Tours, France",
+    "link": "https://maps.app.goo.gl/bXHnp6mPAqfoqT3T7",
+    "icon": "https://raw.githubusercontent.com/Tarikul-Islam-Anik/Animated-Fluent-Emojis/master/Emojis/Smilies/Alien%20Monster.png",
+    "fr": {
+      "description": "Durant mes premières années de lycée, j'ai commencé a apprendre les bases de la programmation avec Python, c'était plutot du niveau scolaire mais c'était passionnant.",
+      "title": "Apprentissage ..."
+    },
+    "en": {
+      "description": "During my freshman year of high school, I started learning the basics of programming with Python. It was pretty basic school level but it was fun.",
+      "title": "Learning ..."
+    },
+    "position": {
+      "x": -280,
+      "y": 750
+    },
+    "threshold": 3
+  },
+  {
+    "id": "experience-2",
+    "from": "2019-01-01",
+    "to": "2021-01-01",
+    "place": "Tours, France",
+    "link": "https://maps.app.goo.gl/bXHnp6mPAqfoqT3T7",
+    "icon": "https://raw.githubusercontent.com/Tarikul-Islam-Anik/Animated-Fluent-Emojis/master/Emojis/Travel%20and%20places/Fire.png",
+    "fr": {
+      "description": "J'ai commence a bricoler des PC chez moi puis a trainer sur internet avec des sites comme root-me.org. L'un des premiers défis était de construire un serveur TCP, alors j'ai commencé à pratiquer le dev de chez moi tout en apprenant les bases de C/C++ à l'université.",
+      "title": "La passion"
+    },
+    "en": {
+      "description": "I started building PCs at home and then started training on internet with sites like root-me.org. One of the first challenges was building a TCP server, so I started practicing at home while learning the basics of C/C++ at university.",
+      "title": "The passion"
+    },
+    "position": {
+      "x": 40,
+      "y": 140
+    },
+    "threshold": 30
+  },
+  {
+    "id": "experience-3",
+    "from": "2021-01-01",
+    "to": "2022-01-01",
+    "place": "Nantes, France",
+    "link": "https://maps.app.goo.gl/6MBSc3cKAc5RVzer8",
+    "icon": "https://raw.githubusercontent.com/Tarikul-Islam-Anik/Animated-Fluent-Emojis/master/Emojis/Travel%20and%20places/Rocket.png",
+    "fr": {
+      "description": "L'école c'est bien sympa mais j'avais besoin d'ajouter plus de concret et d'appliquer ce que je voyais en cours dans des contextes plus réels. Et là, j'ai trouvé un stage dans le géant du nucléaire français EDF! J'ai pu pratiquer sur des apps webs en Symfony, des plugins Autocad en C#, de la CI/CD. C'est à ce moment que je me suis vraiment mis à la programmation pour le plaisir (projets côtés).",
+      "title": "Stage chez EDF"
+    },
+    "en": {
+      "description": "The school is nice but I needed to add more concrete and apply what I saw in class in more real contexts. And then I found a stage at the French energy giant EDF! I built web apps using Symfony, coded C# plugins for AutoCAD and CI/CD. This is also when I really started deep-diving into development just for fun (side projects).",
+      "title": "Stage at EDF"
+    },
+    "position": {
+      "x": 400,
+      "y": 700
+    },
+    "threshold": 60
+  },
+  {
+    "id": "experience-4",
+    "from": "2022-01-01",
+    "to": "2024-01-01",
+    "place": "Rennes, France",
+    "link": "https://maps.app.goo.gl/bpZSBK6K1wNeaVPJA",
+    "icon": "https://raw.githubusercontent.com/Tarikul-Islam-Anik/Animated-Fluent-Emojis/master/Emojis/Food/Beer%20Mug.png",
+    "fr": {
+      "description": "J'ai continué à travailler chez EDF pendant mes études de master, tout en me concentrant sur l'automatisation, en utilisant Jenkins et Ansible pour construire une architecture DevOps complète. Et aussi plus de responsabilité dans la gestion de projet.",
+      "title": "Feeling good"
+    },
+    "en": {
+      "description": "Still happily working at EDF while grinding through my Master's degree! During this phase, I shifted gears into automation, using Jenkins and Ansible to build out a complete DevOps architecture. And also more responsibility in project management.",
+      "title": "Feeling good"
+    },
+    "position": {
+      "x": 600,
+      "y": 280
+    },
+    "threshold": 80
+  },
+  {
+    "id": "experience-5",
+    "from": "2024-01-01",
+    "place": "Montreal, Canada",
+    "link": "https://maps.app.goo.gl/wbCjjgaWWzCb786u5",
+    "icon": "https://raw.githubusercontent.com/Tarikul-Islam-Anik/Animated-Fluent-Emojis/master/Emojis/Travel%20and%20places/Snowflake.png",
+    "fr": {
+      "description": "J'ai traversé l'océan pour commencer un nouveau diplôme en informatique à l'ETS. En parallèle je me cherchais un job et j'ai eu une opportunité dans une jeune entreprise Caido. Je me suis spécialisé comme développeur frontend avec des initiations au Rust.",
+      "title": "Au Canada"
+    },
+    "en": {
+      "description": "I crossed the ocean to start a new CS degree at ETS. While studying, I looked for a job and I stumbled into an opportunity at a brand new company called Caido. It threw me into a field I wasn't super familiar with but I ended up specializing as a frontend engineer and started learning Rust.",
+      "title": "Time to move to Canada"
+    },
+    "position": {
+      "x": 1100,
+      "y": 500
+    },
+    "threshold": 98
+  }
+]

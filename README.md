@@ -1,54 +1,48 @@
-# Astro Starter Kit: Basics
+# Portfolio — Dorian Gauron
 
-```sh
-npm create astro@latest -- --template basics
+Portfolio personnel multilingue (FR / EN) présentant mes expériences, projets, compétences et articles.
+
+🌐 **Live :** [dorian-gauron.com](https://dorian-gauron.com)
+
+---
+
+## 🛠️ Stack Technique
+
+- **Framework :** [Astro 6](https://astro.build)
+- **Langage :** TypeScript
+- **Styles :** [Tailwind CSS v4](https://tailwindcss.com)
+- **Animations :** [GSAP](https://gsap.com)
+- **Runtime & Package Manager :** [Bun](https://bun.sh)
+- **Tooling & Versioning :** [Mise](https://mise.jdx.dev)
+- **Qualité de code :** ESLint, Prettier, Knip, Astro Check
+- **CI / CD :** GitHub Actions & GitHub Pages
+
+---
+
+## 🚀 Démarrage
+
+### Prérequis
+
+- [Mise](https://mise.jdx.dev) (gère automatiquement la version de Bun)
+
+### Installation & Développement
+
+```bash
+# Installation des dépendances
+bun install
+
+# Lancer le serveur de développement
+bun run dev
 ```
 
-[![Open in StackBlitz](https://developer.stackblitz.com/img/open_in_stackblitz.svg)](https://stackblitz.com/github/withastro/astro/tree/latest/examples/basics)
-[![Open with CodeSandbox](https://assets.codesandbox.io/github/button-edit-lime.svg)](https://codesandbox.io/p/sandbox/github/withastro/astro/tree/latest/examples/basics)
-[![Open in GitHub Codespaces](https://github.com/codespaces/badge.svg)](https://codespaces.new/withastro/astro?devcontainer_path=.devcontainer/basics/devcontainer.json)
+---
 
-> 🧑‍🚀 **Seasoned astronaut?** Delete this file. Have fun!
+## 🧞 Commandes
 
-![just-the-basics](https://github.com/withastro/astro/assets/2244813/a0a5533c-a856-4198-8470-2d67b1d7c554)
-
-## 🚀 Project Structure
-
-Inside of your Astro project, you'll see the following folders and files:
-
-```text
-/
-├── public/
-│   └── favicon.svg
-├── src/
-│   ├── components/
-│   │   └── Card.astro
-│   ├── layouts/
-│   │   └── Layout.astro
-│   └── pages/
-│       └── index.astro
-└── package.json
-```
-
-Astro looks for `.astro` or `.md` files in the `src/pages/` directory. Each page is exposed as a route based on its file name.
-
-There's nothing special about `src/components/`, but that's where we like to put any Astro/React/Vue/Svelte/Preact components.
-
-Any static assets, like images, can be placed in the `public/` directory.
-
-## 🧞 Commands
-
-All commands are run from the root of the project, from a terminal:
-
-| Command                   | Action                                           |
-| :------------------------ | :----------------------------------------------- |
-| `npm install`             | Installs dependencies                            |
-| `npm run dev`             | Starts local dev server at `localhost:4321`      |
-| `npm run build`           | Build your production site to `./dist/`          |
-| `npm run preview`         | Preview your build locally, before deploying     |
-| `npm run astro ...`       | Run CLI commands like `astro add`, `astro check` |
-| `npm run astro -- --help` | Get help using the Astro CLI                     |
-
-## 👀 Want to learn more?
-
-Feel free to check [our documentation](https://docs.astro.build) or jump into our [Discord server](https://astro.build/chat).
+| Commande            | Action                                                        |
+| :------------------ | :------------------------------------------------------------ |
+| `bun run dev`       | Lance le serveur local de dev                                 |
+| `bun run build`     | Compile le site pour la production (`./dist`)                 |
+| `bun run preview`   | Prévisualise le build localement                              |
+| `mise run validate` | Lance toutes les vérifications CI (lint, format, types, knip) |
+| `mise run fix`      | Corrige automatiquement le linting et le formatage            |

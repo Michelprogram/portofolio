@@ -1,9 +1,14 @@
 {
   "extends": "astro/tsconfigs/strict",
   "compilerOptions": {
-    "types": [
-      "bun-types"
-    ],
-    "jsx": "preserve"
-  }
+    "verbatimModuleSyntax": true,
+    "types": ["bun-types"],
+    "baseUrl": ".",
+    "paths": {
+      "@/*": ["src/*"]
+    },
+    "jsx": "preserve",
+    "ignoreDeprecations": "6.0"
+  },
+  "include": [".astro/types.d.ts", "src/**/*.ts", "src/**/*.astro"]
 }
