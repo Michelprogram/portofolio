@@ -8,3 +8,7 @@ run = "bun run lint && bun run format:check && bun run knip && bun run check"
 [tasks.fix]
 description = "Fix the project"
 run = "bun run lint:fix && bun run format"
+
+[tasks.dev]
+description = "Run the development server"
+run = "bun run dev"
