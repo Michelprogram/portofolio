@@ -39,10 +39,10 @@ bun run dev
 
 ## 🧞 Commandes
 
-| Commande | Action |
-| :--- | :--- |
-| `bun run dev` | Lance le serveur local de dev |
-| `bun run build` | Compile le site pour la production (`./dist`) |
-| `bun run preview` | Prévisualise le build localement |
+| Commande            | Action                                                        |
+| :------------------ | :------------------------------------------------------------ |
+| `bun run dev`       | Lance le serveur local de dev                                 |
+| `bun run build`     | Compile le site pour la production (`./dist`)                 |
+| `bun run preview`   | Prévisualise le build localement                              |
 | `mise run validate` | Lance toutes les vérifications CI (lint, format, types, knip) |
-| `mise run fix` | Corrige automatiquement le linting et le formatage |
+| `mise run fix`      | Corrige automatiquement le linting et le formatage            |
